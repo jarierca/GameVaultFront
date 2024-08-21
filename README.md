@@ -2,7 +2,7 @@
 
 ## Overview
 
-GameVault Frontend is the user interface for the GameVault application, built using React. This project uses Docker and Docker Compose to simplify development and deployment.
+GameVault Frontend is the user interface for the GameVault application, built using React. This project uses Docker and Docker Compose to simplify development and deployment. GameVault Frontend is Free/Libre and Open Source Software (FLOSS) and is licensed under the GPLv3 License.
 
 ## Prerequisites
 
@@ -83,15 +83,19 @@ If you need to make changes to the project and want to see them reflected immedi
 - `src/`: Source code for the React application.
 - `public/`: Public assets for the React application.
 
+## License
+
+This project is licensed under the GPLv3 License. See the [LICENSE](LICENSE) file for more details. 
+
+## FLOSS Note
+
+GameVault Frontend is Free/Libre and Open Source Software (FLOSS). You are encouraged to use, modify, and distribute the software under the terms of the GPLv3 License.
+
 ## Troubleshooting
 
 - **Issues with Docker Compose**: Make sure Docker and Docker Compose are installed and running correctly. Check the Docker and Docker Compose documentation for more information on installation and usage.
 - **Configuration Issues**: Ensure that the `.env` file is correctly created and located in the root directory of the project.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
 ---
 
-Feel free to adjust the instructions or add additional details as needed.
+Feel free to adapt any of the sections as needed for your specific project details!
