@@ -27,7 +27,7 @@ function RegisterPage() {
     }
 
     try {
-      await axios.post(`${API_URL}/players`, {
+      await axios.post(`${API_URL}/auth/register`, {
         username,
         email,
         password,
