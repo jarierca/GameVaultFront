@@ -1,0 +1,41 @@
+.statusbar {
+  background-color: #f1f1f1;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+}
+
+.statusbar-content {
+  display: flex;
+  align-items: center;
+}
+
+.user-name {
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+.logout-button, .login-button, .register-button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout-button {
+  background-color: #d9534f;
+  color: white;
+}
+
+.login-button, .register-button {
+  background-color: #5bc0de;
+  color: white;
+}
+
+.register-button {
+  background-color: #5cb85c;
+}
+
