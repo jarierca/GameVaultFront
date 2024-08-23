@@ -1,41 +1,112 @@
+/* src/components/auth/StatusBar.css */
+
 .statusbar {
-  background-color: #f1f1f1;
-  padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ccc;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
 }
 
-.statusbar-content {
+.statusbar-left,
+.statusbar-right {
   display: flex;
   align-items: center;
 }
 
-.user-name {
-  margin-right: 20px;
-  font-weight: bold;
+.statusbar-left {
+  gap: 20px;
 }
 
-.logout-button, .login-button, .register-button {
-  padding: 10px 20px;
-  margin-left: 10px;
-  border: none;
-  border-radius: 4px;
+.statusbar-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
   cursor: pointer;
 }
 
-.logout-button {
-  background-color: #d9534f;
+.statusbar-links {
+  display: flex;
+  gap: 15px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.statusbar-links li {
+  margin: 0;
+}
+
+.statusbar-links button {
+  background: none;
+  border: none;
   color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.statusbar-links button:hover {
+  color: #ddd;
+}
+
+.statusbar-center {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search-inpt {
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  width: 150px;
+  font-size: 0.875rem;
+  margin-left: 10px;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.search-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.statusbar-auth {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.logout-button {
+  background-color: #e74c3c;
+  border-radius: 5px;
+  padding: 5px 10px;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
 .login-button, .register-button {
-  background-color: #5bc0de;
+  background-color: #3498db;
+  border-radius: 5px;
+  padding: 5px 10px;
+  border: none;
   color: white;
+  cursor: pointer;
 }
 
-.register-button {
-  background-color: #5cb85c;
+.login-button:hover, .register-button:hover {
+  background-color: #2980b9;
+}
+
+.logout-button:hover {
+  background-color: #c0392b;
 }
 
