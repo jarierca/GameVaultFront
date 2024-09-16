@@ -85,7 +85,7 @@
 }
 
 .logout-button {
-  background-color: #e74c3c;
+  background-color: #3ce767;
   border-radius: 5px;
   padding: 5px 10px;
   border: none;
@@ -108,5 +108,17 @@
 
 .logout-button:hover {
   background-color: #c0392b;
+}
+
+.btn-accountDetail {
+  width: 24px; 
+  height: 24px; 
+  color: white;
+  margin-right: 8px; 
+  cursor: pointer;
+}
+
+.btn-accountDetail:hover {
+  color: #007bff; /* Cambia el color al pasar el mouse */
 }
 
