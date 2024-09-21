@@ -42,6 +42,7 @@ const StatusBar = () => {
           <li><button onClick={() => handleNavigate('/developers')}>Developers</button></li>
           <li><button onClick={() => handleNavigate('/publishers')}>Publishers</button></li>
           <li><button onClick={() => handleNavigate('/genres')}>Genres</button></li>
+          <li><button onClick={() => handleNavigate('/my-collection')}>My Collection</button></li>
         </ul>
       </div>
 

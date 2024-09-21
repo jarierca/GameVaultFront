@@ -22,10 +22,11 @@ function LoginPage() {
         password
       });
 
-      const token = response.data;
+      const token = response.data.token;
       login(token, username);
 
       navigate('/home');
+      window.location.href = "/home";
     } catch (error) {
       setError('Error, incorrect credentials. Try again.');
     }

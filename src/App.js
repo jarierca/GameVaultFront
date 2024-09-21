@@ -6,6 +6,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 // Components
 import StatusBar from './components/auth/StatusBar';
 import Logout from './components/auth/Logout';
+import ScrollToTopButton from './components/util/scrollToTopButton/ScrollToTopButton';
 
 // Pages
 import LoginPage from './pages/auth/login/LoginPage';
@@ -17,6 +18,7 @@ import PublisherPage from './pages/publisher/PublisherPage';
 import GenrePage from './pages/genre/GenrePage';
 import VideogamePage from './pages/videogame/VideogamePage';
 import VideogameDetail from './pages/videogame/VideogameDetailPage';
+import MyCollection from './pages/collection/MyCollection';
 
 // Hooks
 import useAuth from './hooks/useAuth';
@@ -49,7 +51,11 @@ function App() {
           <Route path="/publishers" element={<PublisherPage />}/>
 
           <Route path="/genres" element={<GenrePage />}/>
+          
+          <Route path="/my-collection" element={<MyCollection />}/>
+
         </Routes>
+        <ScrollToTopButton />
       </main>
     </div>
   );
