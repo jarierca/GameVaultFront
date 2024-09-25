@@ -2,21 +2,13 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
+import { useAuth } from '../../context/AuthContext';
 import './StatusBar.css';
 
 const StatusBar = () => {
   const { isAuthenticated, userName, logout } = useAuth();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState('');
-
-  const handleLoginRedirect = () => {
-    navigate('/login');
-  };
-
-  const handleRegisterRedirect = () => {
-    navigate('/register');
-  };
 
   const handleLogout = () => {
     logout();
@@ -69,8 +61,8 @@ const StatusBar = () => {
           </div>
         ) : (
           <div className="statusbar-auth">
-            <button onClick={handleLoginRedirect} className="login-button">Login</button>
-            <button onClick={handleRegisterRedirect} className="register-button">Register</button>
+            <button onClick={() => handleNavigate('/login')} className="login-button">Login</button>
+            <button onClick={() => handleNavigate('/register')} className="register-button">Register</button>
           </div>
         )}
       </div>

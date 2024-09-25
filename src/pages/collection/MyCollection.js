@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './MyCollection.css';
 import SearchGames from '../../components/util/search/SearchGames';
 import Grid from '../../components/util/items/Grid';
 import Card from '../../components/util/items/Card';
+import './MyCollection.css';
 
 const MyCollection = () => {
   const [collections, setCollections] = useState([]);

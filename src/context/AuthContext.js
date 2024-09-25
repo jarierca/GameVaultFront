@@ -1,19 +1,16 @@
-// src/hooks/useAuth.js
+// src/context/AuthContext
 
-//TODO REMOVE IN THE FUTURE
-// WE MUST TO CHECK IF IT'S IMPORTANT
-
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
 
-const useAuth = () => {
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState('');
   const [playerId, setPlayerId] = useState('');
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -52,7 +49,6 @@ const useAuth = () => {
     setUserName(decodedToken.upn);
     setPlayerId(decodedToken.sub);
     setLoading(false);
-    navigate('/home');
   };
 
   const logout = () => {
@@ -62,12 +58,14 @@ const useAuth = () => {
     setUserName('');
     setPlayerId('');
     setLoading(false);
-    navigate('/login');
   };
 
-  return { isAuthenticated, loading, userName, playerId, login, logout };
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, loading, userName, playerId, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-export default useAuth;
-
+export const useAuth = () => useContext(AuthContext);
 
