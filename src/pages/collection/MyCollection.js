@@ -8,7 +8,6 @@ import './MyCollection.css';
 const MyCollection = () => {
   const [collections, setCollections] = useState([]);
   const [selectedCollections, setSelectedCollections] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [newCollectionName, setNewCollectionName] = useState('');
   const [newCollectionDescription, setNewCollectionDescription] = useState('');
   const [editingCollectionId, setEditingCollectionId] = useState(null);
@@ -21,14 +20,12 @@ const MyCollection = () => {
 
   useEffect(() => {
     const fetchCollections = async () => {
-      setLoading(true);
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/my-collections`);
         setCollections(response.data);
       } catch (error) {
         console.error('Error fetching my collections:', error);
       }
-      setLoading(false);
     };
 
     fetchCollections();
