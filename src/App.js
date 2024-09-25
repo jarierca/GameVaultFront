@@ -17,6 +17,7 @@ import PublisherPage from './pages/publisher/PublisherPage';
 import GenrePage from './pages/genre/GenrePage';
 import VideogamePage from './pages/videogame/VideogamePage';
 import VideogameDetail from './pages/videogame/VideogameDetailPage';
+import AccountDetail from './pages/accountDetail/AccountDetail';
 
 // Hooks
 import useAuth from './hooks/useAuth';
@@ -49,6 +50,8 @@ function App() {
           <Route path="/publishers" element={<PublisherPage />}/>
 
           <Route path="/genres" element={<GenrePage />}/>
+
+          <Route path="/accountDetail" element={<AccountDetail />}/>
         </Routes>
       </main>
     </div>

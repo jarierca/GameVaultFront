@@ -1,40 +1,87 @@
 /* src/components/PlatformPage.css */
+.menu {
+    background-color: #f8f9fa; /* Color de fondo del menú */
+    padding: 10px; /* Espaciado interno */
+  }
+  
+  .menu-list {
+    list-style-type: none; /* Eliminar viñetas */
+    display: flex; /* Mostrar elementos en línea */
+    justify-content: space-around; /* Espaciado entre elementos */
+    margin: 0; /* Eliminar margen */
+    padding: 0; /* Eliminar padding */
+  }
+  
+  .menu-item {
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el elemento */
+    padding: 10px 15px; /* Espaciado interno de los elementos del menú */
+    transition: background-color 0.3s; /* Transición suave para el fondo */
+  }
+  
+  .menu-item:hover {
+    background-color: #e2e6ea; /* Color de fondo al pasar el mouse */
+  }
 
-.platform-container {
-  justify-content:center;
-  text-align: center;
-  max-width: 80%;
-  margin: auto;
-  padding: 20px;
-}
+  
 
-.search-input {
-  margin-bottom: 20px;
-  padding: 10px;
-  width: 50%;
-}
 
-.platform-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-  padding: 20px;
-  justify-items: center;
-}
 
-.platform-card {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  width: 100%;
-  max-width: 200px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
-}
 
-.platform-card:hover {
-  transform: scale(1.05);
-}
 
+
+  .form {
+    max-width: 400px; /* Ancho máximo del formulario */
+    margin: 0 auto; /* Centrar el formulario */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde del formulario */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #f9f9f9; /* Color de fondo */
+  }
+  
+  .form-row {
+    display: flex; /* Mostrar elementos en línea */
+    justify-content: space-between; /* Espaciado entre elementos */
+    margin-bottom: 15px; /* Espaciado entre filas */
+  }
+  
+  .form-group {
+    flex: 1; /* Hacer que cada grupo ocupe el mismo espacio */
+    margin-right: 10px; /* Espaciado a la derecha */
+  }
+  
+  .form-group:last-child {
+    margin-right: 0; /* Eliminar margen derecho del último grupo */
+  }
+  
+  label {
+    display: block; /* Mostrar la etiqueta como bloque */
+    margin-bottom: 5px; /* Espaciado debajo de la etiqueta */
+  }
+  
+  input {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde del campo */
+    border-radius: 4px; /* Bordes redondeados */
+  }
+  
+  input:focus {
+    border-color: #007bff; /* Color del borde al enfocar */
+    outline: none; /* Eliminar el contorno por defecto */
+  }
+  
+  .submit-button {
+    width: 100%; /* Ancho completo del botón */
+    padding: 10px; /* Espaciado interno */
+    background-color: #007bff; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+  }
+  
+  .submit-button:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el mouse */
+  }
+  
+  
