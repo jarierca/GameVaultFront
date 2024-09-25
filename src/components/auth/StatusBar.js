@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
+import { useAuth } from '../../context/AuthContext';
 import './StatusBar.css';
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></link>
 
@@ -11,14 +11,6 @@ const StatusBar = () => {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState('');
   const [showMenu, setShowMenu] = useState(false);
-
-  const handleLoginRedirect = () => {
-    navigate('/login');
-  };
-
-  const handleRegisterRedirect = () => {
-    navigate('/register');
-  };
 
   const handleLogout = () => {
     logout();
@@ -44,6 +36,7 @@ const StatusBar = () => {
           <li><button onClick={() => handleNavigate('/developers')}>Developers</button></li>
           <li><button onClick={() => handleNavigate('/publishers')}>Publishers</button></li>
           <li><button onClick={() => handleNavigate('/genres')}>Genres</button></li>
+          <li><button onClick={() => handleNavigate('/my-collection')}>My Collection</button></li>
         </ul>
       </div>
 
@@ -90,8 +83,8 @@ const StatusBar = () => {
           </div>
          ) : (
           <div className="statusbar-auth">
-            <button onClick={handleLoginRedirect} className="login-button">Login</button>
-            <button onClick={handleRegisterRedirect} className="register-button">Register</button>
+            <button onClick={() => handleNavigate('/login')} className="login-button">Login</button>
+            <button onClick={() => handleNavigate('/register')} className="register-button">Register</button>
           </div>
         )}
       </div>

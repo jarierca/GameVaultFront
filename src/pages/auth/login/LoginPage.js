@@ -1,9 +1,10 @@
-// src/pages/LoginPage.js
+// src/pages/auth/login/LoginPage.js
 
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../../../hooks/useAuth';
+import { jwtDecode } from 'jwt-decode';
+import { useAuth } from '../../../context/AuthContext';
 import './LoginPage.css';
 
 function LoginPage() {
@@ -22,14 +23,19 @@ function LoginPage() {
         password
       });
 
-      const token = response.data;
-      login(token, username);
+      if (response.data.message === 'OTP_REQUIRED') {
+        const playerId = response.data.playerId;
+        navigate(`/login-otp`, { state: { username, playerId } });
+      } else {
+        const { token } = response.data;
+        login(token);
+        navigate('/home');
+      }
 
-      navigate('/home');
     } catch (error) {
       setError('Error, incorrect credentials. Try again.');
     }
-  };
+  }
 
   return (
     <div className="login-page">

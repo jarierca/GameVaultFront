@@ -25,7 +25,7 @@ function RegisterPage() {
     }
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, {
         username,
         email,
         password,
@@ -36,10 +36,9 @@ function RegisterPage() {
         }
       });
 
-      setSuccess('Registration successful!');
+      setSuccess('Registration successful! You can now activate your OTP.');
       setError('');
-
-      navigate('/login');
+      navigate('/activate-otp');
     } catch (error) {
       setError('Registration failed. Please try again.');
       setSuccess('');
