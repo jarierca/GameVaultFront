@@ -1,10 +1,10 @@
 // src/components/accountDetail/AccountDetail.jsx
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import './AccountDetail.css';
-import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const AccountDetail = () => {
   const [accountDetail, setAccountDetail] = useState();
@@ -19,6 +19,7 @@ const AccountDetail = () => {
     password: '',
     confirmPassword: '',  });
 
+    const { playerId } = useAuth();
 
 /*
   useEffect(() => {
@@ -89,12 +90,10 @@ const AccountDetail = () => {
         password,
         confirmPassword
       };
-    
-      const username = {userName}; 
-
+  
       try {
-        debugger;
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}/players/${username}`, updatedPlayer, {
+      
+        const response = await axios.put(`${process.env.REACT_APP_API_URL}/players/${playerId}`, updatedPlayer, {
           headers: {
             'Content-Type': 'application/json',
           },
