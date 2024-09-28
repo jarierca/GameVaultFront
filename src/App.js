@@ -26,7 +26,6 @@ import VideogamePage from './pages/videogame/VideogamePage';
 import VideogameDetail from './pages/videogame/VideogameDetailPage';
 import MyCollection from './pages/collection/MyCollection';
 
-
 function App() {
   const { isAuthenticated, loading } = useAuth();
 

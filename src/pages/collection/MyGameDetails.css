@@ -1,0 +1,40 @@
+/* MyGameDetails.css */
+
+.game-details-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.close-icon {
+  cursor: pointer;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 10px;
+}
+
+.editing-notice {
+  text-align: center;
+  font-weight: bold;
+  flex: 1;
+}
+
+.readonly-input {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #e9ecef;
+  color: #495057;
+}
+

@@ -3,6 +3,7 @@ import axios from 'axios';
 import SearchGames from '../../components/util/search/SearchGames';
 import Grid from '../../components/util/items/Grid';
 import Card from '../../components/util/items/Card';
+import MyGameDetails from "./MyGameDetails"
 import './MyCollection.css';
 
 const MyCollection = () => {
@@ -17,19 +18,22 @@ const MyCollection = () => {
   const [isGameDialogOpen, setIsGameDialogOpen] = useState(false);
   const [selectedGame, setSelectedGame] = useState(null);
   const [gamesInCollection, setGamesInCollection] = useState([]);
+  const [selectedGameDetails, setSelectedGameDetails] = useState(null);
+  const [selectedGameId, setSelectedGameId] = useState(null);
+  const [showGamesInCollection, setShowGamesInCollection] = useState(true);
 
   useEffect(() => {
-    const fetchCollections = async () => {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/my-collections`);
-        setCollections(response.data);
-      } catch (error) {
-        console.error('Error fetching my collections:', error);
-      }
-    };
-
     fetchCollections();
   }, []);
+
+  const fetchCollections = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/my-collections`);
+      setCollections(response.data);
+    } catch (error) {
+      console.error('Error fetching my collections:', error);
+    }
+  };
 
   useEffect(() => {
     if (isDialogOpen || isGameDialogOpen) {
@@ -40,17 +44,17 @@ const MyCollection = () => {
   }, [isDialogOpen, isGameDialogOpen]);
 
   const toggleCollection = async (collection) => {
-    if (selectedCollections.includes(collection)) {
-      setSelectedCollections(selectedCollections.filter(c => c !== collection));
-      setGamesInCollection([]);
-    } else {
-      setSelectedCollections([collection]);
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/collection-videogames/${collection.id}/videogames`);
-        setGamesInCollection(response.data);
-      } catch (error) {
-        console.error('Error fetching games for collection:', error);
-      }
+    handleCloseGameDetails();
+
+    setSelectedCollections([collection]);
+
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/collection-videogames/${collection.id}/videogames`);
+    
+      setGamesInCollection(response.data);
+
+    } catch (error) {
+      console.error('Error fetching games for collection:', error);
     }
   };
 
@@ -66,6 +70,8 @@ const MyCollection = () => {
       setNewCollectionName('');
       setNewCollectionDescription('');
       setIsDialogOpen(false);
+      
+      fetchCollections();
     } catch (error) {
       console.error('Error adding new collection:', error);
     }
@@ -95,6 +101,16 @@ const MyCollection = () => {
     } catch (error) {
       console.error('Error editing collection:', error);
     }
+  };
+
+  const handleGameClick = (gameId) => {
+    setSelectedGameId(gameId);
+    setShowGamesInCollection(false);
+  };
+
+  const handleCloseGameDetails = () => {
+    setSelectedGameId(null);
+    setShowGamesInCollection(true);
   };
 
   const openDialog = () => {
@@ -228,28 +244,37 @@ const MyCollection = () => {
           )}
         </div>
 
-        <div className="games-in-collection">
-          <h3>Games in Selected Collection</h3>
-          {gamesInCollection.length > 0 ? (
-            <Grid>
-              {gamesInCollection.map(game => (
-                <Card
-                  key={game.id}
-                  type="collection-videogame"
-                  data={{
-                    name: game.videogame.title,
-                    description: game.videogame.description,
-                    releaseDate: game.videogame.releaseDate,
-                    image: game.videogame.image,
-                  }}
-                  onClick={() => {}}
-                />
-              ))}
-            </Grid>
-          ) : (
-            <p>No games in this collection</p>
+          {showGamesInCollection && (
+            <h3>Games in Selected Collection</h3>
           )}
-        </div>
+          {showGamesInCollection && gamesInCollection.length > 0 ? (
+            <div className="games-in-collection">
+              <Grid>
+                {gamesInCollection.map(game => (
+                  <Card
+                    key={game.id}
+                    type="collection-videogame"
+                    data={{
+                      name: game.videogame.title,
+                      description: game.videogame.description,
+                      releaseDate: game.videogame.releaseDate,
+                      image: game.videogame.image,
+                    }}
+                    onClick={() => handleGameClick(game.id)}
+                  />
+                ))}
+              </Grid>
+            </div>
+          ) : (
+            showGamesInCollection && <p>No games in this collection</p>
+          )}
+
+
+        {selectedGameId && (
+          <div className="game-details">
+            <MyGameDetails gameId={selectedGameId} onClose={handleCloseGameDetails} />
+          </div>
+        )}
       </div>
 
       {isGameDialogOpen && (
