@@ -13,7 +13,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
     const fetchGameDetails = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/collection-videogames/${gameId}`);
-
+console.log(response.data);
         setGameDetails(response.data);
         setEditedDetails(response.data);
 
@@ -109,7 +109,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
         <label>Release Date:</label>
         <input
           type="date"
-          value={videogame.releaseDate || ""}
+          value={videogame.releaseDate ? videogame.releaseDate.split('T')[0] : ""}
           readOnly
           className="readonly-input"
           placeholder="Release Date"

@@ -12,6 +12,7 @@ import StatusBar from './components/auth/StatusBar';
 import Logout from './components/auth/Logout';
 import ScrollToTopButton from './components/util/scrollToTopButton/ScrollToTopButton';
 import OtpValidator from './components/auth/otp/OtpValidator';
+import Alert from './components/util/alert/Alert';
 
 // Pages
 import LoginPage from './pages/auth/login/LoginPage';
@@ -38,6 +39,7 @@ function App() {
     <div>
       <header>
         <StatusBar />
+        <Alert />
       </header>
       <main>
         <Routes>

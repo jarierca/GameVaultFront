@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import { useAlert } from '../../../context/AlertContext';
 import './LoginPage.css';
 
 function LoginPage() {
@@ -12,6 +13,7 @@ function LoginPage() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { showMessage } = useAlert(); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,6 +35,7 @@ function LoginPage() {
 
     } catch (error) {
       setError('Error, incorrect credentials. Try again.');
+      showMessage('Error, incorrect credentials. Try again.', -1, 5000);
     }
   }
 

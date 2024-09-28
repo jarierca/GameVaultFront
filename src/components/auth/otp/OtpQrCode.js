@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { QRCodeSVG } from 'qrcode.react';
+import { useAlert } from '../../../context/AlertContext';
 
 const OtpQrCode = ({ playerId }) => {
   const [qrCodeUri, setQrCodeUri] = useState('');
@@ -12,6 +13,7 @@ const OtpQrCode = ({ playerId }) => {
   const [issuer, setIssuer] = useState('');
   const [otpInput, setOtpInput] = useState('');
   const [otpError, setOtpError] = useState('');
+  const { showMessage } = useAlert(); 
 
   useEffect(() => {
     const fetchOtp = async () => {
@@ -19,6 +21,7 @@ const OtpQrCode = ({ playerId }) => {
         const otpResponse = await axios.post(`${process.env.REACT_APP_API_URL}/mfa/enable-otp?playerId=${playerId}`);
         setQrCodeUri(otpResponse.data);
       } catch (err) {
+        showMessage('Failed to generate OTP. Please try again.', -1, 5000);
         setError('Failed to generate OTP. Please try again.'); 
       }
     };
@@ -51,9 +54,11 @@ const OtpQrCode = ({ playerId }) => {
       const otpResponse = await axios.post(`${process.env.REACT_APP_API_URL}/mfa/verify-otp?playerId=${playerId}&otp=${otpInput}`);
       if (otpResponse.status === 200) {
         setOtpError('');
-        alert('OTP is valid!');
+        showMessage('OTP is valid!', 1, 5000);
+        // alert('OTP is valid!');
       }
     } catch (error) {
+      showMessage('Invalid OTP. Please try again.', -1, 5000);
       setOtpError('Invalid OTP. Please try again.');
     }
   };
