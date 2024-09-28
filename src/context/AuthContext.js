@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
+import { useAlert } from './AlertContext';
 
 const AuthContext = createContext();
 
@@ -11,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [userName, setUserName] = useState('');
   const [playerId, setPlayerId] = useState('');
   const [loading, setLoading] = useState(true);
+  const { showMessage } = useAlert(); 
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -22,6 +24,8 @@ export const AuthProvider = ({ children }) => {
 
         if (decodedToken.exp < currentTime) {
           console.log('Token has expired');
+          showMessage('Session has expired.', -1, 3000);
+
           logout();
         } else {
           axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -31,6 +35,8 @@ export const AuthProvider = ({ children }) => {
         }
       } catch (error) {
         console.error('Invalid token:', error);
+        showMessage('Invalid session.', -1, 3000);
+
         logout();
       }
     } else {
@@ -49,6 +55,8 @@ export const AuthProvider = ({ children }) => {
     setUserName(decodedToken.upn);
     setPlayerId(decodedToken.sub);
     setLoading(false);
+
+    showMessage('Successfully logged in.', 1, 3000);
   };
 
   const logout = () => {
@@ -58,6 +66,8 @@ export const AuthProvider = ({ children }) => {
     setUserName('');
     setPlayerId('');
     setLoading(false);
+
+    showMessage('Successfully logout.', 0, 3000);
   };
 
   return (

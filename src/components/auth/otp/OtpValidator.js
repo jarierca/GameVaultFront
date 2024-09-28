@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import { useAlert } from '../../../context/AlertContext';
 
 const OtpValidator = () => {
   const { state } = useLocation();
@@ -12,6 +13,7 @@ const OtpValidator = () => {
   const [otpError, setOtpError] = useState('');
   const [otpSuccess, setOtpSuccess] = useState('');
   const { login } = useAuth();
+  const { showMessage } = useAlert(); 
   const navigate = useNavigate();
 
   const validateOtp = async () => {
@@ -23,6 +25,7 @@ const OtpValidator = () => {
 
       if (response.status === 200) {
         setOtpError('');
+        showMessage('OTP is valid! Logging in...', 1, 5000);
         setOtpSuccess('OTP is valid! Logging in...');
 
         const { token } = response.data;
@@ -33,6 +36,7 @@ const OtpValidator = () => {
         navigate('/home');
       }
     } catch (error) {
+      showMessage('Invalid OTP. Please try again.', 1, 5000);
       setOtpError('Invalid OTP. Please try again.');
       setOtpSuccess('');
     }

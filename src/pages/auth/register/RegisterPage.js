@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAlert } from '../../../context/AlertContext';
 import './RegisterPage.css';
 
 function RegisterPage() {
@@ -13,6 +14,7 @@ function RegisterPage() {
   const [role, setRole] = useState('user');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const { showMessage } = useAlert(); 
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -20,6 +22,7 @@ function RegisterPage() {
 
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
+      showMessage('Passwords do not match.', -1, 3000);
       setSuccess('');
       return;
     }
@@ -36,10 +39,13 @@ function RegisterPage() {
         }
       });
 
-      setSuccess('Registration successful! You can now activate your OTP.');
+      setSuccess('Registration successful!.');
       setError('');
+      showMessage('Registration successful!', 1, 5000);
       navigate('/activate-otp');
+
     } catch (error) {
+      showMessage('Registration failed. Please try again.', -1, 5000);
       setError('Registration failed. Please try again.');
       setSuccess('');
     }
