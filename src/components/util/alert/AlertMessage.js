@@ -6,25 +6,26 @@ import './Alert.css';
 const AlertMessage = ({ message, msgType, duration, onClose }) => {
   const [isVisible, setIsVisible] = React.useState(true);
   const [progress, setProgress] = React.useState(100);
-  const [remainingTime, setRemainingTime] = React.useState(duration);
   const intervalRef = React.useRef(null);
 
   const startProgress = () => {
-    setRemainingTime(duration);
     setProgress(100);
     intervalRef.current = setInterval(() => {
-      setRemainingTime((prev) => {
+      setProgress((prev) => {
         if (prev <= 0) {
           clearInterval(intervalRef.current);
           setIsVisible(false);
-          onClose();
+          handleClose();
           return 0;
         }
-        const newProgress = (prev / duration) * 100;
-        setProgress(newProgress);
-        return prev - 100;
+        return prev - (100 / (duration / 100));
       });
     }, 100);
+  };
+
+  const handleClose = () => {
+    setIsVisible(false);
+    onClose();
   };
 
   React.useEffect(() => {
@@ -33,7 +34,7 @@ const AlertMessage = ({ message, msgType, duration, onClose }) => {
     return () => {
       clearInterval(intervalRef.current);
     };
-  }, [duration, onClose]);
+  }, [duration]);
 
   const handleMouseEnter = () => {
     clearInterval(intervalRef.current);
