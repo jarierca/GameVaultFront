@@ -1,36 +1,42 @@
-// src/pages/videogame/VideogamePage
+// src/pages/videogame/SearchResultsVideogamePage
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useAlert } from '../../context/AlertContext';
+import axios from 'axios';
 import Pagination from '../../components/util/pagination/Pagination';
 import Grid from '../../components/util/items/Grid';
 import Card from '../../components/util/items/Card';
 import './VideogamePage.css';
 
-const VideogamePage = () => {
-  const { platformId } = useParams();
+const SearchResultsVideogamePage = () => {
+  const { querySearch } = useParams();
   const [videogames, setVideogames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(50);
   const [filter, setFilter] = useState('');
+  const [error, setError] = useState(null);
+  const { showMessage } = useAlert(); 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchVideogames = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/videogames/platform/${platformId}`);
-        setVideogames(response.data);
-      } catch (error) {
-        console.error('Error fetching videogames:', error);
-      }
-      setLoading(false);
+        try {
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/videogames/search`, {
+                params: { title: querySearch },
+            });
+            setVideogames(response.data);
+        } catch (err) {
+            setError(err);
+            showMessage('Error getting game results with this query search.', -1, 5000);
+        } finally {
+            setLoading(false);
+        }
     };
 
     fetchVideogames();
-  }, [platformId]);
+  }, [querySearch]); 
 
   const filteredVideogames = videogames.filter((videogame) =>
     videogame.title.toLowerCase().includes(filter.toLowerCase())
@@ -96,5 +102,5 @@ const VideogamePage = () => {
   );
 };
 
-export default VideogamePage;
+export default SearchResultsVideogamePage;
 

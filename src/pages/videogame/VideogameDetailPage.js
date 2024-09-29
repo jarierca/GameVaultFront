@@ -1,4 +1,4 @@
-// src/pages/videogame/VideogameDetailPage.jsx
+// src/pages/videogame/VideogameDetailPage
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';

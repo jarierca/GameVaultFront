@@ -1,5 +1,4 @@
 /* src/pages/auth/login/LoginPage.css */
-/* src/pages/auth/register/RegisterPage.css */
 
 .login-page,
 .register-page {
@@ -8,7 +7,7 @@
   align-items: center;
   height: 100vh;
   background-color: #f4f4f4;
-  margin: 0; /* Ensure no margin interferes */
+  margin: 0;
 }
 
 .modal {
@@ -20,7 +19,7 @@
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 200; /* Higher z-index to ensure it appears above StatusBar */
+  z-index: 200;
   width: 90%;
   max-width: 500px;
 }

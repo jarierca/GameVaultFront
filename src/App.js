@@ -25,6 +25,7 @@ import PublisherPage from './pages/publisher/PublisherPage';
 import GenrePage from './pages/genre/GenrePage';
 import VideogamePage from './pages/videogame/VideogamePage';
 import VideogameDetail from './pages/videogame/VideogameDetailPage';
+import SearchResultsVideogamePage from './pages/videogame/SearchResultsVideogamePage';
 import MyCollection from './pages/collection/MyCollection';
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
           <Route path="/videogames/developer/:developerId" element={<VideogamePage />} />
           <Route path="/videogames/publisher/:publisherId" element={<VideogamePage />} />
           <Route path="/videogames/genre/:genreId" element={<VideogamePage />} />
+          <Route path="/videogames/search/:querySearch" element={<SearchResultsVideogamePage />} />
 
           <Route path="/platforms" element={<PlatformPage />}/>
 

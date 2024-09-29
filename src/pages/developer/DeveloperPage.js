@@ -19,7 +19,7 @@ const DeveloperPage = () => {
     const fetchConsoles = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/my-collection`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/developers`);
         setConsoles(response.data);
       } catch (error) {
         console.error('Error fetching consoles:', error);
