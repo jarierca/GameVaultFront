@@ -3,7 +3,6 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-
 // Context
 import { useAuth } from './context/AuthContext';
 
@@ -33,7 +32,7 @@ function App() {
   const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
-    return <div>Cargando...</div>; // O un componente de carga
+    return <div>Loading...</div>;
   }
 
   console.log('isAuthenticated:', isAuthenticated);

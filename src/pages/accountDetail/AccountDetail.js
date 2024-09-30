@@ -1,154 +1,178 @@
 // src/components/accountDetail/AccountDetail.jsx
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AccountDetail.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const AccountDetail = () => {
-  const [accountDetail, setAccountDetail] = useState();
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null); 
-  const { isAuthenticated, userName, logout } = useAuth();
+  const { isAuthenticated, userName, logout, playerId } = useAuth();
   const navigate = useNavigate();
+
+  const [confirmationWord, setConfirmationWord] = useState('');
+  const requiredWord = 'CONFIRM';
+
   const [formData, setFormData] = useState({
     currentPassword:'',
     email: '',
-    activateOTP:'',
     password: '',
-    confirmPassword: '',  });
-
-    const { playerId } = useAuth();
-
-/*
-  useEffect(() => {
-    const fetchAccountDetail = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/players`);
-        setAccountDetail(response.data);
-      } catch (error) {
-        console.error('Error fetching account details:', error);
-        setError('Error fetching account details.'); 
-      }
-      setLoading(false);
-    };
-
-    fetchAccountDetail();
-  }, []);
-
-  if (loading) {
-    return <div className="accountDetail-container"><h1>Loading...</h1></div>;
-  }
-
-  if (error) {
-    return <div className="accountDetail-container"><h1>{error}</h1></div>; 
-  }*/
-
+    confirmPassword: '',
+    activateOTP: ''  });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, type, checked, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     });
   };
 
-    const handleNavigate = (path) => {
-      navigate(path);
-    };
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  }; 
 
-    const handleLogout = () => {
-      logout();
-      navigate('/login');
-    };
+  const handleActivateOTP = () => {
+    navigate('/activate-otp');
+  }; 
 
-
-    /*envio formulario*/ 
-
-    const handleSubmit = async (event) => {
-      event.preventDefault(); 
-    
-      const { currentPassword, email, activateOTP, password, confirmPassword } = formData;
-    
-
-      if (currentPassword == null || currentPassword == '' ) {
-        alert("Es obligatorio rellenar la password actual");
-        return;
-      }
-      
-      if (password !== confirmPassword) {
-        alert("Las contraseñas no coinciden");
-        return;
-      }
-    
-      const updatedPlayer = {
-        currentPassword,
-        email,
-        activateOTP,
-        password,
-        confirmPassword
-      };
-  
+  useEffect(() => {
+    const fetchPlayerData = async () => {
       try {
-      
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}/players/${playerId}`, updatedPlayer, {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/players/${playerId}`, {
           headers: {
             'Content-Type': 'application/json',
           },
         });
-    
+
         if (response.status === 200) {
-          alert("Detalles actualizados correctamente");
+          const playerData = response.data;
+          setFormData({
+            ...formData,
+            email: playerData.email,
+            activateOTP: playerData.otpEnabled,
+          });
         } else {
-          
-          alert("Error al actualizar los detalles");
+          console.error('Error al obtener los detalles del jugador');
         }
       } catch (error) {
-        console.error("Error en la solicitud:", error);
-        alert("Error en la solicitud");
+        console.error('Error en la solicitud:', error);
+        setError('Error al obtener los detalles del jugador');
       }
     };
 
+    fetchPlayerData();
+  }, [playerId]);
 
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();        
 
+    const { currentPassword, email, password, confirmPassword } = formData;    
+  
+    const updatedPlayer = {
+      currentPassword, 
+      player: { 
+        email,
+        password,
+        playerId
+      }
+    };
+
+    if (currentPassword == null || currentPassword == '' ) {
+      alert("Es obligatorio rellenar la password actual");
+      return;
+    }
+    
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+  
+    try {      
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/players/${playerId}`, updatedPlayer,  {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+        
+      if (response.status === 200) {
+        alert("Detalles actualizados correctamente");
+      } else {
+        
+        alert("Error al actualizar los detalles");
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+      alert("Error en la solicitud");
+    }
+  };
+
+  const handleConfirmationWordChange = (e) => {
+    setConfirmationWord(e.target.value);
+  };
+  
+
+  const handleDelete = async () => {   
+    const { currentPassword, email, password, confirmPassword } = formData;    
+
+    const updatedPlayer = {
+      currentPassword, 
+      player: { 
+        email,
+        password,
+        playerId
+      }
+    };
+
+    if (confirmationWord !== requiredWord) {
+      alert(`Debes escribir la palabra "${requiredWord}" para confirmar.`);
+      return;
+    }
+
+    try {       
+      const response = await axios.delete(`${process.env.REACT_APP_API_URL}/players/${playerId}`,updatedPlayer, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.status === 204) {         
+        logout();
+        navigate('/login');
+      } else {
+        alert("Error al eliminar la cuenta");
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de eliminación:", error);
+      alert("Error al eliminar la cuenta");
+    }
+  };
 
   return (
     
-    <div className="accountDetail-container">
-        <span className="user-name">Welcome, {userName}!</span>     
-        
-        <nav className="menu">
-          <ul className="menu-list">            
-            <li className="menu-item"><button onClick={() => handleNavigate('/account')}>My Account</button></li>
-            <li className="menu-item"><button onClick={() => handleNavigate('/changeStatus')}>Changes Status</button></li>
-            <li className="menu-item"><button onClick={() => handleNavigate('/collections')}>Manage Collections</button></li>
-            <li className="menu-item"><button onClick={() => handleNavigate('/details')}>Details</button></li>          
-          </ul>
-      </nav>
-   
+  <div className="accountDetail-container">
+    <span className="user-name">Welcome, {userName}!</span>            
 
     <form className="form" onSubmit={handleSubmit}>
 
-    <div>
-      <h3>Current Password</h3>
-      <div className="form-row">
-        <div className="form-group">
-          <label htmlFor="currentPassword">Current Password</label>
-          <input
-            type="password"
-            id="currentPassword"
-            name="currentPassword"
-            value={formData.currentPassword}
-            onChange={handleChange}
-            required/>
-            <p>Please type your current password in order to make changes to your account.</p>
+      <div>
+        <h3>Current Password</h3>
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="currentPassword">Current Password</label>
+            <input
+              type="password"
+              id="currentPassword"
+              name="currentPassword"
+              value={formData.currentPassword}
+              onChange={handleChange}
+              required/>
+              <p>Please type your current password in order to make changes to your account.</p>
+          </div>
         </div>
       </div>
-    </div>
-
 
       <div>
         <h3>Change Details</h3>
@@ -160,88 +184,67 @@ const AccountDetail = () => {
               id="email"
               name="email"
               value={formData.email}
-              onChange={handleChange}
-              
-            />
-          </div>
-        
-    
-          <div className="form-group">
-            <label htmlFor="gamerTag">Activate OTP</label>
-            <input
-              type="activateOTP"
-              id="activateOTP"
-              name="activateOTP"
-              value={formData.activateOTP}
-              onChange={handleChange}
-              
-            />
-          </div>
+              onChange={handleChange}/>
+          </div>       
         </div>
       </div>  
 
-    <div>
-      <h3>Change Password</h3>
-
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm New Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              
-            />
-          </div>
-        </div>  
-    </div> 
-
-      <button type="submit" className="submit-button">Save Changes</button>
-
-
       <div>
-        <h3>Delete Account</h3>
-        <span>There is not going back from this action. After you submit your request you will be logged out and your account deleted.</span>
+        <h3>Change Password</h3>
+
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="deleteAccount">Password</label>
+              <label htmlFor="password">Password</label>
               <input
-                type="deleteAccount"
-                id="deleteAccount"
-                name="deleteAccount"
-                value={formData.deleteAccount}
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
                 onChange={handleChange}
                 
               />
             </div>
             <div className="form-group">
-            <button type="submit" className="delete-button">Delete Account</button>
+              <label htmlFor="confirmPassword">Confirm New Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                
+              />
             </div>
           </div>  
       </div> 
-
-
-
-
+      <button type="submit" className="submit-button">Save Changes</button>
     </form>
 
-    <button onClick={handleLogout} className="logout-button">Logout</button>
-
-     
+    {formData.activateOTP ? (
+        <button onClick={handleLogout} className="logout-button">Disable OTP</button>
+      ) : (
+        <button onClick={handleActivateOTP} className="activateOTP-button">Activate OTP</button>        
+      )}
+      
+    <div>
+      <h3>Delete Account</h3>
+      <span>There is no going back from this action. After you submit your request, you will be logged out and your account deleted.</span>    
+      <div className="form-group">
+        <label htmlFor="confirmationWord">Type "{requiredWord}" to confirm</label>
+        <input
+          type="text"
+          id="confirmationWord"
+          name="confirmationWord"
+          value={confirmationWord}
+          onChange={handleConfirmationWordChange}
+        />
+      </div>
+      <button onClick={handleDelete} className="delete-button">Delete Account</button>
     </div> 
+
+    {error && <p className="error-message">{error}</p>}
+    
+  </div> 
   );
 };
 

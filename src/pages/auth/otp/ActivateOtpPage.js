@@ -1,21 +1,14 @@
 // src/pages/auth/ActivateOtpPage.js
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OtpQrCode from '../../../components/auth/otp/OtpQrCode';
-import OtpValidator from '../../../components/auth/otp/OtpValidator';
+import { useAuth } from '../../../context/AuthContext';
 
 function ActivateOtpPage() {
-  const [playerId, setPlayerId] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const storedPlayerId = 5;//localStorage.getItem('playerId');
-    setPlayerId(storedPlayerId);
-  }, []);
+  const { playerId } = useAuth();
 
   return (
     <div>

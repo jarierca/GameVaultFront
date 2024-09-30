@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './StatusBar.css';
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></link>
 
 const StatusBar = () => {
   const { isAuthenticated, userName, logout } = useAuth();
@@ -57,9 +56,7 @@ const StatusBar = () => {
 
       <div className="statusbar-right">
         {isAuthenticated ? (
-          <div className="statusbar-auth">
-            <span className="user-name">Welcome, {userName}!</span>
-            <button onClick={handleLogout} className="logout-button">Logout</button>
+          <div className="statusbar-auth">        
             <div className="dropdown"
             onMouseEnter={() => setShowMenu(true)} 
             onMouseLeave={() => setShowMenu(false)}>
@@ -72,10 +69,10 @@ const StatusBar = () => {
                 </button>                 
                 {showMenu && (
                     <div className="dropdown-menu">
-                      <ul>
-                        <li onClick={() => handleNavigate('/option1')}>Changes Status</li>
-                        <li onClick={() => handleNavigate('/option2')}>Account Details</li>
-                        <li onClick={() => handleNavigate('/option3')}>Sign Out</li>
+                      <ul>                        
+                        <li>{userName}</li>
+                        <li onClick={() => handleNavigate('/accountDetail')}>Account Details</li>
+                        <li onClick={handleLogout}>Sign Out</li>
                       </ul>
                     </div>
                   )}                
