@@ -7,7 +7,7 @@ import { useAuth } from '../../context/AuthContext';
 
 const AccountDetail = () => {
   const [error, setError] = useState(null); 
-  const { isAuthenticated, userName, logout, playerId } = useAuth();
+  const { userName, logout, playerId } = useAuth();
   const navigate = useNavigate();
 
   const [confirmationWord, setConfirmationWord] = useState('');

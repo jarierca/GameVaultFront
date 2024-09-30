@@ -39,3 +39,31 @@
   background-color: #f0f0f0;
 }
 
+.search-inpt {
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  width: 150px;
+  font-size: 0.875rem;
+  margin-left: 10px;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+.search-btn svg:hover {
+  transition: color 0.3s ease;
+  transform: scale(1.1);
+}
+
+.search-btn svg {
+  width: 24px;
+  height: 24px;
+  color: #cecece;
+}

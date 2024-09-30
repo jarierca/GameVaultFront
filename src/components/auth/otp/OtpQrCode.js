@@ -55,7 +55,6 @@ const OtpQrCode = ({ playerId }) => {
       if (otpResponse.status === 200) {
         setOtpError('');
         showMessage('OTP is valid!', 1, 5000);
-        // alert('OTP is valid!');
       }
     } catch (error) {
       showMessage('Invalid OTP. Please try again.', -1, 5000);
@@ -76,13 +75,15 @@ const OtpQrCode = ({ playerId }) => {
             <p>Secret: {secret}</p>
             <p>Issuer: {issuer}</p>
           </div>
-          <input 
-            type="text" 
-            placeholder="Enter OTP" 
-            value={otpInput} 
-            onChange={(e) => setOtpInput(e.target.value)} 
-          />
-          <button onClick={validateOtp}>Validate OTP</button>
+          <div className="container"> 
+            <input 
+              type="text" 
+              placeholder="Enter OTP" 
+              value={otpInput} 
+              onChange={(e) => setOtpInput(e.target.value)} 
+            />
+            <button onClick={validateOtp}>Validate OTP</button>
+          </div>
           {otpError && <p className="error-message">{otpError}</p>}
         </div>
       )}

@@ -34,7 +34,7 @@ function VerifyOtpPage() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Verify OTP</h1>
       <form onSubmit={handleSubmit}>
         <input

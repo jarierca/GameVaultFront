@@ -11,7 +11,7 @@
   align-items: center;
   padding: 10px 20px;
   background-color: #333;
-  color: white;
+  color: rgb(232, 230, 227) !important;
 }
 
 .statusbar-left,
@@ -45,7 +45,6 @@
 .statusbar-links button {
   background: none;
   border: none;
-  color: white;
   font-size: 1rem;
   cursor: pointer;
   transition: color 0.3s ease;
@@ -59,36 +58,6 @@
   display: flex;
   align-items: center;
   position: relative;
-}
-
-.search-inpt {
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  width: 150px;
-  font-size: 0.875rem;
-  margin-left: 10px;
-}
-
-.search-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  padding: 8px;
-}
-
-.search-btn svg:hover {
-  color: white;
-  transition: color 0.3s ease;
-  transform: scale(1.1);
-}
-
-.search-btn svg {
-  width: 24px;
-  height: 24px;
-  color: #cecece;
 }
 
 .statusbar-auth {
@@ -111,7 +80,6 @@
   border-radius: 5px;
   padding: 5px 10px;
   border: none;
-  color: white;
   cursor: pointer;
 }
 
@@ -126,7 +94,6 @@
 .svg-accountDetail {
   width: 15px; 
   height: 15px; 
-  color: white;
   cursor: pointer;
 }
 
@@ -143,24 +110,24 @@
   cursor: pointer; 
 }
 
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
   
-  .dropdown-menu {
-    display: block;
-    position: absolute;
-    background-color: #333;
-    border: 1px solid #ccc;
-    z-index: 1;
-    margin-top: 5px;
-    padding: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    left: -130px; 
-    min-width: 150px; 
-  }
-  
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #333;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  min-width: 150px;
+  max-width: 250px;
+}
+
   .dropdown-menu ul {
     list-style: none;
     padding: 0;
@@ -169,12 +136,20 @@
   }
   
   .dropdown-menu li {
-    padding: 8px 12px;
+    margin: 5px 5px;
+    padding: 6px 10px;
     cursor: pointer;
   }
   
   .dropdown-menu li:hover {
-    background-color: #333;
+    background-color: #222;
+    color: white;
+    border-radius: 15px;
   }
+
+.dropdown-divider {
+  padding: 0 !important;
+  border-top: 1px solid #222;
+}
 
 

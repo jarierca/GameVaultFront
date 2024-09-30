@@ -11,7 +11,7 @@ function ActivateOtpPage() {
   const { playerId } = useAuth();
 
   return (
-    <div>
+    <div className="container">
       <h1>Activate OTP</h1>
       <div>
         <p>Scan the QR code below to activate OTP:</p>
