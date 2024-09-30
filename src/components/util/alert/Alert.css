@@ -1,0 +1,100 @@
+/* src/components/util/alert/Alert.css */
+
+.alert-container {
+  position: fixed;
+  top: 80px;
+  right: 40px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.alert {
+  --bs-alert-bg: transparent;
+  --bs-alert-padding-x: 1rem;
+  --bs-alert-padding-y: 0.5rem;
+  --bs-alert-color: inherit;
+  --bs-alert-border-color: transparent;
+  --bs-alert-border: var(--bs-border-width) solid var(--bs-alert-border-color);
+  --bs-alert-border-radius: 10px;
+  padding: var(--bs-alert-padding-y) var(--bs-alert-padding-x);
+  color: var(--bs-alert-color);
+  background-color: var(--bs-alert-bg);
+  border: var(--bs-alert-border);
+  border-radius: var(--bs-alert-border-radius);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: fit-content;
+  width: auto; 
+}
+
+.alert div {
+  display: flex;
+  align-items: center;
+}
+
+.alert .svg-icon-msg {
+  padding: 3px 5px 0 0;
+}
+
+.progress-bar {
+  height: 5px;
+  background-color: var(--bs-progress-bar-bg);
+  border-radius: 10px;
+  transition: width 0.1s linear;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.close-icon {
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 1.2rem;
+}
+
+
+.alert-info {
+  --bs-alert-color: #ffffff;
+  --bs-alert-bg: #004085;
+  --bs-alert-border-color: #003766;
+}
+
+.alert-success {
+  --bs-alert-color: #ffffff;
+  --bs-alert-bg: #28a745;
+  --bs-alert-border-color: #1e7e34;
+}
+
+.alert-danger {
+  --bs-alert-color: #ffffff;
+  --bs-alert-bg: #721c24;
+  --bs-alert-border-color: #491217;
+}
+
+.alert-warning {
+  --bs-alert-color: #212529;
+  --bs-alert-bg: #856404;
+  --bs-alert-border-color: #4b4b2f;
+}
+
+.alert-info .progress-bar {
+  --bs-progress-bar-bg: #002752;
+}
+
+.alert-success .progress-bar {
+  --bs-progress-bar-bg: #1e7e34;
+}
+
+.alert-danger .progress-bar {
+  --bs-progress-bar-bg: #4a0e12;
+}
+
+.alert-warning .progress-bar {
+  --bs-progress-bar-bg: #6c4f00;
+}
+

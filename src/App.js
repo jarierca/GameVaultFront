@@ -12,6 +12,7 @@ import StatusBar from './components/auth/StatusBar';
 import Logout from './components/auth/Logout';
 import ScrollToTopButton from './components/util/scrollToTopButton/ScrollToTopButton';
 import OtpValidator from './components/auth/otp/OtpValidator';
+import Alert from './components/util/alert/Alert';
 
 // Pages
 import LoginPage from './pages/auth/login/LoginPage';
@@ -24,9 +25,9 @@ import PublisherPage from './pages/publisher/PublisherPage';
 import GenrePage from './pages/genre/GenrePage';
 import VideogamePage from './pages/videogame/VideogamePage';
 import VideogameDetail from './pages/videogame/VideogameDetailPage';
+import SearchResultsVideogamePage from './pages/videogame/SearchResultsVideogamePage';
 import MyCollection from './pages/collection/MyCollection';
 import AccountDetail from './pages/accountDetail/AccountDetail';
-
 
 function App() {
   const { isAuthenticated, loading } = useAuth();
@@ -40,6 +41,7 @@ function App() {
     <div>
       <header>
         <StatusBar />
+        <Alert />
       </header>
       <main>
         <Routes>
@@ -55,6 +57,7 @@ function App() {
           <Route path="/videogames/developer/:developerId" element={<VideogamePage />} />
           <Route path="/videogames/publisher/:publisherId" element={<VideogamePage />} />
           <Route path="/videogames/genre/:genreId" element={<VideogamePage />} />
+          <Route path="/videogames/search/:querySearch" element={<SearchResultsVideogamePage />} />
 
           <Route path="/platforms" element={<PlatformPage />}/>
 

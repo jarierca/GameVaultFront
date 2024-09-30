@@ -1,4 +1,4 @@
-// src/components/util/Card.js
+// src/components/util/items/Card.js
 
 import React from 'react';
 import PropTypes from 'prop-types';

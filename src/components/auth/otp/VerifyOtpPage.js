@@ -1,7 +1,10 @@
+// src/components/auth/VerifyOtpPage.js
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import useAuth from '../../../hooks/useAuth';
+import { useAuth } from '../../../context/AuthContext';
+import { useAlert } from '../../../context/AlertContext';
 
 function VerifyOtpPage() {
   const [otp, setOtp] = useState('');
@@ -9,6 +12,7 @@ function VerifyOtpPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
+  const { showMessage } = useAlert(); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,6 +28,7 @@ function VerifyOtpPage() {
       navigate('/home');
 
     } catch (error) {
+      showMessage('Invalid OTP. Please try again.', -1, 5000);
       setError('Invalid OTP. Please try again.');
     }
   };
