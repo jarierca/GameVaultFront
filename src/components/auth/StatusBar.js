@@ -9,6 +9,7 @@ import './StatusBar.css';
 const StatusBar = () => {
   const { isAuthenticated, userName, logout } = useAuth();
   const [searchValue, setSearchValue] = useState('');
+  const [showMenu, setShowMenu] = useState(false);
   const [selectedGame, setSelectedGame] = useState(null);
   const navigate = useNavigate();
 
@@ -48,11 +49,29 @@ const StatusBar = () => {
 
       <div className="statusbar-right">
         {isAuthenticated ? (
-          <div className="statusbar-auth">
-            <span className="user-name">Welcome, {userName}!</span>
-            <button onClick={handleLogout} className="logout-button">Logout</button>
+          <div className="statusbar-auth">        
+            <div className="dropdown"
+            onMouseEnter={() => setShowMenu(true)} 
+            onMouseLeave={() => setShowMenu(false)}>
+              <button 
+                onClick={() => handleNavigate('/accountDetail')} 
+                className="button-accountDetail">
+                  <svg className="svg-accountDetail" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path fill="#ffffff" d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/>
+                  </svg>
+                </button>                 
+                {showMenu && (
+                    <div className="dropdown-menu">
+                      <ul>                        
+                        <li>{userName}</li>
+                        <li onClick={() => handleNavigate('/accountDetail')}>Account Details</li>
+                        <li onClick={handleLogout}>Sign Out</li>
+                      </ul>
+                    </div>
+                  )}                
+            </div>
           </div>
-        ) : (
+         ) : (
           <div className="statusbar-auth">
             <button onClick={() => handleNavigate('/login')} className="login-button">Login</button>
             <button onClick={() => handleNavigate('/register')} className="register-button">Register</button>

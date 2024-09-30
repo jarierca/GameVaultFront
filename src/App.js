@@ -27,6 +27,7 @@ import VideogamePage from './pages/videogame/VideogamePage';
 import VideogameDetail from './pages/videogame/VideogameDetailPage';
 import SearchResultsVideogamePage from './pages/videogame/SearchResultsVideogamePage';
 import MyCollection from './pages/collection/MyCollection';
+import AccountDetail from './pages/accountDetail/AccountDetail';
 
 function App() {
   const { isAuthenticated, loading } = useAuth();
@@ -68,6 +69,8 @@ function App() {
           
           <Route path="/my-collection" element={<ProtectedRoute element={<MyCollection />} />} />
           
+
+          <Route path="/accountDetail" element={<AccountDetail />}/>
         </Routes>
         <ScrollToTopButton />
       </main>
