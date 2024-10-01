@@ -7,6 +7,7 @@ import './StatusBar.css';
 const StatusBar = () => {
   const { isAuthenticated, userName, logout } = useAuth();
   const [showMenu, setShowMenu] = useState(false);
+  const [selectedGame, setSelectedGame] = useState(null);
   const toggleButtonRef = useRef(null); 
   const menuRef = useRef(null);
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ const StatusBar = () => {
 
   const handleNavigate = (path) => {
     navigate(path);
+    // Hide when u navigate??
+    setShowMenu(false);
   };
 
   const toggleMenu = (event) => {
@@ -57,7 +60,9 @@ const StatusBar = () => {
       </div>
 
       <div className="statusbar-center">
-        <SearchGames showSearchButton={true} />
+        <SearchGames onGameSelect={(game) => {
+            setSelectedGame(game);
+          }} showSearchButton={true} />
       </div>
 
       <div className="statusbar-right">
@@ -79,10 +84,10 @@ const StatusBar = () => {
                   {showMenu && (
                     <div className="dropdown-menu" ref={menuRef}>
                       <ul>
-                        <li>{userName}</li>
+                        <li className="username">{userName}</li>
                         <li className="dropdown-divider"></li>
                         <li onClick={() => handleNavigate('/accountDetail')}>Account Details</li>
-                        <li onClick={handleLogout}>Sign Out</li>
+                        <li className="logout" onClick={handleLogout}>Sign Out</li>
                       </ul>
                     </div>
                   )}

@@ -1,18 +1,14 @@
-/* MyGameDetails.css */
-
 .game-details-container {
-  border: 1px solid #ccc;
   padding: 20px;
-  border-radius: 5px;
-  background-color: #fff;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-
 
 .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .close-icon {
@@ -24,17 +20,81 @@
   gap: 10px;
 }
 
-.editing-notice {
-  text-align: center;
-  font-weight: bold;
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.column {
   flex: 1;
+  margin-right: 10px;
+}
+
+.column:last-child {
+  margin-right: 0;
+}
+
+label {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-column {
+  display: flex;
+  align-items: center;
+  margin-right: 0;
+}
+
+.txt-collection-detail{
+  width: 100%;
+    margin-top: 5px;
 }
 
 .readonly-input {
+  background-color: #f0f0f0;
+}
+
+.textarea-collection-detail {
+  height: 80px;
+  resize: vertical;
+}
+
+.separator {
+  border-top: 1px solid #ccc;
+  margin: 15px 0;
+}
+
+.checkbox-column {
+  display: flex;
+  align-items: center;
+}
+
+.readonly-input {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 5px;
   width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #e9ecef;
-  color: #495057;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button {
+  background: green;
+}
+
+.cancel-button, .edit-remove {
+  background: red;
+}
+
+.edit-button,
+.cancel-button,
+.save-button,
+.edit-remove {
+  padding: 5px 10px;
+  cursor: pointer;
 }
 

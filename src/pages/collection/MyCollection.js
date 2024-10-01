@@ -183,7 +183,7 @@ const MyCollection = () => {
               <li
                 key={collection.id}
                 onClick={() => toggleCollection(collection)}
-                className={selectedCollections.includes(collection) ? 'selected' : ''}
+                className={selectedCollections.includes(collection) ? 'collection-selected' : ''}
                 title={collection.name}
               >
                 {collection.name}
@@ -257,7 +257,7 @@ const MyCollection = () => {
                     data={{
                       name: game.videogame.title,
                       description: game.videogame.description,
-                      releaseDate: game.videogame.releaseDate,
+                      releaseDate: game.videogame.releaseDate.split('T')[0],
                       image: game.videogame.image,
                     }}
                     onClick={() => handleGameClick(game.id)}

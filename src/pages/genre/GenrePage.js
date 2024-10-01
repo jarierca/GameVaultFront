@@ -5,7 +5,6 @@ import Pagination from '../../components/util/pagination/Pagination';
 import Grid from '../../components/util/items/Grid';
 import Card from '../../components/util/items/Card';
 import { useNavigate } from 'react-router-dom';
-import './GenrePage.css';
 
 const GenrePage = () => {
   const [genres, setGenres] = useState([]);
@@ -49,7 +48,7 @@ const GenrePage = () => {
   }
 
   return (
-    <div className="genre-container">
+    <div className="container-f">
       <h1>Console Genres</h1>
       <input
         type="text"

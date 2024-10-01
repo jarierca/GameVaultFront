@@ -5,7 +5,6 @@ import Pagination from '../../components/util/pagination/Pagination';
 import Grid from '../../components/util/items/Grid';
 import Card from '../../components/util/items/Card';
 import { useNavigate } from 'react-router-dom';
-import './PublisherPage.css';
 
 const PublisherPage = () => {
   const [consoles, setConsoles] = useState([]);
@@ -49,7 +48,7 @@ const PublisherPage = () => {
   }
 
   return (
-    <div className="publisher-container">
+    <div className="container-f">
       <h1>Console Publishers</h1>
       <input
         type="text"

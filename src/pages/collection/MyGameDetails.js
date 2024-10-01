@@ -13,10 +13,9 @@ const MyGameDetails = ({ gameId, onClose }) => {
     const fetchGameDetails = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/collection-videogames/${gameId}`);
-console.log(response.data);
+        console.log(response.data);
         setGameDetails(response.data);
         setEditedDetails(response.data);
-
       } catch (error) {
         console.error('Error fetching game details:', error);
       }
@@ -50,19 +49,16 @@ console.log(response.data);
   };
 
   const handleRemoveCurrentVideogame = async () => {
-
     const confirmDelete = window.confirm(`Are you sure you want to delete the collection "${editedDetails.videogame.title}"?`);
     if (!confirmDelete) return;
 
     try {
       await axios.delete(`${process.env.REACT_APP_API_URL}/collection-videogames/${editedDetails.id}`);
-      
       onClose();
     } catch (error) {
       console.error('Error deleting collection:', error);
     }
   };
-
 
   if (!gameDetails) {
     return <div>Loading...</div>;
@@ -95,260 +91,196 @@ console.log(response.data);
       </div>
       <h2>{videogame.title}</h2>
 
-      <div>
-        <label>Description:</label>
-        <input
-          type="text"
-          value={videogame.overview || ""}
-          readOnly
-          className="readonly-input"
-          placeholder="Description"
-        />
+      <div className="row">
+        <div className="column">
+          <label>Description:</label>
+          <input
+            type="text"
+            value={videogame.overview || ""}
+            readOnly
+            className="readonly-input txt-collection-detail"
+            placeholder="Description"
+          />
+        </div>
+        <div className="column">
+          <label>Release Date:</label>
+          <input
+            type="date"
+            value={videogame.releaseDate ? videogame.releaseDate.split('T')[0] : ""}
+            readOnly
+            className="readonly-input txt-collection-detail"
+          />
+        </div>
       </div>
-      <div>
-        <label>Release Date:</label>
-        <input
-          type="date"
-          value={videogame.releaseDate ? videogame.releaseDate.split('T')[0] : ""}
-          readOnly
-          className="readonly-input"
-          placeholder="Release Date"
-        />
-      </div>
-      <div>
-        <label>Platform:</label>
-        <input
-          type="text"
-          value={videogame.platform?.name || ""}
-          readOnly
-          className="readonly-input"
-          placeholder="Platform"
-        />
-      </div>
-      <div>
-        <label>Genre:</label>
-        <input
-          type="text"
-          value={videogame.genre?.name || ""}
-          readOnly
-          className="readonly-input"
-          placeholder="Genre"
-        />
-      </div>
-      <div>
-        <label>Developer:</label>
-        <input
-          type="text"
-          value={videogame.developer?.name || ""}
-          readOnly
-          className="readonly-input"
-          placeholder="Developer"
-        />
-      </div>
-      <div>
-        <label>Publisher:</label>
-        <input
-          type="text"
-          value={videogame.publisher?.name || ""}
-          readOnly
-          className="readonly-input"
-          placeholder="Publisher"
-        />
-      </div>
-
-      <div>
-        <label>Date Added:</label>
-        <input
-          type="date"
-          value={dateAdded ? dateAdded.split('T')[0] : ""}
-          readOnly
-          className="readonly-input"
-        />
+      <div className="row">
+        <div className="column">
+          <label>Platform:</label>
+          <input
+            type="text"
+            value={videogame.platform?.name || ""}
+            readOnly
+            className="readonly-input txt-collection-detail"
+          />
+        </div>
+        <div className="column">
+          <label>Developer:</label>
+          <input
+            type="text"
+            value={videogame.developer?.name || ""}
+            readOnly
+            className="readonly-input txt-collection-detail"
+          />
+        </div>
+        <div className="column">
+          <label>Genre:</label>
+          <input
+            type="text"
+            value={videogame.genre?.name || ""}
+            readOnly
+            className="readonly-input txt-collection-detail"
+          />
+        </div>
+        <div className="column">
+          <label>Date Added:</label>
+          <input
+            type="date"
+            value={dateAdded ? dateAdded.split('T')[0] : ""}
+            readOnly
+            className="readonly-input txt-collection-detail"
+          />
+        </div>
       </div>
 
-      {isEditing ? (
-        <>
-          <div>
-            <label>Digital:</label>
-            <input
-              type="checkbox"
-              name="digital"
-              checked={editedDetails.digital}
-              onChange={(e) => handleChange({ target: { name: 'digital', value: e.target.checked } })}
-            />
-          </div>
-          <div>
-            <label>Status:</label>
-            <input
-              type="text"
-              name="status"
-              value={editedDetails.status || ""}
-              onChange={handleChange}
-              placeholder="Status"
-            />
-          </div>
-          <div>
-            <label>Completed:</label>
+      <div className="separator" />
+
+      <div className="row">
+        <div className="column checkbox-column">
+          <label>
             <input
               type="checkbox"
               name="completed"
-              checked={editedDetails.completed}
-              onChange={(e) => handleChange({ target: { name: 'completed', value: e.target.checked } })}
+              checked={isEditing ? editedDetails.completed : completed}
+              onChange={(e) => {
+                if (isEditing) {
+                  handleChange({ target: { name: 'completed', value: e.target.checked } });
+                }
+              }}
+              className="txt-collection-detail"
+              disabled={!isEditing}
             />
-          </div>
-          <div>
+            Completed
+          </label>
+        </div>
+        {isEditing && editedDetails.completed && (
+          <div className="column">
             <label>Times Completed:</label>
             <input
               type="number"
               name="timesCompleted"
               value={editedDetails.timesCompleted || ""}
               onChange={handleChange}
+              className="txt-collection-detail"
               placeholder="Times Completed"
             />
           </div>
-          <div>
-            <label>Hours Played:</label>
+        )}
+        <div className="column">
+          <label>Hours Played:</label>
+          <input
+            type="number"
+            name="hoursPlayed"
+            value={isEditing ? editedDetails.hoursPlayed || "" : hoursPlayed || ""}
+            onChange={isEditing ? handleChange : null}
+            placeholder="Hours Played"
+            className="txt-collection-detail"
+            disabled={!isEditing}
+          />
+        </div>
+        <div className="column">
+          <label>Rating:</label>
+          <input
+            type="number"
+            name="rating"
+            value={isEditing ? editedDetails.rating || "" : rating || ""}
+            onChange={isEditing ? handleChange : null}
+            placeholder="Rating"
+            className="txt-collection-detail"
+            disabled={!isEditing}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="column checkbox-column">
+          <label>
             <input
-              type="number"
-              name="hoursPlayed"
-              value={editedDetails.hoursPlayed || ""}
-              onChange={handleChange}
-              placeholder="Hours Played"
+              type="checkbox"
+              name="digital"
+              checked={isEditing ? editedDetails.digital : digital}
+              onChange={(e) => {
+                if (isEditing) {
+                  handleChange({ target: { name: 'digital', value: e.target.checked } });
+                }
+              }}
+              className="txt-collection-detail"
+              disabled={!isEditing}
             />
-          </div>
-          <div>
-            <label>Rating:</label>
-            <input
-              type="number"
-              name="rating"
-              value={editedDetails.rating || ""}
-              onChange={handleChange}
-              placeholder="Rating"
-            />
-          </div>
-          <div>
-            <label>Notes:</label>
-            <input
-              type="text"
-              name="notes"
-              value={editedDetails.notes || ""}
-              onChange={handleChange}
-              placeholder="Notes"
-            />
-          </div>
-          <div>
+            Digital
+          </label>
+        </div>
+        {!isEditing || (isEditing && !editedDetails.digital) && (
+          <div className="column">
             <label>Physical Status:</label>
             <input
               type="text"
               name="physicalStatus"
-              value={editedDetails.physicalStatus || ""}
-              onChange={handleChange}
+              value={isEditing ? editedDetails.physicalStatus || "" : digital ? "" : physicalStatus || ""}
+              onChange={isEditing ? handleChange : null}
               placeholder="Physical Status"
+              className="txt-collection-detail"
+              disabled={!isEditing}
             />
           </div>
-          <div>
-            <label>Purchase Date:</label>
-            <input
-              type="date"
-              name="purchaseDate"
-              value={editedDetails.purchaseDate ? editedDetails.purchaseDate.split('T')[0] : ""}
-              onChange={handleChange}
-            />
-          </div>
-        </>
-      ) : (
-        <>
-          <div>
-            <label>Digital:</label>
-            <input
-              type="checkbox"
-              checked={digital}
-              readOnly
-              className="readonly-input"
-              placeholder="Digital"
-            />
-          </div>
-          <div>
-            <label>Status:</label>
-            <input
-              type="text"
-              value={status || ""}
-              readOnly
-              className="readonly-input"
-              placeholder="Status"
-            />
-          </div>
-          <div>
-            <label>Completed:</label>
-            <input
-              type="checkbox"
-              checked={completed}
-              readOnly
-              className="readonly-input"
-              placeholder="Completed"
-            />
-          </div>
-          <div>
-            <label>Times Completed:</label>
-            <input
-              type="number"
-              value={timesCompleted || ""}
-              readOnly
-              className="readonly-input"
-              placeholder="Times Completed"
-            />
-          </div>
-          <div>
-            <label>Hours Played:</label>
-            <input
-              type="number"
-              value={hoursPlayed || ""}
-              readOnly
-              className="readonly-input"
-              placeholder="Hours Played"
-            />
-          </div>
-          <div>
-            <label>Rating:</label>
-            <input
-              type="number"
-              value={rating || ""}
-              readOnly
-              className="readonly-input"
-              placeholder="Rating"
-            />
-          </div>
-          <div>
-            <label>Notes:</label>
-            <input
-              type="text"
-              value={notes || ""}
-              readOnly
-              className="readonly-input"
-              placeholder="Notes"
-            />
-          </div>
-          <div>
-            <label>Physical Status:</label>
-            <input
-              type="text"
-              value={physicalStatus || ""}
-              readOnly
-              className="readonly-input"
-              placeholder="Physical Status"
-            />
-          </div>
-          <div>
-            <label>Purchase Date:</label>
-            <input
-              type="date"
-              value={purchaseDate ? purchaseDate.split('T')[0] : ""}
-              readOnly
-              className="readonly-input"
-            />
-          </div>
-        </>
-      )}
+        )}
+        <div className="column">
+          <label>Purchase Date:</label>
+          <input
+            type="date"
+            name="purchaseDate"
+            value={isEditing ? editedDetails.purchaseDate ? editedDetails.purchaseDate.split('T')[0] : "" : purchaseDate ? purchaseDate.split('T')[0] : ""}
+            onChange={isEditing ? handleChange : null}
+            className="txt-collection-detail"
+            disabled={!isEditing}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="column">
+          <label>Status:</label>
+          <textarea
+            name="status"
+            value={isEditing ? editedDetails.status || "" : status || ""}
+            onChange={isEditing ? handleChange : null}
+            placeholder="Status"
+            rows={3}
+            className="txt-collection-detail textarea-collection-detail"
+            disabled={!isEditing}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="column">
+          <label>Notes:</label>
+          <textarea
+            name="notes"
+            value={isEditing ? editedDetails.notes || "" : notes || ""}
+            onChange={isEditing ? handleChange : null}
+            placeholder="Notes"
+            rows={3}
+            className="txt-collection-detail textarea-collection-detail"
+            disabled={!isEditing}
+          />
+        </div>
+      </div>
     </div>
   );
 };

@@ -49,6 +49,7 @@
 
 .collection-list li:hover {
   background-color: #f0f0f0;
+  border-radius: 4px;
 }
 
 .my-collection-wrapper {
@@ -60,7 +61,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding-left: 20px;
+  padding: 0px 20px;
 }
 
 .selected-collections {
@@ -74,6 +75,12 @@
 .selected-collections ul {
   list-style-type: none;
   padding: 0;
+}
+
+.collection-selected {
+  background-color: #e0f7fa;
+  font-weight: bold;
+  border-radius: 4px;
 }
 
 .games-in-collection {
@@ -156,6 +163,6 @@
 
 .dialog-actions {
   margin-top: auto;
-  display: flex;
+  text-align: center;
 }
 

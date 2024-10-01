@@ -1,13 +1,5 @@
 /* src/components/PlatformPage.css */
 
-.platform-container {
-  justify-content:center;
-  text-align: center;
-  max-width: 80%;
-  margin: auto;
-  padding: 20px;
-}
-
 .search-input {
   margin-bottom: 20px;
   padding: 10px;

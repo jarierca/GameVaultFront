@@ -49,7 +49,7 @@ const PlatformPage = () => {
   }
 
   return (
-    <div className="platform-container">
+    <div className="container-f">
       <h1>Console Platforms</h1>
       <input
         type="text"
