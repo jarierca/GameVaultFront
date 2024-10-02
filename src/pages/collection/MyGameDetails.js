@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Icon from '../../components/icon/Icon'; 
 import './MyGameDetails.css';
 
 const MyGameDetails = ({ gameId, onClose }) => {
@@ -70,9 +71,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
     <div className="game-details-container">
       <div className="header-container">
         <div className="close-icon" onClick={onClose} aria-label="Close">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-            <path fill="currentColor" d="M12 10.586l-4.293-4.293-1.414 1.414L10.586 12l-4.293 4.293 1.414 1.414L12 13.414l4.293 4.293 1.414-1.414L13.414 12l4.293-4.293-1.414-1.414z" />
-          </svg>
+          <Icon iconName="CloseXIcon" />
         </div>
         {isEditing && <div className="editing-notice">Editing Video Game</div>}
         <div className="buttons-container">
@@ -100,6 +99,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
             readOnly
             className="readonly-input txt-collection-detail"
             placeholder="Description"
+            disabled={!isEditing}
           />
         </div>
         <div className="column">
@@ -109,6 +109,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
             value={videogame.releaseDate ? videogame.releaseDate.split('T')[0] : ""}
             readOnly
             className="readonly-input txt-collection-detail"
+            disabled={!isEditing}
           />
         </div>
       </div>
@@ -120,6 +121,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
             value={videogame.platform?.name || ""}
             readOnly
             className="readonly-input txt-collection-detail"
+            disabled={!isEditing}
           />
         </div>
         <div className="column">
@@ -129,6 +131,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
             value={videogame.developer?.name || ""}
             readOnly
             className="readonly-input txt-collection-detail"
+            disabled={!isEditing}
           />
         </div>
         <div className="column">
@@ -138,6 +141,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
             value={videogame.genre?.name || ""}
             readOnly
             className="readonly-input txt-collection-detail"
+            disabled={!isEditing}
           />
         </div>
         <div className="column">
@@ -147,6 +151,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
             value={dateAdded ? dateAdded.split('T')[0] : ""}
             readOnly
             className="readonly-input txt-collection-detail"
+            disabled={!isEditing}
           />
         </div>
       </div>
@@ -171,7 +176,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
             Completed
           </label>
         </div>
-        {isEditing && editedDetails.completed && (
+        {(isEditing && editedDetails.completed) || (!isEditing && completed) ? (
           <div className="column">
             <label>Times Completed:</label>
             <input
@@ -181,9 +186,10 @@ const MyGameDetails = ({ gameId, onClose }) => {
               onChange={handleChange}
               className="txt-collection-detail"
               placeholder="Times Completed"
+              disabled={!isEditing}
             />
           </div>
-        )}
+        ) : null}
         <div className="column">
           <label>Hours Played:</label>
           <input
@@ -227,20 +233,19 @@ const MyGameDetails = ({ gameId, onClose }) => {
             Digital
           </label>
         </div>
-        {!isEditing || (isEditing && !editedDetails.digital) && (
+        {(!isEditing && !digital) || (isEditing && !editedDetails.digital) ? (
           <div className="column">
-            <label>Physical Status:</label>
+            <label>Times Completed:</label>
             <input
-              type="text"
-              name="physicalStatus"
-              value={isEditing ? editedDetails.physicalStatus || "" : digital ? "" : physicalStatus || ""}
-              onChange={isEditing ? handleChange : null}
-              placeholder="Physical Status"
+              type="number"
+              name="timesCompleted"
+              onChange={handleChange}
               className="txt-collection-detail"
+              placeholder="Times Completed"
               disabled={!isEditing}
             />
           </div>
-        )}
+        ) : null}
         <div className="column">
           <label>Purchase Date:</label>
           <input

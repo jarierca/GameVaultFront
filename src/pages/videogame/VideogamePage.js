@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import Pagination from '../../components/util/pagination/Pagination';
-import Grid from '../../components/util/items/Grid';
-import Card from '../../components/util/items/Card';
+import Pagination from '../../components/pagination/Pagination';
+import Grid from '../../components/items/Grid';
+import Card from '../../components/items/Card';
 import './VideogamePage.css';
 
 const VideogamePage = () => {

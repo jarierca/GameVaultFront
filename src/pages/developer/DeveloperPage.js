@@ -1,9 +1,9 @@
 // src/components/developer/DeveloperPage.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Pagination from '../../components/util/pagination/Pagination';
-import Grid from '../../components/util/items/Grid';
-import Card from '../../components/util/items/Card';
+import Pagination from '../../components/pagination/Pagination';
+import Grid from '../../components/items/Grid';
+import Card from '../../components/items/Card';
 import { useNavigate } from 'react-router-dom';
 
 const DeveloperPage = () => {

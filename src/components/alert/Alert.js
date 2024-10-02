@@ -1,7 +1,7 @@
 // src/components/util/alert/Alert.js
 
 import React from "react";
-import { useAlert } from '../../../context/AlertContext';
+import { useAlert } from '../../context/AlertContext';
 import AlertMessage from './AlertMessage';
 import './Alert.css';
 

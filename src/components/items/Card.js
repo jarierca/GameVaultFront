@@ -18,7 +18,7 @@ const Card = ({ type, data, onClick }) => {
       {type === 'collection-videogame' && (
         <>
           <div className="card-image" style={{ backgroundImage: `url(${data.image})` }}></div>
-          <h3>{data.name}</h3>
+          <h3>{data.name} ({data.platformName})</h3>
           <p>{data.description}</p>
           <small>Release Date: {data.releaseDate}</small>
         </>

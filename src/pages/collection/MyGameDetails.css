@@ -41,14 +41,18 @@ label {
 }
 
 .checkbox-column {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   margin-right: 0;
 }
 
+.checkbox-column label {
+  margin: 0;
+}
+
 .txt-collection-detail{
   width: 100%;
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .readonly-input {
@@ -65,10 +69,6 @@ label {
   margin: 15px 0;
 }
 
-.checkbox-column {
-  display: flex;
-  align-items: center;
-}
 
 .readonly-input {
   background-color: #f9f9f9;

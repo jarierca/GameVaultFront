@@ -7,8 +7,8 @@ import AppRoutes from './routes/AppRoutes';
 
 // Components
 import StatusBar from './components/auth/StatusBar';
-import ScrollToTopButton from './components/util/scrollToTopButton/ScrollToTopButton';
-import Alert from './components/util/alert/Alert';
+import ScrollToTopButton from './components/scrollToTopButton/ScrollToTopButton';
+import Alert from './components/alert/Alert';
 
 function App() {
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import SearchGames from '../../components/util/search/SearchGames';
-import Grid from '../../components/util/items/Grid';
-import Card from '../../components/util/items/Card';
+import SearchGames from '../../components/search/SearchGames';
+import Grid from '../../components/items/Grid';
+import Card from '../../components/items/Card';
 import MyGameDetails from "./MyGameDetails"
 import './MyCollection.css';
 
@@ -21,6 +21,9 @@ const MyCollection = () => {
   const [selectedGameDetails, setSelectedGameDetails] = useState(null);
   const [selectedGameId, setSelectedGameId] = useState(null);
   const [showGamesInCollection, setShowGamesInCollection] = useState(true);
+  const [filter, setFilter] = useState('');
+  const [filterType, setFilterType] = useState('platform');
+  const [sortOrder, setSortOrder] = useState('asc');
 
   useEffect(() => {
     fetchCollections();
@@ -169,6 +172,28 @@ const MyCollection = () => {
     }
   };
 
+  const filterGames = gamesInCollection.filter((game) =>
+    game.videogame.title.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  const sortGames = (games) => {
+    const sortedGames = [...games];
+    sortedGames.sort((a, b) => {
+      if (filterType === "platform") {
+        return a.videogame.platform.name.localeCompare(b.videogame.platform.name);
+      } else if (filterType === "developer") {
+        return a.videogame.developer.name.localeCompare(b.videogame.developer.name);
+      } else if (filterType === "publisher") {
+        return a.videogame.publisher.name.localeCompare(b.videogame.publisher.name);
+      } else if (filterType === "genre") {
+        return a.videogame.genre.name.localeCompare(b.videogame.genre.name);
+      }
+      return 0;
+    });
+
+    return sortOrder === "asc" ? sortedGames : sortedGames.reverse();
+  };
+
   return (
     <div className="my-collection-wrapper">
       {(isDialogOpen || isGameDialogOpen) && <div className="overlay" onClick={closeDialog}></div>}
@@ -225,7 +250,7 @@ const MyCollection = () => {
               <div key={index} className="collection-header">
                 <div className="collection-title">
                   <h2>{collection.name}</h2>
-                  <p>{collection.description}</p>
+                  {collection.description ? <p>{collection.description}</p> : <p>&nbsp;</p>}
                 </div>
                 <div className="collection-actions">
                   <button onClick={openGameDialog} className="add-game-button" title="Add new videogame">+</button>
@@ -244,31 +269,42 @@ const MyCollection = () => {
           )}
         </div>
 
-          {showGamesInCollection && (
-            <h3>Games in Selected Collection</h3>
-          )}
-          {showGamesInCollection && gamesInCollection.length > 0 ? (
-            <div className="games-in-collection">
-              <Grid>
-                {gamesInCollection.map(game => (
-                  <Card
-                    key={game.id}
-                    type="collection-videogame"
-                    data={{
-                      name: game.videogame.title,
-                      description: game.videogame.description,
-                      releaseDate: game.videogame.releaseDate.split('T')[0],
-                      image: game.videogame.image,
-                    }}
-                    onClick={() => handleGameClick(game.id)}
-                  />
-                ))}
-              </Grid>
-            </div>
-          ) : (
-            showGamesInCollection && <p>No games in this collection</p>
-          )}
+        <div className="filter-section">
+          <input type="text" className="search-input" value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Search games..." />
+          <div className="filter-select">
+            <select onChange={(e) => setFilterType(e.target.value)}>
+              <option value="platform">Platform</option>
+              <option value="developer">Developer</option>
+              <option value="publisher">Publisher</option>
+              <option value="genre">Genre</option>
+            </select>
+            <select onChange={(e) => setSortOrder(e.target.value)}>
+              <option value="asc">Sort Ascending</option>
+              <option value="desc">Sort Descending</option>
+            </select>
+          </div>
+        </div>
 
+        {showGamesInCollection && gamesInCollection.length > 0 ? (
+          <Grid>
+            {sortGames(filterGames).map(game => (
+              <Card
+                key={game.id}
+                type="collection-videogame"
+                data={{
+                  name: game.videogame.title,
+                  platformName: game.videogame.platform.name,
+                  description: game.videogame.description,
+                  releaseDate: game.videogame.releaseDate.split('T')[0],
+                  image: game.videogame.image,
+                }}
+                onClick={() => handleGameClick(game.id)}
+              />
+            ))}
+          </Grid>
+        ) : (
+          showGamesInCollection && <span className="container"><h3>No games in this collection</h3></span>
+        )}
 
         {selectedGameId && (
           <div className="game-details">
