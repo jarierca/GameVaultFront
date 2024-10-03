@@ -26,7 +26,7 @@ function LoginPage() {
 
       if (response.data.message === 'OTP_REQUIRED') {
         const playerId = response.data.playerId;
-        navigate(`/login-otp`, { state: { username, playerId } });
+        navigate(`/login-otp`, { state: { username, password, playerId } });
       } else {
         const { token } = response.data;
         login(token);

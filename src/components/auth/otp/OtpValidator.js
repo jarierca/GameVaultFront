@@ -15,17 +15,21 @@ const OtpValidator = () => {
   const { login } = useAuth();
   const { showMessage } = useAlert(); 
   const navigate = useNavigate();
+  const location = useLocation();
+  const { username, password } = location.state || {}; 
 
   const validateOtp = async () => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login-otp`, {
         playerId: playerId,
-        otp: otpInput
+        otp: otpInput,
+        username: username,
+        password: password 
       });
 
       if (response.status === 200) {
         setOtpError('');
-        showMessage('OTP is valid! Logging in...', 1, 5000);
+        // showMessage('OTP is valid! Logging in...', 1, 5000);
         setOtpSuccess('OTP is valid! Logging in...');
 
         const { token } = response.data;
@@ -36,7 +40,7 @@ const OtpValidator = () => {
         navigate('/home');
       }
     } catch (error) {
-      showMessage('Invalid OTP. Please try again.', 1, 5000);
+      showMessage('Invalid OTP. Please try again.', -1, 5000);
       setOtpError('Invalid OTP. Please try again.');
       setOtpSuccess('');
     }

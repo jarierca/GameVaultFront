@@ -3,11 +3,13 @@ import axios from 'axios';
 import SearchGames from '../../components/search/SearchGames';
 import Grid from '../../components/items/Grid';
 import Card from '../../components/items/Card';
+import Loading from '../../components/loading/Loading'
 import MyGameDetails from "./MyGameDetails"
 import './MyCollection.css';
 
 const MyCollection = () => {
   const [collections, setCollections] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCollections, setSelectedCollections] = useState([]);
   const [newCollectionName, setNewCollectionName] = useState('');
   const [newCollectionDescription, setNewCollectionDescription] = useState('');
@@ -31,11 +33,13 @@ const MyCollection = () => {
 
   const fetchCollections = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/my-collections`);
       setCollections(response.data);
     } catch (error) {
       console.error('Error fetching my collections:', error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -52,6 +56,7 @@ const MyCollection = () => {
     setSelectedCollections([collection]);
 
     try {
+      setLoading(true);
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/collection-videogames/${collection.id}/videogames`);
     
       setGamesInCollection(response.data);
@@ -59,6 +64,7 @@ const MyCollection = () => {
     } catch (error) {
       console.error('Error fetching games for collection:', error);
     }
+    setLoading(false);
   };
 
   const handleAddCollection = async () => {
@@ -203,17 +209,21 @@ const MyCollection = () => {
             Collections 
             <button onClick={openDialog} className="add-collection-button" title="Create a new game collection">+</button>
           </h2>
-          <ul>
-            {collections.map(collection => (
-              <li
-                key={collection.id}
-                onClick={() => toggleCollection(collection)}
-                className={selectedCollections.includes(collection) ? 'collection-selected' : ''}
-                title={collection.name}
-              >
-                {collection.name}
-              </li>
-            ))}
+           <ul>
+            {loading && collections.length == 0 ? (
+              <Loading />
+            ) : (
+              collections.map(collection => (
+                <li
+                  key={collection.id}
+                  onClick={() => toggleCollection(collection)}
+                  className={selectedCollections.includes(collection) ? 'collection-selected' : ''}
+                  title={collection.name}
+                >
+                  {collection.name}
+                </li>
+              ))
+            )}
           </ul>
         </div>
 
@@ -302,8 +312,10 @@ const MyCollection = () => {
               />
             ))}
           </Grid>
-        ) : (
-          showGamesInCollection && <span className="container"><h3>No games in this collection</h3></span>
+        ) : gamesInCollection && loading ? (
+            <Loading />
+        ) : (showGamesInCollection && 
+            <span className="container"><h3>No games in this collection</h3></span>
         )}
 
         {selectedGameId && (

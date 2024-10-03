@@ -4,6 +4,7 @@ import axios from 'axios';
 import Pagination from '../../components/pagination/Pagination';
 import Grid from '../../components/items/Grid';
 import Card from '../../components/items/Card';
+import Loading from '../../components/loading/Loading'
 import { useNavigate } from 'react-router-dom';
 import './PlatformPage.css';
 
@@ -45,7 +46,7 @@ const PlatformPage = () => {
   };
 
   if (loading) {
-    return <div className="platform-container"><h1>Loading...</h1></div>;
+    return <Loading />;
   }
 
   return (

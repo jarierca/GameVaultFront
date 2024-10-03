@@ -4,6 +4,7 @@ import axios from 'axios';
 import Pagination from '../../components/pagination/Pagination';
 import Grid from '../../components/items/Grid';
 import Card from '../../components/items/Card';
+import Loading from '../../components/loading/Loading'
 import { useNavigate } from 'react-router-dom';
 
 const GenrePage = () => {
@@ -44,7 +45,7 @@ const GenrePage = () => {
   };
 
   if (loading) {
-    return <div className="genre-container"><h1>Loading...</h1></div>;
+    return <Loading />;
   }
 
   return (

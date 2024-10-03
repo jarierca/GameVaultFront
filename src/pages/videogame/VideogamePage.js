@@ -51,7 +51,7 @@ const VideogamePage = () => {
   }
 
   return (
-    <div className="videogame-container">
+    <div className="container">
       <h1>Videogames</h1>
       <input
         type="text"
