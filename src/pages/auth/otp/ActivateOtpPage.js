@@ -1,7 +1,6 @@
 // src/pages/auth/ActivateOtpPage.js
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import OtpQrCode from '../../../components/auth/otp/OtpQrCode';
 import { useAuth } from '../../../context/AuthContext';
 

@@ -1,6 +1,6 @@
 // src/components/auth/OtpValidator.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
@@ -17,6 +17,12 @@ const OtpValidator = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { username, password } = location.state || {}; 
+
+  useEffect(() => {
+    if (!username || !password) {
+      navigate('/login');
+    }
+  }, [username, password, navigate]);
 
   const validateOtp = async () => {
     try {
@@ -47,16 +53,21 @@ const OtpValidator = () => {
   };
 
   return (
-    <div>
-      <input 
-        type="text" 
-        placeholder="Enter OTP" 
-        value={otpInput} 
-        onChange={(e) => setOtpInput(e.target.value)} 
-      />
-      <button onClick={validateOtp}>Validate OTP</button>
-      {otpError && <p className="error-message">{otpError}</p>}
-      {otpSuccess && <p className="success-message">{otpSuccess}</p>}
+    <div className="login-page">
+      <div className="login-container">
+        <h1>OTP Login</h1>
+          <div className="input-group">
+            <input 
+              type="text" 
+              placeholder="Enter OTP" 
+              value={otpInput} 
+              onChange={(e) => setOtpInput(e.target.value)} 
+            />
+          </div>
+          <button className="btn-otp" onClick={validateOtp}>Validate OTP</button>
+          {otpError && <p className="error-message">{otpError}</p>}
+          {otpSuccess && <p className="success-message">{otpSuccess}</p>}
+      </div>
     </div>
   );
 };

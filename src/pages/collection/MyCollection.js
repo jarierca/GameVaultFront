@@ -275,7 +275,10 @@ const MyCollection = () => {
               </div>
             ))
           ) : (
-            <h2>No collections selected</h2>
+            <>
+              <h2>No collections selected</h2>
+              <p>&nbsp;</p>
+            </>
           )}
         </div>
 
@@ -314,7 +317,7 @@ const MyCollection = () => {
           </Grid>
         ) : gamesInCollection && loading ? (
             <Loading />
-        ) : (showGamesInCollection && 
+        ) : (showGamesInCollection && selectedCollections.length > 0 && 
             <span className="container"><h3>No games in this collection</h3></span>
         )}
 
