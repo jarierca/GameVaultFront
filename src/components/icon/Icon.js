@@ -1,4 +1,4 @@
-// Icon.js
+// src/components/icon/Icon.js
 import React from 'react';
 
 const icons = {
@@ -49,6 +49,26 @@ const icons = {
     RightArrowIcon: () => (
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="9 18 15 12 9 6" />
+        </svg>
+    ),
+    TrashIcon: () => (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M5 4H4V6H5V20C5 21.1 5.9 22 7 22H17C18.1 22 19 21.1 19 20V6H20V4H16.5L15.5 3H8.5L7.5 4H5ZM7 6H17V20H7V6ZM9 8V18H11V8H9ZM13 8V18H15V8H13Z" />
+        </svg>
+    ),
+    EditIcon: () => (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M3 18V21H6L17.4 9.6L14.4 6.6L3 18ZM20.7 7.3C21.1 6.9 21.1 6.3 20.7 5.9L18.1 3.3C17.7 2.9 17.1 2.9 16.7 3.3L15 5L19 9L20.7 7.3Z" />
+        </svg>
+    ),
+    SaveIcon: () => (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M17 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V7L17 3ZM12 19C10.34 19 9 17.66 9 16C9 14.34 10.34 13 12 13C13.66 13 15 14.34 15 16C15 17.66 13.66 19 12 19ZM15 9H5V5H15V9Z" />
+        </svg>
+    ),
+    CancelIcon: () => (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z" />
         </svg>
     ),
 };

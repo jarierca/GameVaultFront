@@ -85,20 +85,20 @@ const MyGameDetails = ({ gameId, onClose }) => {
       ) : (
         <div className="game-details-container">
           <div className="header-container">
-            <div className="close-icon" onClick={onClose} aria-label="Close">
+            <div className="close-icon" onClick={onClose} aria-label="Close" title="Close videogame">
               <Icon iconName="CloseXIcon" />
             </div>
             {isEditing && <div className="editing-notice">Editing Video Game</div>}
             <div className="buttons-container">
               {!isEditing ? (
                 <>
-                  <button onClick={handleEditToggle} className="edit-button">Edit</button>
-                  <button onClick={handleRemoveCurrentVideogame} className="edit-remove">Remove</button>
+                  <button onClick={handleEditToggle} className="edit-button" title="Edit Videogame"><Icon iconName="EditIcon" /></button>
+                  <button onClick={handleRemoveCurrentVideogame} className="remove-button" title="Remove Videogame"><Icon iconName="TrashIcon" /></button>
                 </>
               ) : (
                 <>
-                  <button onClick={handleCancel} className="cancel-button">Cancel</button>
-                  <button onClick={handleUpdate} className="save-button">Save</button>
+                  <button onClick={handleCancel} className="cancel-button" title="Cancel changes"><Icon iconName="CancelIcon" /></button>
+                  <button onClick={handleUpdate} className="save-button" title="Save Videogame"><Icon iconName="SaveIcon" /></button>
                 </>
               )}
             </div>
@@ -303,7 +303,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
             </div>
           </div>
         </div>
-      )};
+      )}
     </>
   );
 };

@@ -5,6 +5,7 @@ import Grid from '../../components/items/Grid';
 import Card from '../../components/items/Card';
 import Loading from '../../components/loading/Loading'
 import MyGameDetails from "./MyGameDetails"
+import Icon from '../../components/icon/Icon';
 import './MyCollection.css';
 
 const MyCollection = () => {
@@ -269,8 +270,8 @@ const MyCollection = () => {
                     setEditingCollectionName(selectedCollections[0].name);
                     setEditingCollectionDescription(selectedCollections[0].description || '');
                     setIsDialogOpen(true);
-                  }} title="Edit current collection details">Edit</button>
-                  <button onClick={removeCurrentCollection} className="add-game-button" title="Remove current collection">Remove</button>
+                  }} className="edit-button" title="Edit current collection details"><Icon iconName="EditIcon" /></button>
+                  <button onClick={removeCurrentCollection} className="remove-button" title="Remove current collection"><Icon iconName="TrashIcon" /></button>
                 </div>
               </div>
             ))

@@ -83,17 +83,17 @@ label {
 }
 
 .edit-button {
-  background: green;
+  background: #008000b5;
 }
 
-.cancel-button, .edit-remove {
-  background: red;
+.cancel-button, .remove-button {
+  background: #ff3434e8;
 }
 
 .edit-button,
 .cancel-button,
 .save-button,
-.edit-remove {
+.remove-button {
   padding: 5px 10px;
   cursor: pointer;
 }
