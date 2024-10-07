@@ -35,8 +35,8 @@ h1 {
 }
 
 .card {
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: var(--background-color-2);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   overflow: hidden;
   text-align: center;

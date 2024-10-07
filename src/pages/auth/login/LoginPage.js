@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { useAlert } from '../../../context/AlertContext';
-import './LoginPage.css';
+import './../AuthPage.css';
 
 function LoginPage() {
   const [username, setUsername] = useState('');
@@ -40,8 +40,8 @@ function LoginPage() {
   }
 
   return (
-    <div className="login-page">
-      <div className="login-container">
+    <div className="auth-page">
+      <div className="auth-container">
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
           <div className="input-group">

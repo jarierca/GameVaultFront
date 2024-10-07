@@ -2,13 +2,13 @@
 
 .accountDetail-container {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 85px auto;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: var(--background-color-2);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
-  color: #333;
+  color: var(--text-color);
 }
 
 .user-name {
@@ -27,7 +27,7 @@
 .form h3 {
   font-size: 1.2em;
   margin-bottom: 10px;
-  color: #555;
+  color: var(--text-color);
 }
 
 .form-row {
@@ -43,7 +43,7 @@
 
 .form-group label {
   font-size: 0.9em;
-  color: #666;
+  color: var(--text-color);
 }
 
 .otp-group {
@@ -59,9 +59,10 @@
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="password"] {
+  color-scheme: var(--color-schema) !important;
   padding: 10px;
   font-size: 1em;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   margin-top: 5px;
   margin-bottom: 10px;
@@ -72,7 +73,7 @@
   padding: 10px 20px;
   font-size: 1em;
   color: #fff;
-  background-color: #dc3545;
+  background-color: var(--remove-btn-color);
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -84,7 +85,7 @@
   padding: 10px 20px;
   font-size: 1em;
   color: #fff;
-  background-color: #54dc35;
+  background-color: var(--edit-btn-color);;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -96,17 +97,12 @@
   padding: 10px 20px;
   font-size: 1em;
   color: #fff;
-  background-color: #0056b3;
+  background-color: var(--btn-color);
   border: none;
   border-radius: 4px;
   cursor: pointer;
   margin-top: 10px;
   transition: background-color 0.3s ease;
-}
-
-.delete-button:hover,
-.logout-button:hover {
-  background-color: #000000;
 }
 
 .error-message {

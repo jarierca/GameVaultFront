@@ -12,7 +12,6 @@
 }
 
 .stat-item {
-  background-color: #ffffff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -34,7 +33,6 @@
 .top-stats-section {
   margin-bottom: 50px;
   padding: 20px; 
-  background-color: #ffffff;
   border-radius: 10px;
   position: relative;
 }

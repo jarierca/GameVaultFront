@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from '../../../context/AlertContext';
-import './RegisterPage.css';
+import './../AuthPage.css';
 
 function RegisterPage() {
   const [username, setUsername] = useState('');
@@ -52,8 +52,8 @@ function RegisterPage() {
   };
 
   return (
-    <div className="register-page">
-      <div className="register-container">
+    <div className="auth-page">
+      <div className="auth-container">
         <h1>Register</h1>
         <form onSubmit={handleSubmit}>
           <div className="input-group">

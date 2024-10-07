@@ -8,7 +8,7 @@
 .collection-list {
   min-width: 200px;
   max-width: 400px;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid var(--border-color);
   padding: 10px;
   overflow: hidden;
 }
@@ -32,7 +32,6 @@
 .add-collection-button {
   margin-left: 10px;
   cursor: pointer;
-  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
@@ -50,9 +49,9 @@
 }
 
 .collection-list li:hover {
-  background-color: #f0f0f0;
+  background-color: var(--background-color-2);
   border-radius: 4px;
-  border: 1px solid #333333a6;
+  border: 1px solid var(--border-color);
 }
 
 .my-collection-wrapper {
@@ -81,10 +80,10 @@
 }
 
 .collection-selected {
-  background-color: #e0f7fa;
+  background-color: var(--selected-item);
   font-weight: bold;
   border-radius: 4px;
-  border: 1px solid #333333a6 !important;
+  border: 1px solid var(--border-color) !important;
 }
 
 .games-in-collection {
@@ -96,7 +95,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: var(--background-color);
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 1000;
@@ -118,7 +117,7 @@
   width: 100%;
   padding: 8px;
   margin-bottom: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
 }
 
@@ -131,7 +130,7 @@
 }
 
 .dialog button:hover {
-  background-color: #f0f0f0;
+  background-color: var(--item-hover);
 }
 
 .collection-header {
@@ -178,11 +177,12 @@
 }
 
 .search-input {
+  color-scheme: var(--color-schema) !important;
   width: 100%;
   max-width: 400px;
   padding: 10px;
   margin-right: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 5px;
   font-size: 16px;
   transition: border-color 0.3s;
@@ -199,15 +199,49 @@
 }
 
 .filter-select select {
-  padding: 10px;
-  border: 1px solid #ccc;
+  color-scheme: var(--color-schema) !important;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
   border-radius: 5px;
+  padding: 10px;
+  width: auto;
   font-size: 16px;
   cursor: pointer;
   transition: border-color 0.3s;
-  width: auto;
 }
 
 .filter-select select:hover {
   border-color: #007BFF;
 }
+
+.list-view {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+}
+
+.list-item:hover {
+  background-color: var(--item-hover);
+}
+
+.game-title, .game-platform {
+  margin: 0 10px;
+}
+
+.grid-btn-show {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.grid-btn-show:hover {
+  color: #007BFF;
+}
+

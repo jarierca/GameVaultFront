@@ -1,6 +1,6 @@
 .game-details-container {
   padding: 20px;
-  background: #fff;
+  background: var(--background-color-2);
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -51,6 +51,8 @@ label {
 }
 
 .txt-collection-detail{
+  color-scheme: var(--color-schema) !important;
+  color: var(--text-color);
   width: 100%;
   margin-top: 5px;
 }
@@ -65,14 +67,15 @@ label {
 }
 
 .separator {
-  border-top: 1px solid #ccc;
-  margin: 15px 0;
+  border-top: 1px solid var(--border-color);
+  margin: 25px 0;
 }
 
 
 .readonly-input {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  color: var(--text-color);
+  background-color: var(--text-color-2);
+  border: 1px solid var(--border-color);
   padding: 5px;
   width: 100%;
 }
@@ -83,11 +86,11 @@ label {
 }
 
 .edit-button {
-  background: #008000b5;
+  background: var(--edit-btn-color);
 }
 
 .cancel-button, .remove-button {
-  background: #ff3434e8;
+  background: var(--remove-btn-color);
 }
 
 .edit-button,

@@ -54,11 +54,11 @@ const AccountDetail = () => {
             activateOTP: playerData.otpEnabled,
           });
         } else {
-          console.error('Error al obtener los detalles del jugador');
+          console.error('Error obtaining player details');
         }
       } catch (error) {
-        console.error('Error en la solicitud:', error);
-        setError('Error al obtener los detalles del jugador');
+        console.error('Error in the application:', error);
+        setError('Error obtaining player details');
       }
     };
 
@@ -81,7 +81,7 @@ const AccountDetail = () => {
     };
 
     if (currentPassword == null || currentPassword == '' ) {
-      alert("Es obligatorio rellenar la password actual");
+      alert("It is mandatory to fill in the current password");
       return;
     }
     
@@ -98,14 +98,14 @@ const AccountDetail = () => {
       });
         
       if (response.status === 200) {
-        alert("Detalles actualizados correctamente");
+        alert("Details correctly updated");
       } else {
         
-        alert("Error al actualizar los detalles");
+        alert("Error updating details");
       }
     } catch (error) {
-      console.error("Error en la solicitud:", error);
-      alert("Error en la solicitud");
+      console.error("Error in the application:", error);
+      alert("Error in the application:");
     }
   };
 
@@ -127,7 +127,7 @@ const AccountDetail = () => {
     };
 
     if (confirmationWord !== requiredWord) {
-      alert(`Debes escribir la palabra "${requiredWord}" para confirmar.`);
+      alert(`You must type the word "${requiredWord}" to confirm.`);
       return;
     }
 
@@ -142,11 +142,11 @@ const AccountDetail = () => {
         logout();
         navigate('/login');
       } else {
-        alert("Error al eliminar la cuenta");
+        alert("Error deleting account");
       }
     } catch (error) {
-      console.error("Error en la solicitud de eliminación:", error);
-      alert("Error al eliminar la cuenta");
+      console.error("Error in the deletion request:", error);
+      alert("Error deleting account");
     }
   };
 
