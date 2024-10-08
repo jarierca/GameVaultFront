@@ -10,6 +10,7 @@ import { useAuth } from '../context/AuthContext';
 import ProtectedRoute from '../components/auth/ProtectedRoute';
 import Logout from '../components/auth/Logout';
 import OtpValidator from '../components/auth/otp/OtpValidator';
+import NotFoundPage from '../components/routes/NotFoundPage'; 
 
 // Pages
 import LoginPage from '../pages/auth/login/LoginPage';
@@ -39,22 +40,24 @@ const AppRoutes = () => {
       <Route path="/login-otp" element={<OtpValidator />} />
       <Route path="/login" element={isAuthenticated ? <Navigate to="/home" /> : <LoginPage />} />
       <Route path="/logout" element={<Logout />} />
-
+      
       <Route path="/videogames/:id" element={<VideogameDetail />} />
       <Route path="/videogames/platform/:platformId" element={<VideogamePage />} />
       <Route path="/videogames/developer/:developerId" element={<VideogamePage />} />
       <Route path="/videogames/publisher/:publisherId" element={<VideogamePage />} />
       <Route path="/videogames/genre/:genreId" element={<VideogamePage />} />
       <Route path="/videogames/search/:querySearch" element={<SearchResultsVideogamePage />} />
-
+      
       <Route path="/platforms" element={<PlatformPage />} />
       <Route path="/developers" element={<DeveloperPage />} />
       <Route path="/publishers" element={<PublisherPage />} />
       <Route path="/genres" element={<GenrePage />} />
-
+      
       <Route path="/my-collection" element={<ProtectedRoute element={<MyCollection />} />} />
-
+      
       <Route path="/accountDetail" element={<ProtectedRoute element={<AccountDetail />} />} />
+      
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };

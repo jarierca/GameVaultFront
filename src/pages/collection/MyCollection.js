@@ -5,6 +5,7 @@ import Grid from '../../components/items/Grid';
 import Card from '../../components/items/Card';
 import Loading from '../../components/loading/Loading'
 import MyGameDetails from "./MyGameDetails"
+import Icon from '../../components/icon/Icon';
 import './MyCollection.css';
 
 const MyCollection = () => {
@@ -26,6 +27,14 @@ const MyCollection = () => {
   const [filter, setFilter] = useState('');
   const [filterType, setFilterType] = useState('platform');
   const [sortOrder, setSortOrder] = useState('asc');
+  const [isGridView, setIsGridView] = useState(() => {
+    const savedView = localStorage.getItem('isGridView');
+    return savedView !== null ? JSON.parse(savedView) : true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('isGridView', JSON.stringify(isGridView));
+  }, [isGridView]);
 
   useEffect(() => {
     fetchCollections();
@@ -269,8 +278,8 @@ const MyCollection = () => {
                     setEditingCollectionName(selectedCollections[0].name);
                     setEditingCollectionDescription(selectedCollections[0].description || '');
                     setIsDialogOpen(true);
-                  }} title="Edit current collection details">Edit</button>
-                  <button onClick={removeCurrentCollection} className="add-game-button" title="Remove current collection">Remove</button>
+                  }} className="edit-button" title="Edit current collection details"><Icon iconName="EditIcon" /></button>
+                  <button onClick={removeCurrentCollection} className="remove-button" title="Remove current collection"><Icon iconName="TrashIcon" /></button>
                 </div>
               </div>
             ))
@@ -282,23 +291,38 @@ const MyCollection = () => {
           )}
         </div>
 
-        <div className="filter-section">
-          <input type="text" className="search-input" value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Search games..." />
-          <div className="filter-select">
-            <select onChange={(e) => setFilterType(e.target.value)}>
-              <option value="platform">Platform</option>
-              <option value="developer">Developer</option>
-              <option value="publisher">Publisher</option>
-              <option value="genre">Genre</option>
-            </select>
-            <select onChange={(e) => setSortOrder(e.target.value)}>
-              <option value="asc">Sort Ascending</option>
-              <option value="desc">Sort Descending</option>
-            </select>
+        {selectedCollections.length > 0 &&
+          <div className="filter-section">
+            <input type="text" className="search-input" value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Search games..." />
+            <div className="filter-select">
+              <select onChange={(e) => setFilterType(e.target.value)}>
+                <option value="platform">Platform</option>
+                <option value="developer">Developer</option>
+                <option value="publisher">Publisher</option>
+                <option value="genre">Genre</option>
+              </select>
+              <select onChange={(e) => setSortOrder(e.target.value)}>
+                <option value="asc">Sort Ascending</option>
+                <option value="desc">Sort Descending</option>
+              </select>
+            </div>  
+            <div className="grid-btn-show">
+              <span onClick={() => setIsGridView(!isGridView)}>
+                {isGridView ? (
+                  <span title="Switch to list view">
+                    <Icon iconName="RowViewIcon"/>
+                  </span>
+                ) : (
+                  <span title="Switch to gallery view">
+                    <Icon iconName="GridViewIcon"/>
+                  </span>
+                )}
+              </span>
+            </div>
           </div>
-        </div>
+        }
 
-        {showGamesInCollection && gamesInCollection.length > 0 ? (
+        {isGridView && showGamesInCollection && gamesInCollection.length > 0 ? (
           <Grid>
             {sortGames(filterGames).map(game => (
               <Card
@@ -315,7 +339,16 @@ const MyCollection = () => {
               />
             ))}
           </Grid>
-        ) : gamesInCollection && loading ? (
+        ) : !isGridView && showGamesInCollection && gamesInCollection.length > 0 ? (
+          <div className="list-view">
+            {sortGames(filterGames).map(game => (
+              <div key={game.id} className="list-item" onClick={() => handleGameClick(game.id)}>
+                <span className="game-title">{game.videogame.title}</span>
+                <span className="game-platform">{game.videogame.platform.name}</span>
+              </div>
+            ))}
+          </div>
+        ): gamesInCollection && loading ? (
             <Loading />
         ) : (showGamesInCollection && selectedCollections.length > 0 && 
             <span className="container"><h3>No games in this collection</h3></span>

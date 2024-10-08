@@ -5,7 +5,7 @@ import SearchGames from '../search/SearchGames';
 import Icon from '../icon/Icon';
 import './StatusBar.css';
 
-const StatusBar = () => {
+const StatusBar = ({ toggleTheme, isDarkMode }) => {
   const { isAuthenticated, userName, logout } = useAuth();
   const [showMenu, setShowMenu] = useState(false);
   const [selectedGame, setSelectedGame] = useState(null);
@@ -92,10 +92,18 @@ const StatusBar = () => {
                   )}
                 </span>
               </li>
+              <li>
+                <button onClick={toggleTheme} className="toggle-theme-button">
+                  <Icon iconName={isDarkMode ? "SunIcon" : "MoonIcon"} />
+                </button>
+              </li>
             </ul>
           </div>
         ) : (
           <div className="statusbar-auth">
+            <a onClick={toggleTheme} className="toggle-theme-button">
+              <Icon iconName={isDarkMode ? "SunIcon" : "MoonIcon"} />
+            </a>
             <button onClick={() => handleNavigate('/login')} className="login-button">Login</button>
             <button onClick={() => handleNavigate('/register')} className="register-button">Register</button>
           </div>

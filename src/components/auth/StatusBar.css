@@ -10,7 +10,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #333;
+  background-color: var(--dark-header);
   color: rgb(232, 230, 227) !important;
 }
 
@@ -44,14 +44,16 @@
 
 .statusbar-links button {
   background: none;
-  border: none;
+  border: 1px solid transparent;
   font-size: 1rem;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
 .statusbar-links button:hover {
-  color: #ddd;
+  color: #cecece;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
 }
 
 .statusbar-center {
@@ -89,16 +91,6 @@
 
 .logout-button:hover {
   background-color: #c0392b;
-}
-
-.svg-accountDetail {
-  width: 15px; 
-  height: 15px; 
-  cursor: pointer;
-}
-
-.svg-accountDetail:hover {
-  color: #000000; 
 }
 
 .button-accountDetail {
