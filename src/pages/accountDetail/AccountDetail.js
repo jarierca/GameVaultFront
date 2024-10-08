@@ -28,10 +28,35 @@ const AccountDetail = () => {
     });
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  }; 
+     const handleDisabledOTP = async () => {   
+      const { currentPassword, email, password, confirmPassword } = formData;    
+  
+      const updatedPlayer = {
+        currentPassword, 
+        player: {        
+          email,
+          password
+        }
+      };    
+  
+      try {       
+        const response = await axios.put(`${process.env.REACT_APP_API_URL}auth/disabledOTP/`,updatedPlayer, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+    
+        if (response.status === 204) {         
+          logout();
+          navigate('/login');
+        } else {
+          alert("Error al eliminar la cuenta");
+        }
+      } catch (error) {
+        console.error("Error en la solicitud de eliminación:", error);
+        alert("Error al eliminar la cuenta");
+      }
+    };
 
   const handleActivateOTP = () => {
     navigate('/activate-otp');
@@ -73,10 +98,9 @@ const AccountDetail = () => {
   
     const updatedPlayer = {
       currentPassword, 
-      player: { 
+      player: {         
         email,
-        password,
-        playerId
+        password
       }
     };
 
@@ -119,10 +143,9 @@ const AccountDetail = () => {
 
     const updatedPlayer = {
       currentPassword, 
-      player: { 
+      player: {        
         email,
-        password,
-        playerId
+        password
       }
     };
 
@@ -221,7 +244,7 @@ const AccountDetail = () => {
     </form>
 
     {formData.activateOTP ? (
-        <button onClick={handleLogout} className="logout-button">Disable OTP</button>
+        <button onClick={handleDisabledOTP} className="logout-button">Disable OTP</button>
       ) : (
         <button onClick={handleActivateOTP} className="activateOTP-button">Activate OTP</button>        
       )}
