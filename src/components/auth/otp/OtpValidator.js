@@ -53,8 +53,8 @@ const OtpValidator = () => {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-container">
+    <div className="auth-page">
+      <div className="auth-container">
         <h1>OTP Login</h1>
           <div className="input-group">
             <input 

@@ -19,6 +19,7 @@
   flex: 1;
   margin: 0 10px;
   transition: transform 0.2s;
+  background-color: var(--background-color-2);
 }
 
 .stat-item:hover {
@@ -63,6 +64,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: transform 0.2s;
+  background-color: var(--background-color-2);
 }
 
 .game-item:hover,

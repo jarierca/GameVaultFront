@@ -35,7 +35,8 @@
   --background-color: #ffffff;
   --background-color-2: #f4f4f4;
   --text-color: #000000;
-  --text-color-2: #f9f9f9;;
+  --text-color-2: #f9f9f9;
+  --text-color-alt: black;
   --primary-color: #007bff;
   --label-color: #555;
   --border-color: #ddd;
@@ -54,6 +55,7 @@
   --background-color-input: #2b2a33;
   --text-color: #e8e6e3;
   --text-color-2: #1b1e1f;
+  --text-color-alt: white;
   --primary-color: #bb86fc;
   --dark-header: rgb(38, 42, 43);
   --label-color: #b2aca2;
@@ -118,7 +120,7 @@ select,
 textarea {
   padding: 12px;
   font-size: 16px;
-  border: 1px solid var(---border-color);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   box-sizing: border-box;
   color-scheme: var(--color-schema) !important;
@@ -144,7 +146,7 @@ button {
 
 button:hover {
   filter: brightness(var(--brightness));
-  color: white;
+  color: var(--text-color-alt);
 }
 
 .container-f {

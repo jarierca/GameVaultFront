@@ -53,8 +53,12 @@ const AppRoutes = () => {
       <Route path="/publishers" element={<PublisherPage />} />
       <Route path="/genres" element={<GenrePage />} />
       
+
+      {/* COLLECTIONS*/}
       <Route path="/my-collection" element={<ProtectedRoute element={<MyCollection />} />} />
-      
+      <Route path="/my-collection/:collectionName" element={<ProtectedRoute element={<MyCollection />} />} />
+      <Route path="/my-collection/:collectionName/:gameInfo" element={<ProtectedRoute element={<MyCollection />} />} />
+
       <Route path="/accountDetail" element={<ProtectedRoute element={<AccountDetail />} />} />
       
       <Route path="*" element={<NotFoundPage />} />
