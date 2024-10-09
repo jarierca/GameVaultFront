@@ -37,7 +37,7 @@ const icons = {
         </svg>
     ),
     CloseXIcon: () => (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 18" width="24" height="24">
           <path fill="currentColor" d="M12 10.586l-4.293-4.293-1.414 1.414L10.586 12l-4.293 4.293 1.414 1.414L12 13.414l4.293 4.293 1.414-1.414L13.414 12l4.293-4.293-1.414-1.414z" />
         </svg>
     ),
@@ -77,7 +77,7 @@ const icons = {
         </svg>
     ),
     RowViewIcon: () => (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 18" width="24" height="24" fill="currentColor" >
           <path d="M3 5h18v2H3V5zm0 7h18v-2H3v2zm0 5h18v-2H3v2z" />
         </svg>
     ),

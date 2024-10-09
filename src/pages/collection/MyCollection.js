@@ -363,8 +363,18 @@ const MyCollection = () => {
             selectedCollections.map((collection, index) => (
               <div key={index} className="collection-header">
                 <div className="collection-title">
-                  <h2>{collection.name}</h2>
-                  {collection.description ? <p>{collection.description}</p> : <p>&nbsp;</p>}
+                  <span className="collection-name-year">
+                    <h2 title={collection.name}>{collection.name}</h2>
+                    <small title="Created at "> 
+                      {(() => {
+                        const date = new Date(collection.createdDate);
+                        return date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric',
+                            hour: '2-digit', minute: '2-digit', hour12: false
+                        });
+                      })()}
+                    </small>
+                  </span>                  
+                  {collection.description ? <p title={collection.description}>{collection.description}</p> : <p>&nbsp;</p>}
                 </div>
                 <div className="collection-actions">
                   <button onClick={openGameDialog} className="add-game-button" title="Add new videogame">+</button>
@@ -392,7 +402,11 @@ const MyCollection = () => {
             <div className="filter-select">
               <div>
                 <div className="dropdown">
-                  <button className="dropbtn">Platforms</button>
+                  <button className="dropbtn">
+                    Platforms
+                    {selectedPlatforms.length > 0 ? (<span className="filter-num-checked">{selectedPlatforms.length}</span>)
+                     : (<span className="filter-num-empty">&nbsp;&nbsp;</span>)}
+                  </button>
                   <div className="dropdown-content">
                     {platforms.map(platform => (
                       <label key={platform}>
@@ -411,7 +425,11 @@ const MyCollection = () => {
 
               <div>
                 <div className="dropdown">
-                  <button className="dropbtn">Developers</button>
+                  <button className="dropbtn">
+                    Developers
+                    {selectedDevelopers.length > 0 ? (<span className="filter-num-checked">{selectedDevelopers.length}</span>)
+                      : (<span className="filter-num-empty">&nbsp;&nbsp;</span>)}
+                  </button>
                   <div className="dropdown-content">
                     {developers.map(developer => (
                       <label key={developer}>
@@ -430,7 +448,11 @@ const MyCollection = () => {
 
               <div>
                 <div className="dropdown">
-                  <button className="dropbtn">Publishers</button>
+                  <button className="dropbtn">
+                    Publishers
+                    {selectedPublishers.length > 0 ? (<span className="filter-num-checked">{selectedPublishers.length}</span>)
+                     : (<span className="filter-num-empty">&nbsp;&nbsp;</span>)}
+                  </button>
                   <div className="dropdown-content">
                     {publishers.map(publisher => (
                       <label key={publisher}>
@@ -449,7 +471,11 @@ const MyCollection = () => {
 
               <div>
                 <div className="dropdown">
-                  <button className="dropbtn">Genres</button>
+                  <button className="dropbtn">
+                    Genres
+                    {selectedGenres.length > 0 ? (<span className="filter-num-checked">{selectedGenres.length}</span>)
+                     : (<span className="filter-num-empty">&nbsp;&nbsp;</span>)}
+                  </button>
                   <div className="dropdown-content">
                     {genres.map(genre => (
                       <label key={genre}>
@@ -466,33 +492,30 @@ const MyCollection = () => {
                 </div>
               </div>
 
-              <button onClick={handleSortByTitle} title="Sort by game title asc/desc">
-                {sortOrderBy === 'title' 
-                  ? (sortOrder === 'asc' ? <Icon iconName="AZAscIcon"/> : <Icon iconName="ZADescIcon"/>) 
-                  : <Icon iconName="AZAscIcon"/>} 
-              </button>
-              <button onClick={handleSortByReleaseDate} title="Sort by release date asc/desc">
+              <div className="btn-collection-game-filter" onClick={handleSortByTitle}>
+                {sortOrderBy === 'title' ? (sortOrder === 'asc' ? <span title="Sort by game title A to Z"><Icon iconName="AZAscIcon"/></span> : <span title="Sort by game title  Z to A"><Icon iconName="ZADescIcon"/></span>) 
+                  : <span title="Sort by game title A to Z"><Icon iconName="AZAscIcon"/></span>} 
+              </div>
+              <div className="btn-collection-game-filter" onClick={handleSortByReleaseDate}>
                 {sortOrderBy === 'releaseDate' 
-                  ? (sortOrder === 'asc' ? <Icon iconName="CalendarDescIcon"/> : <Icon iconName="CalendarAscIcon"/>)
-                  : <Icon iconName="CalendarAscIcon"/>}
-              </button>
-              <button onClick={clearFilters} title="Clear filters">
+                  ? (sortOrder === 'asc' ? <span title="Sort by release date desc"><Icon iconName="CalendarDescIcon"/></span> : <span title="Sort by release date asc"><Icon iconName="CalendarAscIcon"/></span>)
+                  : <span title="Sort by release date asc"><Icon iconName="CalendarAscIcon"/></span>}
+              </div>
+              <div className="btn-collection-game-filter" onClick={clearFilters} title="Clear filters">
                 <Icon iconName="CloseXIcon"/>
-              </button>
+              </div>
+              <div className="btn-collection-game-filter" onClick={() => setIsGridView(!isGridView)}>
+                  {isGridView ? (
+                    <span title="Switch to list view">
+                      <Icon iconName="RowViewIcon"/>
+                    </span>
+                  ) : (
+                    <span title="Switch to gallery view">
+                      <Icon iconName="GridViewIcon"/>
+                    </span>
+                  )}
+              </div>
             </div>  
-            <div className="grid-btn-show">
-              <span onClick={() => setIsGridView(!isGridView)}>
-                {isGridView ? (
-                  <span title="Switch to list view">
-                    <Icon iconName="RowViewIcon"/>
-                  </span>
-                ) : (
-                  <span title="Switch to gallery view">
-                    <Icon iconName="GridViewIcon"/>
-                  </span>
-                )}
-              </span>
-            </div>
           </div>
         }
 

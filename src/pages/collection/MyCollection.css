@@ -7,7 +7,7 @@
 
 .collection-list {
   min-width: 200px;
-  max-width: 400px;
+  max-width: 300px;
   border-right: 1px solid var(--border-color);
   padding: 10px;
   overflow: hidden;
@@ -139,9 +139,31 @@
   align-items: flex-start;
 }
 
-.collection-title {
-  flex: 1;
+.collection-name-year {
+  display: flex;
+  align-items:baseline;
 }
+
+.collection-name-year small {
+  padding-left: 15px;
+  color: #659299;
+  font-size: 15px;
+}
+
+.collection-title h2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 600px;
+}
+
+.collection-title p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 800px;
+  white-space: normal;
+}
+
 
 .collection-actions {
   margin: 10px 10px 0 0;
@@ -240,13 +262,16 @@
   color: #659299;
 }
 
-.grid-btn-show {
+.btn-collection-game-filter {
+  background-color: var(--background-color-2);
   padding: 5px 10px;
   cursor: pointer;
+  border-radius: 4px;
 }
 
-.grid-btn-show:hover {
-  color: #007BFF;
+.btn-collection-game-filter:hover {
+  filter: brightness(var(--brightness));
+  color: var(--text-color-alt);
 }
 
 .dropdown {
@@ -284,5 +309,15 @@
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+.filter-num-checked {
+  background: var(--border-color);
+}
+
+.filter-num-empty, .filter-num-checked {
+  border-radius: 50px;
+  padding: 0 5px;
+  margin-left: 5px;
 }
 
