@@ -45,7 +45,7 @@
   --btn-color: #007bff;
   --edit-btn-color: #008000b5;
   --remove-btn-color: #ff3434e8;
-  --brightness: 0.7;
+  --brightness: 0.8;
 }
 
 .dark-mode {
@@ -86,7 +86,7 @@ code {
 }
 
 main {
-  margin-top: 63px;
+  margin-top: 60px;
 }
 
 h1 {
@@ -128,7 +128,7 @@ textarea {
 
 input:focus,
 select:focus,
-textarea {
+textarea:focus {
   border-color: #007bff;
   outline: none;
 }
@@ -147,6 +147,11 @@ button {
 button:hover {
   filter: brightness(var(--brightness));
   color: var(--text-color-alt);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .container-f {

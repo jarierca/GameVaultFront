@@ -30,8 +30,6 @@ import AccountDetail from '../pages/accountDetail/AccountDetail';
 const AppRoutes = () => {
   const { isAuthenticated } = useAuth();
 
-  console.log('isAuthenticated:', isAuthenticated);
-
   return (
     <Routes>
       <Route path="/home" element={<HomePage />} />
@@ -55,9 +53,9 @@ const AppRoutes = () => {
       
 
       {/* COLLECTIONS*/}
-      <Route path="/my-collection" element={<ProtectedRoute element={<MyCollection />} />} />
-      <Route path="/my-collection/:collectionName" element={<ProtectedRoute element={<MyCollection />} />} />
       <Route path="/my-collection/:collectionName/:gameInfo" element={<ProtectedRoute element={<MyCollection />} />} />
+      <Route path="/my-collection/:collectionName" element={<ProtectedRoute element={<MyCollection />} />} />
+      <Route path="/my-collection" element={<ProtectedRoute element={<MyCollection />} />} />
 
       <Route path="/accountDetail" element={<ProtectedRoute element={<AccountDetail />} />} />
       

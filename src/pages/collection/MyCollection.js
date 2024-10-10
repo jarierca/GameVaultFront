@@ -20,10 +20,10 @@ const MyCollection = () => {
   const [editingCollectionDescription, setEditingCollectionDescription] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isGameDialogOpen, setIsGameDialogOpen] = useState(false);
-  const [selectedGame, setSelectedGame] = useState(null);
+  const [selectedGameToAdd, setSelectedGameToAdd] = useState(null);
   const [gamesInCollection, setGamesInCollection] = useState([]);
   const [selectedGameId, setSelectedGameId] = useState(null);
-  const [showGamesInCollection, setShowGamesInCollection] = useState(true);
+  const [showGame, setShowGame] = useState(false);
   const [filter, setFilter] = useState('');
   const [sortOrderBy, setSortOrderBy] = useState('title');
   const [sortOrder, setSortOrder] = useState('asc');
@@ -39,7 +39,7 @@ const MyCollection = () => {
   const [selectedDevelopers, setSelectedDevelopers] = useState([]);
   const [selectedPublishers, setSelectedPublishers] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
-  const { collectionName, gameIdTitle } = useParams();
+  const { collectionName, gameInfo } = useParams();
   const navigate = useNavigate(); 
 
   useEffect(() => {
@@ -54,18 +54,21 @@ const MyCollection = () => {
     if (collectionName) {
       const collection = collections.find(c => c.name === collectionName);
       if (collection) {
-        toggleCollection(collection);
+         toggleCollection(collection);
       }
     }
   }, [collectionName, collections]);
 
   useEffect(() => {
-    if (gameIdTitle && selectedCollections.length > 0) {
-      const gameId = gameIdTitle.split('-')[0];
-      setSelectedGameId(gameId);
-      setShowGamesInCollection(false);
+    if (gameInfo && collectionName) {
+     const gameId = gameInfo.split('-')[0];
+     const game = gamesInCollection.find(game => game.id === parseInt(gameId));
+     if (game) {
+      setSelectedGameId(game.id);
+      setShowGame(true);
+     }
     }
-  }, [gameIdTitle, selectedCollections]);
+  }, [gameInfo, collectionName, gamesInCollection]);
 
   const fetchCollections = async () => {
     try {
@@ -89,7 +92,7 @@ const MyCollection = () => {
   const toggleCollection = async (collection) => {
     handleCloseGameDetails();
     setSelectedCollections([collection]);
-    navigate(`/my-collection/${collection.name}`);
+/*    navigate(`/my-collection/${collection.name}`);*/
     try {
       setLoading(true);
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/collection-videogames/${collection.id}/videogames`);
@@ -155,14 +158,14 @@ const MyCollection = () => {
 
   const handleGameClick = (game) => {
     setSelectedGameId(game.id);
-    setShowGamesInCollection(false);
+    setShowGame(true);
     const collection = selectedCollections[0];
     navigate(`/my-collection/${collection.name}/${game.id}-${game.videogame.title.replace(/\s+/g, '-')}`);
   };
 
   const handleCloseGameDetails = () => {
     setSelectedGameId(null);
-    setShowGamesInCollection(true);
+    setShowGame(false);
   };
 
   const openDialog = () => {
@@ -182,9 +185,9 @@ const MyCollection = () => {
     setIsGameDialogOpen(true);
   };
 
-  const closeGameDialog = () => {
+  const closeAddGameDialog = () => {
     setIsGameDialogOpen(false);
-    setSelectedGame(null);
+    setSelectedGameToAdd(null);
   };
 
   const removeCurrentCollection = async () => {
@@ -203,12 +206,12 @@ const MyCollection = () => {
   };
 
   const handleAddGameToCollection = async () => {
-    if (!selectedGame || selectedCollections.length === 0) return;
+    if (!selectedGameToAdd || selectedCollections.length === 0) return;
     const collectionId = selectedCollections[0].id;
-    const gameId = selectedGame.id;
+    const gameId = selectedGameToAdd.id;
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/collection-videogames/${collectionId}/add-game`, { gameId });
-      closeGameDialog();
+      closeAddGameDialog();
       setGamesInCollection(prevGames => [...prevGames, response.data]);
     } catch (error) {
       console.error('Error adding game to collection:', error);
@@ -377,14 +380,14 @@ const MyCollection = () => {
                   {collection.description ? <p title={collection.description}>{collection.description}</p> : <p>&nbsp;</p>}
                 </div>
                 <div className="collection-actions">
-                  <button onClick={openGameDialog} className="add-game-button" title="Add new videogame">+</button>
-                  <button onClick={() => {
+                  <div onClick={openGameDialog} className="btn-generic-action add-game-button" title="Add new videogame"><Icon iconName="PlusIcon" /></div>
+                  <div onClick={() => {
                     setEditingCollectionId(selectedCollections[0].id);
                     setEditingCollectionName(selectedCollections[0].name);
                     setEditingCollectionDescription(selectedCollections[0].description || '');
                     setIsDialogOpen(true);
-                  }} className="edit-button" title="Edit current collection details"><Icon iconName="EditIcon" /></button>
-                  <button onClick={removeCurrentCollection} className="remove-button" title="Remove current collection"><Icon iconName="TrashIcon" /></button>
+                  }} className="btn-generic-action edit-button" title="Edit current collection details"><Icon iconName="EditIcon" /></div>
+                  <div onClick={removeCurrentCollection} className="btn-generic-action remove-button" title="Remove current collection"><Icon iconName="TrashIcon" /></div>
                 </div>
               </div>
             ))
@@ -398,7 +401,6 @@ const MyCollection = () => {
 
         {selectedCollections.length > 0 && !selectedGameId && gamesInCollection.length > 0 &&
           <div className="filter-section">
-            <input type="text" className="search-input" value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Search games..." />
             <div className="filter-select">
               <div>
                 <div className="dropdown">
@@ -492,19 +494,20 @@ const MyCollection = () => {
                 </div>
               </div>
 
-              <div className="btn-collection-game-filter" onClick={handleSortByTitle}>
+            <input type="text" className="search-input-collection" value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Search games..." />
+              <div className="btn-generic-action" onClick={clearFilters} title="Clear filters">
+                <Icon iconName="CloseXIcon"/>
+              </div>
+              <div className="btn-generic-action" onClick={handleSortByTitle}>
                 {sortOrderBy === 'title' ? (sortOrder === 'asc' ? <span title="Sort by game title A to Z"><Icon iconName="AZAscIcon"/></span> : <span title="Sort by game title  Z to A"><Icon iconName="ZADescIcon"/></span>) 
                   : <span title="Sort by game title A to Z"><Icon iconName="AZAscIcon"/></span>} 
               </div>
-              <div className="btn-collection-game-filter" onClick={handleSortByReleaseDate}>
+              <div className="btn-generic-action" onClick={handleSortByReleaseDate}>
                 {sortOrderBy === 'releaseDate' 
                   ? (sortOrder === 'asc' ? <span title="Sort by release date desc"><Icon iconName="CalendarDescIcon"/></span> : <span title="Sort by release date asc"><Icon iconName="CalendarAscIcon"/></span>)
                   : <span title="Sort by release date asc"><Icon iconName="CalendarAscIcon"/></span>}
               </div>
-              <div className="btn-collection-game-filter" onClick={clearFilters} title="Clear filters">
-                <Icon iconName="CloseXIcon"/>
-              </div>
-              <div className="btn-collection-game-filter" onClick={() => setIsGridView(!isGridView)}>
+              <div className="btn-generic-action" onClick={() => setIsGridView(!isGridView)}>
                   {isGridView ? (
                     <span title="Switch to list view">
                       <Icon iconName="RowViewIcon"/>
@@ -519,7 +522,7 @@ const MyCollection = () => {
           </div>
         }
 
-        {isGridView && showGamesInCollection && gamesInCollection.length > 0 ? (
+        {isGridView && !showGame && gamesInCollection.length > 0 ? (
           <Grid>
             {filteredAndSortedGames.map(game => (
               <Card
@@ -536,7 +539,7 @@ const MyCollection = () => {
               />
             ))}
           </Grid>
-        ) : !isGridView && showGamesInCollection && gamesInCollection.length > 0 ? (
+        ) : !isGridView && !showGame && gamesInCollection.length > 0 ? (
           <div className="list-view">
             {filteredAndSortedGames.map(game => (
               <div key={game.id} className="list-item" onClick={() => handleGameClick(game)}>
@@ -551,7 +554,7 @@ const MyCollection = () => {
           </div>
         ): gamesInCollection && loading ? (
             <Loading />
-        ) : (showGamesInCollection && selectedCollections.length > 0 && 
+        ) : (!showGame && selectedCollections.length > 0 && 
             <span className="container"><h3>No games in this collection</h3></span>
         )}
 
@@ -566,11 +569,11 @@ const MyCollection = () => {
         <div className="dialog">
           <h3>Add Game to Collection</h3>
           <SearchGames onGameSelect={(game) => {
-            setSelectedGame(game);
+            setSelectedGameToAdd(game);
           }} />
           <div className="dialog-actions">
             <button onClick={handleAddGameToCollection}>Add Game</button>
-            <button onClick={closeGameDialog}>Cancel</button>
+            <button onClick={closeAddGameDialog}>Cancel</button>
           </div>
         </div>
       )}

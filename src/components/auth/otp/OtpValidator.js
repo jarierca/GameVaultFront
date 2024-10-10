@@ -42,7 +42,6 @@ const OtpValidator = () => {
 
         login(token);
         
-        console.log(`Logged in with OTP. Token: ${token}`);
         navigate('/home');
       }
     } catch (error) {

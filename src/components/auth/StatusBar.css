@@ -36,13 +36,14 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
+  align-items: center;
 }
 
 .statusbar-links li {
   margin: 0;
 }
 
-.statusbar-links button {
+.statusbar-links .btn-link {
   background: none;
   border: 1px solid transparent;
   font-size: 1rem;
@@ -50,10 +51,26 @@
   transition: color 0.3s ease;
 }
 
-.statusbar-links button:hover {
+.statusbar-links .btn-link:hover {
   color: #cecece;
   border-bottom: 1px solid var(--border-color);
   border-radius: 0;
+}
+
+.btn-link {
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: var(--btn-color);
+  color: var(--white);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, filter 0.3s;
+}
+
+.btn-link:hover {
+  filter: brightness(var(--brightness));
+  color: var(--text-color-alt);
 }
 
 .statusbar-center {
@@ -93,15 +110,6 @@
   background-color: #c0392b;
 }
 
-.button-accountDetail {
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  background-color: transparent; 
-  border: none; 
-  cursor: pointer; 
-}
-
 .dropdown {
   position: relative;
   display: inline-block;
@@ -109,7 +117,7 @@
   
 .dropdown-menu {
   position: absolute;
-  top: 60px;
+  top: 45px;
   right: 0;
   background-color: #333;
   border-radius: 5px;
