@@ -9,6 +9,7 @@ const AccountDetail = () => {
   const [error, setError] = useState(null); 
   const { userName, logout, playerId } = useAuth();
   const navigate = useNavigate();
+  const [isOtpEnabled, setIsOtpEnabled] = useState(false);
 
   const [confirmationWord, setConfirmationWord] = useState('');
   const requiredWord = 'CONFIRM';
@@ -28,38 +29,21 @@ const AccountDetail = () => {
     });
   };
 
-     const handleDisabledOTP = async () => {   
-      const { currentPassword, email, password, confirmPassword } = formData;    
+  const handleDisabledOTP =  () => {  
+    const { currentPassword} = formData;    
+    if (currentPassword == null || currentPassword == '' ) {
+      alert("It is mandatory to fill in the current password");
+      return;
+    }
+
+    navigate('/disabled-otp', { state: {currentPassword}});
+    setIsOtpEnabled(true);
+  };     
   
-      const updatedPlayer = {
-        currentPassword, 
-        player: {        
-          email,
-          password
-        }
-      };    
-  
-      try {       
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}auth/disabledOTP/`,updatedPlayer, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-    
-        if (response.status === 204) {         
-          logout();
-          navigate('/login');
-        } else {
-          alert("Error al eliminar la cuenta");
-        }
-      } catch (error) {
-        console.error("Error en la solicitud de eliminación:", error);
-        alert("Error al eliminar la cuenta");
-      }
-    };
 
   const handleActivateOTP = () => {
     navigate('/activate-otp');
+    setIsOtpEnabled(true);
   }; 
 
   useEffect(() => {
@@ -243,7 +227,7 @@ const AccountDetail = () => {
       <button type="submit" className="submit-button">Save Changes</button>
     </form>
 
-    {formData.activateOTP ? (
+    {formData.activateOTP ? ( 
         <button onClick={handleDisabledOTP} className="logout-button">Disable OTP</button>
       ) : (
         <button onClick={handleActivateOTP} className="activateOTP-button">Activate OTP</button>        
