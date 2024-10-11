@@ -9,7 +9,7 @@ import Card from '../../components/items/Card';
 import './VideogamePage.css';
 
 const VideogamePage = () => {
-  const { platformId } = useParams();
+  const { platformId, developerId, publisherId, genreId } = useParams();
   const [videogames, setVideogames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,7 +21,19 @@ const VideogamePage = () => {
     const fetchVideogames = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/videogames/platform/${platformId}`);
+
+        let url = `${process.env.REACT_APP_API_URL}/videogames`;
+        if (platformId) {
+          url += `/platform/${platformId}`;
+        } else if (developerId) {
+          url += `/developer/${developerId}`;
+        } else if (publisherId) {
+          url += `/publisher/${publisherId}`;
+        } else if (genreId) {
+          url += `/genre/${genreId}`;
+        }
+
+        const response = await axios.get(url);
         setVideogames(response.data);
       } catch (error) {
         console.error('Error fetching videogames:', error);
@@ -30,7 +42,7 @@ const VideogamePage = () => {
     };
 
     fetchVideogames();
-  }, [platformId]);
+  }, [platformId, developerId, publisherId, genreId]);
 
   const filteredVideogames = videogames.filter((videogame) =>
     videogame.title.toLowerCase().includes(filter.toLowerCase())

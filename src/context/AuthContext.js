@@ -23,7 +23,6 @@ export const AuthProvider = ({ children }) => {
         const currentTime = Date.now() / 1000;
 
         if (decodedToken.exp < currentTime) {
-          console.log('Token has expired');
           showMessage('Session has expired.', -1, 3000);
 
           logout();

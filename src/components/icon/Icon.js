@@ -37,7 +37,7 @@ const icons = {
         </svg>
     ),
     CloseXIcon: () => (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 18" width="24" height="24">
           <path fill="currentColor" d="M12 10.586l-4.293-4.293-1.414 1.414L10.586 12l-4.293 4.293 1.414 1.414L12 13.414l4.293 4.293 1.414-1.414L13.414 12l4.293-4.293-1.414-1.414z" />
         </svg>
     ),
@@ -53,7 +53,13 @@ const icons = {
     ),
     TrashIcon: () => (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-            <path d="M5 4H4V6H5V20C5 21.1 5.9 22 7 22H17C18.1 22 19 21.1 19 20V6H20V4H16.5L15.5 3H8.5L7.5 4H5ZM7 6H17V20H7V6ZM9 8V18H11V8H9ZM13 8V18H15V8H13Z" />
+           <path d="M5 4H4V6H5V20C5 21.1 5.9 22 7 22H17C18.1 22 19 21.1 19 20V6H20V4H16.5L15.5 3H8.5L7.5 4H5ZM7 6H17V20H7V6ZM9 8V18H11V8H9ZM13 8V18H15V8H13Z" />
+        </svg>
+    ),
+    PlusIcon: () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" >
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
         </svg>
     ),
     EditIcon: () => (
@@ -77,7 +83,7 @@ const icons = {
         </svg>
     ),
     RowViewIcon: () => (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 18" width="24" height="24" fill="currentColor" >
           <path d="M3 5h18v2H3V5zm0 7h18v-2H3v2zm0 5h18v-2H3v2z" />
         </svg>
     ),
@@ -91,6 +97,40 @@ const icons = {
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" >
            <path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
+    ),
+    AZAscIcon: () => (
+       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 40"fill="currentColor" >
+        <text x="-12" y="32" fontSize="35">↑</text>
+        <text x="13" y="18" fontSize="24">A</text>
+        <text x="13" y="40" fontSize="24">Z</text>
+      </svg>
+    ),
+    ZADescIcon: () => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 40" fill="currentColor" >
+        <text x="-12" y="32" fontSize="35">↓</text>
+        <text x="13" y="18" fontSize="24">Z</text>
+        <text x="13" y="40" fontSize="24">A</text>
+      </svg>
+    ),
+    CalendarAscIcon: () => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" >
+        <rect x="2" y="4" width="20" height="18" rx="2" ry="2" />
+        <line x1="2" y1="10" x2="22" y2="10" />
+        <line x1="7" y1="4" x2="7" y2="10" />
+        <line x1="17" y1="4" x2="17" y2="10" />
+        <path d="M12 19v-4" />
+        <path d="M9 16l3-3 3 3" />
+      </svg>
+    ),
+    CalendarDescIcon: () => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" >
+        <rect x="2" y="4" width="20" height="18" rx="2" ry="2" />
+        <line x1="2" y1="10" x2="22" y2="10" />
+        <line x1="7" y1="4" x2="7" y2="10" />
+        <line x1="17" y1="4" x2="17" y2="10" />
+        <path d="M12 13v4" />
+        <path d="M9 16l3 3 3-3" />
+      </svg>
     ),
 };
 

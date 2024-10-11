@@ -92,13 +92,13 @@ const MyGameDetails = ({ gameId, onClose }) => {
             <div className="buttons-container">
               {!isEditing ? (
                 <>
-                  <button onClick={handleEditToggle} className="edit-button" title="Edit Videogame"><Icon iconName="EditIcon" /></button>
-                  <button onClick={handleRemoveCurrentVideogame} className="remove-button" title="Remove Videogame"><Icon iconName="TrashIcon" /></button>
+                  <div onClick={handleEditToggle} className="btn-generic-action edit-button" title="Edit Videogame"><Icon iconName="EditIcon" /></div>
+                  <div onClick={handleRemoveCurrentVideogame} className="btn-generic-action remove-button" title="Remove Videogame"><Icon iconName="TrashIcon" /></div>
                 </>
               ) : (
                 <>
-                  <button onClick={handleCancel} className="cancel-button" title="Cancel changes"><Icon iconName="CancelIcon" /></button>
-                  <button onClick={handleUpdate} className="save-button" title="Save Videogame"><Icon iconName="SaveIcon" /></button>
+                  <div onClick={handleCancel} className="btn-generic-action cancel-button" title="Cancel changes"><Icon iconName="CancelIcon" /></div>
+                  <div onClick={handleUpdate} className="btn-generic-action save-button" title="Save Videogame"><Icon iconName="SaveIcon" /></div>
                 </>
               )}
             </div>

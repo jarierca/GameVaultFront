@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import SearchGames from '../search/SearchGames';
 import Icon from '../icon/Icon';
@@ -17,12 +17,6 @@ const StatusBar = ({ toggleTheme, isDarkMode }) => {
     logout();
     setShowMenu(false);
     navigate('/login');
-  };
-
-  const handleNavigate = (path) => {
-    navigate(path);
-    // Hide when u navigate??
-    setShowMenu(false);
   };
 
   const toggleMenu = (event) => {
@@ -49,14 +43,14 @@ const StatusBar = ({ toggleTheme, isDarkMode }) => {
   return (
     <nav className="statusbar">
       <div className="statusbar-left">
-        <div className="statusbar-logo" onClick={() => handleNavigate('/home')}>
-          GameVault
+        <div className="statusbar-logo">
+          <Link to="/home">GameVault</Link>
         </div>
         <ul className="statusbar-links">
-          <li><button onClick={() => handleNavigate('/platforms')}>Platforms</button></li>
-          <li><button onClick={() => handleNavigate('/developers')}>Developers</button></li>
-          <li><button onClick={() => handleNavigate('/publishers')}>Publishers</button></li>
-          <li><button onClick={() => handleNavigate('/genres')}>Genres</button></li>
+          <li><Link to="/platforms" className="btn-link">Platforms</Link></li>
+          <li><Link to="/developers" className="btn-link">Developers</Link></li>
+          <li><Link to="/publishers" className="btn-link">Publishers</Link></li>
+          <li><Link to="/genres" className="btn-link">Genres</Link></li>
         </ul>
       </div>
 
@@ -70,22 +64,22 @@ const StatusBar = ({ toggleTheme, isDarkMode }) => {
         {isAuthenticated ? (
           <div className="statusbar-auth">
             <ul className="statusbar-links">
-              <li><button onClick={() => handleNavigate('/my-collection')}>My Collection</button></li>
+              <li><Link to="/my-collection" className="btn-link">My Collection</Link></li>
               <li>
                 <span className="dropdown">
-                  <button 
+                  <span 
                     onClick={toggleMenu} 
-                    className="button-accountDetail"
+                    className="btn-link"
                     ref={toggleButtonRef}
                   >
                     <Icon iconName="AccountDetailIcon" />
-                  </button>
+                  </span>
                   {showMenu && (
                     <div className="dropdown-menu" ref={menuRef}>
                       <ul>
                         <li className="username">{userName}</li>
                         <li className="dropdown-divider"></li>
-                        <li onClick={() => handleNavigate('/accountDetail')}>Account Details</li>
+                        <li><Link to="/accountDetail">Account Details</Link></li>
                         <li className="logout" onClick={handleLogout}>Sign Out</li>
                       </ul>
                     </div>
@@ -93,9 +87,9 @@ const StatusBar = ({ toggleTheme, isDarkMode }) => {
                 </span>
               </li>
               <li>
-                <button onClick={toggleTheme} className="toggle-theme-button">
+                <span onClick={toggleTheme} className="btn-link toggle-theme-button">
                   <Icon iconName={isDarkMode ? "SunIcon" : "MoonIcon"} />
-                </button>
+                </span>
               </li>
             </ul>
           </div>
@@ -104,8 +98,8 @@ const StatusBar = ({ toggleTheme, isDarkMode }) => {
             <a onClick={toggleTheme} className="toggle-theme-button">
               <Icon iconName={isDarkMode ? "SunIcon" : "MoonIcon"} />
             </a>
-            <button onClick={() => handleNavigate('/login')} className="login-button">Login</button>
-            <button onClick={() => handleNavigate('/register')} className="register-button">Register</button>
+            <Link to="/login" className="btn-link login-button">Login</Link>
+            <Link to="/register" className="btn-link register-button">Register</Link>
           </div>
         )}
       </div>

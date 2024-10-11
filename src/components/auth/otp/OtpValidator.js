@@ -42,7 +42,6 @@ const OtpValidator = () => {
 
         login(token);
         
-        console.log(`Logged in with OTP. Token: ${token}`);
         navigate('/home');
       }
     } catch (error) {
@@ -53,8 +52,8 @@ const OtpValidator = () => {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-container">
+    <div className="auth-page">
+      <div className="auth-container">
         <h1>OTP Login</h1>
           <div className="input-group">
             <input 

@@ -53,11 +53,11 @@ const SearchResultsVideogamePage = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   if (loading) {
-    return <div className="platform-container"><h1>Loading...</h1></div>;
+    return <div className="container-f"><h1>Loading...</h1></div>;
   }
 
   return (
-    <div className="videogame-container">
+    <div className="container-f">
       <h1>Videogames</h1>
       <input
         type="text"

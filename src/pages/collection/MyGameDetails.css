@@ -85,11 +85,15 @@ label {
   gap: 10px;
 }
 
-.edit-button {
+.add-game-button:hover {
+  background-color: var(--btn-color);
+}
+
+.edit-button:hover, .save-button:hover {
   background: var(--edit-btn-color);
 }
 
-.cancel-button, .remove-button {
+.cancel-button:hover, .remove-button:hover {
   background: var(--remove-btn-color);
 }
 
