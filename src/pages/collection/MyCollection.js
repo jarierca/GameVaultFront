@@ -92,7 +92,11 @@ const MyCollection = () => {
   const toggleCollection = async (collection) => {
     handleCloseGameDetails();
     setSelectedCollections([collection]);
-/*    navigate(`/my-collection/${collection.name}`);*/
+    
+    if (!collectionName != collection && !gameInfo){
+      navigate(`/my-collection/${collection.name}`);
+    }
+
     try {
       setLoading(true);
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/collection-videogames/${collection.id}/videogames`);
@@ -166,6 +170,10 @@ const MyCollection = () => {
   const handleCloseGameDetails = () => {
     setSelectedGameId(null);
     setShowGame(false);
+
+    if(collectionName) {
+      navigate(`/my-collection/${collectionName}`);
+    }
   };
 
   const openDialog = () => {

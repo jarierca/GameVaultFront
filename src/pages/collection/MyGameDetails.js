@@ -17,7 +17,6 @@ const MyGameDetails = ({ gameId, onClose }) => {
       try {
         setLoading(true);
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/collection-videogames/${gameId}`);
-        console.log(response.data);
         setGameDetails(response.data);
         setEditedDetails(response.data);
       } catch (error) {

@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import './VideogameDetailPage.css';
 
 const VideogameDetailPage = () => {
-    const { id } = useParams();
+    const { gameId } = useParams();
     const [videogame, setVideogame] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -14,7 +14,8 @@ const VideogameDetailPage = () => {
         const fetchVideogame = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/videogames/${id}`);
+                const videgameId = gameId.split('-')[0];
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/videogames/${videgameId}`);
                 setVideogame(response.data);
             } catch (error) {
                 console.error('Error fetching videogame:', error);
@@ -23,7 +24,7 @@ const VideogameDetailPage = () => {
         };
 
         fetchVideogame();
-    }, [id]);
+    }, [gameId]);
 
     if (loading) {
         return <div className="platform-container"><h1>Loading...</h1></div>;

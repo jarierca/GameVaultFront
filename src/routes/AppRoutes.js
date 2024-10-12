@@ -39,7 +39,7 @@ const AppRoutes = () => {
       <Route path="/login" element={isAuthenticated ? <Navigate to="/home" /> : <LoginPage />} />
       <Route path="/logout" element={<Logout />} />
       
-      <Route path="/videogames/:id" element={<VideogameDetail />} />
+      <Route path="/videogames/:gameId" element={<VideogameDetail />} />
       <Route path="/videogames/platform/:platformId" element={<VideogamePage />} />
       <Route path="/videogames/developer/:developerId" element={<VideogamePage />} />
       <Route path="/videogames/publisher/:publisherId" element={<VideogamePage />} />

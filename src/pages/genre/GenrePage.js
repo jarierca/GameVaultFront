@@ -40,8 +40,8 @@ const GenrePage = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const handleGenreClick = (genreId) => {
-    navigate(`/videogames/genre/${genreId}`);
+  const handleGenreClick = (genreId, genreName) => {
+    navigate(`/videogames/genre/${genreId}-${genreName}`);
   };
 
   if (loading) {
@@ -74,7 +74,7 @@ const GenrePage = () => {
             data={{
               name: genre.name,
             }}
-            onClick={() => handleGenreClick(genre.id)}
+            onClick={() => handleGenreClick(genre.id, genre.name)}
           />
         ))}
       </Grid>

@@ -40,8 +40,8 @@ const DeveloperPage = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const handleDeveloperClick = (developerId) => {
-    navigate(`/videogames/developer/${developerId}`);
+  const handleDeveloperClick = (developerId, developerName) => {
+    navigate(`/videogames/developer/${developerId, developerName}`);
   };
 
   if (loading) {
@@ -67,16 +67,16 @@ const DeveloperPage = () => {
       />
 
       <Grid>
-        {currentConsoles.map((console) => (
+        {currentConsoles.map((developer) => (
           <Card
-            key={console.id}
+            key={developer.id}
             type="developer"
             data={{
-              name: console.name,
-              description: console.description,
-              releaseDate: console.releaseDate,
+              name: developer.name,
+              description: developer.description,
+              releaseDate: developer.releaseDate,
             }}
-            onClick={() => handleDeveloperClick(console.id)}
+            onClick={() => handleDeveloperClick(developer.id, developer.name)}
           />
         ))}
       </Grid>

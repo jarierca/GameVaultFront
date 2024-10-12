@@ -40,8 +40,8 @@ const PublisherPage = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const handlePublisherClick = (publisherId) => {
-    navigate(`/videogames/publisher/${publisherId}`);
+  const handlePublisherClick = (publisherId, publisherName) => {
+    navigate(`/videogames/publisher/${publisherId}-${publisherName}`);
   };
 
   if (loading) {
@@ -67,16 +67,16 @@ const PublisherPage = () => {
       />
 
       <Grid>
-        {currentConsoles.map((console) => (
+        {currentConsoles.map((publisher) => (
           <Card
-            key={console.id}
+            key={publisher.id}
             type="publisher"
             data={{
-              name: console.name,
-              description: console.description,
-              releaseDate: console.releaseDate,
+              name: publisher.name,
+              description: publisher.description,
+              releaseDate: publisher.releaseDate,
             }}
-            onClick={() => handlePublisherClick(console.id)}
+            onClick={() => handlePublisherClick(publisher.id, publisher.name)}
           />
         ))}
       </Grid>

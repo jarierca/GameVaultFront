@@ -41,8 +41,8 @@ const PlatformPage = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const handlePlatformClick = (platformId) => {
-    navigate(`/videogames/platform/${platformId}`);
+  const handlePlatformClick = (platformId, platformName) => {
+    navigate(`/videogames/platform/${platformId}-${platformName}`);
   };
 
   if (loading) {
@@ -68,16 +68,16 @@ const PlatformPage = () => {
       />
 
       <Grid>
-        {currentConsoles.map((console) => (
+        {currentConsoles.map((platform) => (
           <Card
-            key={console.id}
+            key={platform.id}
             type="platform"
             data={{
-              name: console.name,
-              description: console.description,
-              releaseDate: console.releaseDate,
+              name: platform.name,
+              description: platform.description,
+              releaseDate: platform.releaseDate,
             }}
-            onClick={() => handlePlatformClick(console.id)}
+            onClick={() => handlePlatformClick(platform.id, platform.name)}
           />
         ))}
       </Grid>

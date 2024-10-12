@@ -11,8 +11,6 @@ const ProtectedRoute = ({ element }) => {
     return <div>Loading...</div>;
   }
 
-  console.log('Checking authentication:', isAuthenticated);
-
   return isAuthenticated ? element : <Navigate to="/login" />;
 };
 

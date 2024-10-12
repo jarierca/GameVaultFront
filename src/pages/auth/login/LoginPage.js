@@ -28,8 +28,8 @@ function LoginPage() {
         const playerId = response.data.playerId;
         navigate(`/login-otp`, { state: { username, password, playerId } });
       } else {
-        const { token } = response.data;
-        login(token);
+        const { token, refreshToken } = response.data;
+        login(token, refreshToken);
         navigate('/home');
       }
 

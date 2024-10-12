@@ -9,12 +9,13 @@ import Card from '../../components/items/Card';
 import './VideogamePage.css';
 
 const VideogamePage = () => {
-  const { platformId, developerId, publisherId, genreId } = useParams();
+  const { platform, developer, publisher, genre } = useParams();
   const [videogames, setVideogames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(50);
   const [filter, setFilter] = useState('');
+  const [titlePage, setTitlePage] = useState('Videogames');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,14 +24,22 @@ const VideogamePage = () => {
       try {
 
         let url = `${process.env.REACT_APP_API_URL}/videogames`;
-        if (platformId) {
+        if (platform) {
+          const platformId = platform.split('-')[0];
           url += `/platform/${platformId}`;
-        } else if (developerId) {
+
+        } else if (developer) {
+          const developerId = developer.split('-')[0];
           url += `/developer/${developerId}`;
-        } else if (publisherId) {
+
+        } else if (publisher) {
+          const publisherId = publisher.split('-')[0];
           url += `/publisher/${publisherId}`;
-        } else if (genreId) {
+
+        } else if (genre) {
+          const genreId = genre.split('-')[0];
           url += `/genre/${genreId}`;
+
         }
 
         const response = await axios.get(url);
@@ -42,14 +51,14 @@ const VideogamePage = () => {
     };
 
     fetchVideogames();
-  }, [platformId, developerId, publisherId, genreId]);
+  }, [platform, developer, publisher, genre]);
 
   const filteredVideogames = videogames.filter((videogame) =>
     videogame.title.toLowerCase().includes(filter.toLowerCase())
   );
 
-  const handleVideogameClick = (id) => {
-    navigate(`/videogames/${id}`);
+  const handleVideogameClick = (gameId, gameName) => {
+    navigate(`/videogames/${gameId}-${gameName}`);
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -64,7 +73,7 @@ const VideogamePage = () => {
 
   return (
     <div className="container">
-      <h1>Videogames</h1>
+      <h1>{titlePage}</h1>
       <input
         type="text"
         placeholder="Search by videogame name..."
@@ -92,7 +101,7 @@ const VideogamePage = () => {
               releaseDate: videogame.releaseDate,
               image: videogame.image,
             }}
-            onClick={() => handleVideogameClick(videogame.id)}
+            onClick={() => handleVideogameClick(videogame.id, videogame.title)}
           />
         ))}
       </Grid>
