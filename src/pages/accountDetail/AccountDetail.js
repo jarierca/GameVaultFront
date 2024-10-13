@@ -9,6 +9,7 @@ const AccountDetail = () => {
   const [error, setError] = useState(null); 
   const { userName, logout, playerId } = useAuth();
   const navigate = useNavigate();
+  const [isOtpEnabled, setIsOtpEnabled] = useState(false);
 
   const [confirmationWord, setConfirmationWord] = useState('');
   const requiredWord = 'CONFIRM';
@@ -28,13 +29,21 @@ const AccountDetail = () => {
     });
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  }; 
+  const handleDisabledOTP =  () => {  
+    const { currentPassword} = formData;    
+    if (currentPassword == null || currentPassword == '' ) {
+      alert("It is mandatory to fill in the current password");
+      return;
+    }
+
+    navigate('/disabled-otp', { state: {currentPassword}});
+    setIsOtpEnabled(true);
+  };     
+  
 
   const handleActivateOTP = () => {
     navigate('/activate-otp');
+    setIsOtpEnabled(true);
   }; 
 
   useEffect(() => {
@@ -73,10 +82,9 @@ const AccountDetail = () => {
   
     const updatedPlayer = {
       currentPassword, 
-      player: { 
+      player: {         
         email,
-        password,
-        playerId
+        password
       }
     };
 
@@ -119,10 +127,9 @@ const AccountDetail = () => {
 
     const updatedPlayer = {
       currentPassword, 
-      player: { 
+      player: {        
         email,
-        password,
-        playerId
+        password
       }
     };
 
@@ -220,8 +227,8 @@ const AccountDetail = () => {
       <button type="submit" className="submit-button">Save Changes</button>
     </form>
 
-    {formData.activateOTP ? (
-        <button onClick={handleLogout} className="logout-button">Disable OTP</button>
+    {formData.activateOTP ? ( 
+        <button onClick={handleDisabledOTP} className="logout-button">Disable OTP</button>
       ) : (
         <button onClick={handleActivateOTP} className="activateOTP-button">Activate OTP</button>        
       )}

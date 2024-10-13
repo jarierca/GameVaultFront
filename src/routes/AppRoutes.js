@@ -26,6 +26,7 @@ import VideogameDetail from '../pages/videogame/VideogameDetailPage';
 import SearchResultsVideogamePage from '../pages/videogame/SearchResultsVideogamePage';
 import MyCollection from '../pages/collection/MyCollection';
 import AccountDetail from '../pages/accountDetail/AccountDetail';
+import OtpDisabledValidator from '../components/auth/otp/OtpDisabledValidator';
 
 const AppRoutes = () => {
   const { isAuthenticated } = useAuth();
@@ -38,6 +39,7 @@ const AppRoutes = () => {
       <Route path="/login-otp" element={<OtpValidator />} />
       <Route path="/login" element={isAuthenticated ? <Navigate to="/home" /> : <LoginPage />} />
       <Route path="/logout" element={<Logout />} />
+      <Route path="/disabled-otp" element={<OtpDisabledValidator />} />
       
       <Route path="/videogames/:gameId" element={<VideogameDetail />} />
       <Route path="/videogames/platform/:platformId" element={<VideogamePage />} />
