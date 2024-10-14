@@ -38,9 +38,8 @@ const OtpValidator = () => {
         // showMessage('OTP is valid! Logging in...', 1, 5000);
         setOtpSuccess('OTP is valid! Logging in...');
 
-        const { token } = response.data;
-
-        login(token);
+        const { token, refreshToken } = response.data;
+        login(token, refreshToken);
         
         navigate('/home');
       }

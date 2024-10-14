@@ -42,7 +42,7 @@ function RegisterPage() {
       setSuccess('Registration successful!.');
       setError('');
       showMessage('Registration successful!', 1, 5000);
-      navigate('/activate-otp');
+      navigate('/home');
 
     } catch (error) {
       showMessage('Registration failed. Please try again.', -1, 5000);

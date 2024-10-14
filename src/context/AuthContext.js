@@ -14,9 +14,12 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const { showMessage } = useAlert();
   const [logoutTimer, setLogoutTimer] = useState(null); 
+  const [refreshTimer, setRefreshTimer] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
     const token = localStorage.getItem('token');
+    const refreshToken = localStorage.getItem('refreshToken');
 
     if (token) {
       try {
@@ -25,30 +28,22 @@ export const AuthProvider = ({ children }) => {
 
         if (decodedToken.exp < currentTime) {
           showMessage('Session has expired.', -1, 3000);
+          handleLogout(refreshToken);
 
-          logout();
         } else {
           axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
           setIsAuthenticated(true);
           setUserName(decodedToken.upn);
           setPlayerId(decodedToken.sub);
-
-          const expirationTime = decodedToken.exp * 1000;
-          const remainingTime = expirationTime - Date.now();
-
-          const timer = setTimeout(() => {
-            showMessage('Session has expired.', -1, 3000);
-            logout();
-          }, remainingTime);
-
-          setLogoutTimer(timer);
+          scheduleLogout(decodedToken.exp);
         }
       } catch (error) {
         console.error('Invalid token:', error);
         showMessage('Invalid session.', -1, 3000);
-
-        logout();
+        handleLogout(refreshToken);
       }
+    } else if (refreshToken) {
+      refreshAccessToken();
     } else {
       setIsAuthenticated(false);
       setUserName('');
@@ -57,11 +52,70 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
 
     return () => {
-      if (logoutTimer) {
-        clearTimeout(logoutTimer);
-      }
+      clearTimers();
     };
   }, []);
+
+  const handleLogout = (refreshToken) => {
+    if (refreshToken) {
+      const decodedRefreshToken = jwtDecode(refreshToken);
+      const currentTime = Date.now() / 1000;
+
+      if (decodedRefreshToken.exp < currentTime) {
+        logout();
+      } else {
+        console.log("Refresh token is still valid, not logging out.");
+      }
+    } else {
+      logout();
+    }
+  };
+
+  const scheduleLogout = (exp) => {
+    const expirationTime = exp * 1000;
+    const remainingTime = expirationTime - Date.now();
+    
+    if (remainingTime > 0) {
+      clearTimeout(logoutTimer);
+      const timer = setTimeout(() => {
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (refreshToken) {
+          const decodedRefreshToken = jwtDecode(refreshToken);
+          const currentTime = Date.now() / 1000;
+
+          if (decodedRefreshToken.exp < currentTime) {
+            showMessage('Session has expired.', -1, 3000);
+            handleLogout(refreshToken);
+          } else {
+            console.log("Refresh token is still valid, not logging out.");
+          }
+        } else {
+          showMessage('Session has expired.', -1, 3000);
+          handleLogout(refreshToken);
+        }
+      }, remainingTime);
+    
+      setLogoutTimer(timer);
+      scheduleRefresh(remainingTime);
+    } else {
+      handleLogout(localStorage.getItem('refreshToken'));
+    }
+  };
+
+
+  const scheduleRefresh = (remainingTime) => {
+    clearTimeout(refreshTimer);
+    const refreshTime = Math.max(remainingTime - (60 * 1000), 0);
+    if (refreshTime > 0) {
+      const newRefreshTimer = setTimeout(refreshAccessToken, refreshTime);
+      setRefreshTimer(newRefreshTimer);
+    }
+  };
+
+  const clearTimers = () => {
+    clearTimeout(logoutTimer);
+    clearTimeout(refreshTimer);
+  };
 
   const login = (token, refreshToken) => {
     localStorage.setItem('token', token);
@@ -71,21 +125,7 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(true);
     setUserName(decodedToken.upn);
     setPlayerId(decodedToken.sub);
-
-    const expirationTime = decodedToken.exp * 1000;
-    const remainingTime = expirationTime - Date.now();
-
-    const refreshTime = remainingTime - (60 * 1000);
-    const refreshTimer = setTimeout(() => {
-      refreshAccessToken();
-    }, refreshTime);
-
-    const timer = setTimeout(() => {
-      showMessage('Session has expired.', -1, 3000);
-      logout();
-    }, remainingTime);
-
-    setLogoutTimer(timer);
+    scheduleLogout(decodedToken.exp);
 
     showMessage('Successfully logged in.', 1, 3000);
   };
@@ -98,50 +138,48 @@ export const AuthProvider = ({ children }) => {
     setUserName('');
     setPlayerId('');
     setLoading(false);
-
-    if (logoutTimer) {
-      clearTimeout(logoutTimer);
-    }
+    clearTimers();
 
     showMessage('Successfully logout.', 0, 3000);
   };
 
+
+//TODO Al hacer logout a mano a veces sigue apareciendo mensajes de logout, no funciona bien el autorefresh este
+// Poner opcion en el login si el usuario quiere guardar su sesion para que se guarde el refresh token durante 60 dias o si no el refresh token a los 2 dias de va
   const refreshAccessToken = async () => {
     const refreshToken = localStorage.getItem('refreshToken');
+
+    console.log("Refreshing access token...");
+    console.log(refreshToken);
+    console.log("Current access token...");
+    console.log(localStorage.getItem('token'));
+
     try {
-      const response = await axios.post('/auth/refresh', null, {
-        headers: {
-            'Refresh-Token': refreshToken,
-        },
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/refresh`, {
+          token: refreshToken
       });
 
       if (response.status === 200) {
-        const { accessToken } = response.data;
-        localStorage.setItem('token', accessToken);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+        const { token } = response.data;
 
-        const decodedToken = jwtDecode(accessToken);
-        const expirationTime = decodedToken.exp * 1000;
-        const remainingTime = expirationTime - Date.now();
+        localStorage.setItem('token', token);
+        console.log("New access token...");
+        console.log(token);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-        const refreshTime = remainingTime - (60 * 1000);
-        const refreshTimer = setTimeout(() => {
-          refreshAccessToken();
-        }, refreshTime);
-
-        if (logoutTimer) {
-          clearTimeout(logoutTimer);
-        }
-
-        setLogoutTimer(refreshTimer);
+        const decodedToken = jwtDecode(token);
+        scheduleLogout(decodedToken.exp);
+        
       } else {
         logout();
       }
     } catch (error) {
       console.error('Error refreshing access token:', error);
+      showMessage('Error refreshing session.', -1, 3000);
       logout();
     }
   };
+
 
 
   return (
