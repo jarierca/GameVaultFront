@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Loading from '../../components/loading/Loading';
 import { useParams } from 'react-router-dom';
 import './VideogameDetailPage.css';
 
@@ -11,32 +12,33 @@ const VideogameDetailPage = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchVideogame = async () => {
-            setLoading(true);
-            try {
-                const videgameId = gameId.split('-')[0];
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/videogames/${videgameId}`);
-                setVideogame(response.data);
-            } catch (error) {
-                console.error('Error fetching videogame:', error);
-            }
-            setLoading(false);
-        };
+      const fetchVideogame = async () => {
+        setLoading(true);
+        try {
+          const videgameId = gameId.split('-')[0];
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/videogames/${videgameId}`);
+          setVideogame(response.data);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching videogame:', error);
+          setLoading(false);
+        }
+      };
 
-        fetchVideogame();
+      fetchVideogame();
     }, [gameId]);
 
-    if (loading) {
-        return <div className="platform-container"><h1>Loading...</h1></div>;
-    }
-
-    if (!videogame) {
-        return <div className="platform-container"><h1>Videogame not found</h1></div>;
-    }
-
-    return (
+  return (
+    <>
+      {loading ? (
+        <Loading />
+      ) : !videogame ? (
+        <div className="platform-container"><h1>Videogame not found</h1></div>
+      ) : (
         <div className="videogame-detail-container">
-            <img src={videogame.image} alt={videogame.title} className="videogame-image" />
+            {videogame.images.map(image => (
+                <img key={image.id} src={image.url} alt={image.altName} className="videogame-image" />
+            ))}
             <h1 className="videogame-title">{videogame.title}</h1>
             <div className="videogame-description-container">
                 <div className="videogame-description">
@@ -53,7 +55,7 @@ const VideogameDetailPage = () => {
                     </div>
                     <div className="detail-box">
                         <h4>Platform</h4>
-                        <p>{videogame.platform.name}</p>
+                        <p>{videogame.platform?.name}</p>
                     </div>
                     <div className="detail-box">
                         <h4>Game Type</h4>
@@ -65,15 +67,17 @@ const VideogameDetailPage = () => {
                     </div>
                     <div className="detail-box">
                         <h4>Genre</h4>
-                        <p>{videogame.genre.name}</p>
+                        <p>{videogame.genre && videogame.genre.length > 0 
+                              ? videogame.genre.map((genre) => genre.name).join(', ') : 'N/A'}
+                        </p>
                     </div>
                     <div className="detail-box">
                         <h4>Developer</h4>
-                        <p>{videogame.developer.name}</p>
+                        <p>{videogame.developer?.name}</p>
                     </div>
                     <div className="detail-box">
                         <h4>Publisher</h4>
-                        <p>{videogame.publisher.name}</p>
+                        <p>{videogame.publisher?.name}</p>
                     </div>
                 </div>
             </div>
@@ -89,7 +93,9 @@ const VideogameDetailPage = () => {
                 </div>
             </div>
         </div>
-    );
+     )}
+    </>
+  );
 };
 
 export default VideogameDetailPage;

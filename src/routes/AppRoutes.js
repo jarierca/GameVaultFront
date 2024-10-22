@@ -42,10 +42,10 @@ const AppRoutes = () => {
       <Route path="/disabled-otp" element={<OtpDisabledValidator />} />
       
       <Route path="/videogames/:gameId" element={<VideogameDetail />} />
-      <Route path="/videogames/platform/:platformId" element={<VideogamePage />} />
-      <Route path="/videogames/developer/:developerId" element={<VideogamePage />} />
-      <Route path="/videogames/publisher/:publisherId" element={<VideogamePage />} />
-      <Route path="/videogames/genre/:genreId" element={<VideogamePage />} />
+      <Route path="/videogames/platform/:platform" element={<VideogamePage />} />
+      <Route path="/videogames/developer/:developer" element={<VideogamePage />} />
+      <Route path="/videogames/publisher/:publisher" element={<VideogamePage />} />
+      <Route path="/videogames/genre/:genre" element={<VideogamePage />} />
       <Route path="/videogames/search/:querySearch" element={<SearchResultsVideogamePage />} />
       
       <Route path="/platforms" element={<PlatformPage />} />

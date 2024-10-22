@@ -4,44 +4,62 @@ import axios from 'axios';
 import Pagination from '../../components/pagination/Pagination';
 import Grid from '../../components/items/Grid';
 import Card from '../../components/items/Card';
-import Loading from '../../components/loading/Loading'
-import { useNavigate } from 'react-router-dom';
+import Loading from '../../components/loading/Loading';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const DeveloperPage = () => {
-  const [consoles, setConsoles] = useState([]);
+  const [developers, setDevelopers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(50);
   const [filter, setFilter] = useState('');
+  const [totalItems, setTotalItems] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    const fetchConsoles = async () => {
+    const searchParams = new URLSearchParams(location.search);
+    const page = parseInt(searchParams.get('page')) || 1;
+    setCurrentPage(page);
+  }, [location.search]);
+
+  useEffect(() => {
+    const fetchDevelopers = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/developers`);
-        setConsoles(response.data);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/developers`, {
+          params: {
+            page: currentPage - 1,
+            size: itemsPerPage
+          }
+        });
+        setDevelopers(response.data.content);
+        setTotalItems(response.data.totalElements);
       } catch (error) {
-        console.error('Error fetching consoles:', error);
+        console.error('Error fetching developers:', error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
-    fetchConsoles();
-  }, []);
+    fetchDevelopers();
+  }, [currentPage, itemsPerPage]);
 
-  const filteredConsoles = consoles.filter((console) =>
-    console.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  const filteredDevelopers = Array.isArray(developers) && developers !== null
+    ? developers.filter((developer) =>
+      developer && typeof developer === 'object' && 'name' in developer &&
+      developer.name.toLowerCase().includes(filter.toLowerCase())
+    ) : [];
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentConsoles = filteredConsoles.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    navigate(`?page=${page}`);
+  };
 
   const handleDeveloperClick = (developerId, developerName) => {
-    navigate(`/videogames/developer/${developerId, developerName}`);
+    navigate(`/videogames/developer/${developerId}-${developerName}`);
   };
 
   if (loading) {
@@ -50,10 +68,10 @@ const DeveloperPage = () => {
 
   return (
     <div className="container-f">
-      <h1>Console Developers</h1>
+      <h1>Developers</h1>
       <input
         type="text"
-        placeholder="Search by console name..."
+        placeholder="Search by developer name..."
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
         className="search-input"
@@ -61,13 +79,13 @@ const DeveloperPage = () => {
 
       <Pagination
         itemsPerPage={itemsPerPage}
-        totalItems={filteredConsoles.length}
-        paginate={paginate}
+        totalItems={totalItems}
+        paginate={handlePageChange}
         currentPage={currentPage}
       />
 
       <Grid>
-        {currentConsoles.map((developer) => (
+        {filteredDevelopers.map((developer) => (
           <Card
             key={developer.id}
             type="developer"
@@ -83,8 +101,8 @@ const DeveloperPage = () => {
 
       <Pagination
         itemsPerPage={itemsPerPage}
-        totalItems={filteredConsoles.length}
-        paginate={paginate}
+        totalItems={totalItems}
+        paginate={handlePageChange}
         currentPage={currentPage}
       />
     </div>

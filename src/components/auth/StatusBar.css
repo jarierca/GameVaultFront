@@ -166,4 +166,7 @@ li .logout:hover {
   border-top: 1px solid #222;
 }
 
+.toggle-theme-button {
+  cursor: pointer;
+}
 

@@ -36,3 +36,8 @@
   border-color: #007bff;
 }
 
+.page-link svg {
+  margin: -5px;
+  color: var(--text-color);
+}
+

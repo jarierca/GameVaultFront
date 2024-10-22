@@ -75,10 +75,11 @@ const MyCollection = () => {
       setLoading(true);
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/my-collections`);
       setCollections(response.data);
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching my collections:', error);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -102,20 +103,49 @@ const MyCollection = () => {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/collection-videogames/${collection.id}/videogames`);
       setGamesInCollection(response.data);
 
-      const uniquePlatforms = [...new Set(response.data.map(game => game.videogame.platform.name))];
-      const uniqueDevelopers = [...new Set(response.data.map(game => game.videogame.developer.name))];
-      const uniquePublishers = [...new Set(response.data.map(game => game.videogame.publisher.name))];
-      const uniqueGenres = [...new Set(response.data.map(game => game.videogame.genre.name))];
-      
+      const uniquePlatforms = [
+        ...new Set(
+          response.data
+            .map(game => game.platformName)
+            .filter(platform => platform !== null && platform !== '')
+        )
+      ];
+
+      const uniqueDevelopers = [
+        ...new Set(
+          response.data
+            .map(game => game.developerName)
+            .filter(developer => developer !== null && developer !== '')
+        )
+      ];
+
+      const uniquePublishers = [
+        ...new Set(
+          response.data
+            .map(game => game.publisherName)
+            .filter(publisher => publisher !== null && publisher !== '')
+        )
+      ];
+
+      const uniqueGenres = [
+        ...new Set(
+          response.data
+            .flatMap(game => game.genreNames ? game.genreNames.split(',') : [])
+            .map(genre => genre.trim())
+            .filter(genre => genre !== '')
+        )
+      ];
+
       setPlatforms(uniquePlatforms);
       setDevelopers(uniqueDevelopers);
       setPublishers(uniquePublishers);
       setGenres(uniqueGenres);
+      setLoading(false);
 
     } catch (error) {
       console.error('Error fetching games for collection:', error);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const handleAddCollection = async () => {
@@ -164,7 +194,7 @@ const MyCollection = () => {
     setSelectedGameId(game.id);
     setShowGame(true);
     const collection = selectedCollections[0];
-    navigate(`/my-collection/${collection.name}/${game.id}-${game.videogame.title.replace(/\s+/g, '-')}`);
+    navigate(`/my-collection/${collection.name}/${game.id}-${game.title.replace(/\s+/g, '-')}`);
   };
 
   const handleCloseGameDetails = () => {
@@ -266,22 +296,28 @@ const MyCollection = () => {
     });
   };
 
-  const filteredAndSortedGames = gamesInCollection
-    .filter(game => {
-      const matchesTitle = game.videogame.title.toLowerCase().includes(filter.toLowerCase());
-      const matchesPlatform = selectedPlatforms.length === 0 || selectedPlatforms.includes(game.videogame.platform.name);
-      const matchesDeveloper = selectedDevelopers.length === 0 || selectedDevelopers.includes(game.videogame.developer.name);
-      const matchesPublisher = selectedPublishers.length === 0 || selectedPublishers.includes(game.videogame.publisher.name);
-      const matchesGenre = selectedGenres.length === 0 || selectedGenres.includes(game.videogame.genre.name);
-      return matchesTitle && matchesPlatform && matchesDeveloper && matchesPublisher && matchesGenre;
-    })
-    .sort((a, b) => {
-      const compareValue = sortOrder === 'asc' 
-        ? (a.videogame[sortOrderBy] < b.videogame[sortOrderBy] ? -1 : 1) 
-        : (a.videogame[sortOrderBy] > b.videogame[sortOrderBy] ? -1 : 1);
+  const filteredAndSortedGames = (gamesInCollection && gamesInCollection.length > 0)
+    ? gamesInCollection
+        .filter(game => {
+          const matchesTitle = filter.trim() === "" || game.title.toLowerCase().includes(filter.toLowerCase());
+          const matchesPlatform = selectedPlatforms.length === 0 || selectedPlatforms.includes(game.platformName);
+          const matchesDeveloper = selectedDevelopers.length === 0 || selectedDevelopers.includes(game.developerName);
+          const matchesPublisher = selectedPublishers.length === 0 || selectedPublishers.includes(game.publisherName);
+          const gameGenres = game.genreNames ? game.genreNames.split(',').map(genre => genre.trim()) : [];
+          const matchesGenre = selectedGenres.length === 0 || selectedGenres.some(selectedGenre => gameGenres.includes(selectedGenre));          
 
-      return compareValue;
-    });
+
+          return matchesTitle && matchesPlatform && matchesDeveloper && matchesPublisher && matchesGenre;
+        })
+        .sort((a, b) => {
+          const compareValue = sortOrder === 'asc' 
+            ? (a.title[sortOrderBy] < b.title[sortOrderBy] ? -1 : 1) 
+            : (a.title[sortOrderBy] > b.title[sortOrderBy] ? -1 : 1);
+
+          return compareValue;
+        })
+    : [];
+
 
   const toggleSortOrder = () => {
     setSortOrder(prevSortOrder => (prevSortOrder === 'asc' ? 'desc' : 'asc'));
@@ -411,7 +447,7 @@ const MyCollection = () => {
           <div className="filter-section">
             <div className="filter-select">
               <div>
-                <div className="dropdown">
+                <div className={`${platforms.length > 0 ? 'dropdown' : 'disabled'}`}>
                   <button className="dropbtn">
                     Platforms
                     {selectedPlatforms.length > 0 ? (<span className="filter-num-checked">{selectedPlatforms.length}</span>)
@@ -434,7 +470,7 @@ const MyCollection = () => {
               </div>
 
               <div>
-                <div className="dropdown">
+                <div className={`${developers.length > 0 ? 'dropdown' : 'disabled'}`}>
                   <button className="dropbtn">
                     Developers
                     {selectedDevelopers.length > 0 ? (<span className="filter-num-checked">{selectedDevelopers.length}</span>)
@@ -457,7 +493,7 @@ const MyCollection = () => {
               </div>
 
               <div>
-                <div className="dropdown">
+                <div className={`${publishers.length > 0 ? 'dropdown' : 'disabled'}`}>
                   <button className="dropbtn">
                     Publishers
                     {selectedPublishers.length > 0 ? (<span className="filter-num-checked">{selectedPublishers.length}</span>)
@@ -480,7 +516,7 @@ const MyCollection = () => {
               </div>
 
               <div>
-                <div className="dropdown">
+                <div className={`${genres.length > 0 ? 'dropdown' : 'disabled'}`}>
                   <button className="dropbtn">
                     Genres
                     {selectedGenres.length > 0 ? (<span className="filter-num-checked">{selectedGenres.length}</span>)
@@ -537,11 +573,9 @@ const MyCollection = () => {
                 key={game.id}
                 type="collection-videogame"
                 data={{
-                  name: game.videogame.title,
-                  platformName: game.videogame.platform.name,
-                  description: game.videogame.description,
-                  releaseDate: game.videogame.releaseDate.split('T')[0],
-                  image: game.videogame.image,
+                  name: game.title,
+                  platformName: game.platformName,
+                  releaseDate: game.releaseDate.split('T')[0],
                 }}
                 onClick={() => handleGameClick(game)}
               />
@@ -552,11 +586,11 @@ const MyCollection = () => {
             {filteredAndSortedGames.map(game => (
               <div key={game.id} className="list-item" onClick={() => handleGameClick(game)}>
                 <div >
-                  <span className="game-title">{game.videogame.title}</span> 
+                  <span className="game-title">{game.title}</span> 
                    -
-                  <span className="game-release-date"> {game.videogame.releaseDate.split('T')[0]}</span>
+                  <span className="game-release-date"> {game.releaseDate.split('T')[0]}</span>
                 </div>                
-                <span className="game-platform">{game.videogame.platform.name}</span>
+                <span className="game-platform">{game.platformName}</span>
               </div>
             ))}
           </div>

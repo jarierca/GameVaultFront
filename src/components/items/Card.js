@@ -12,7 +12,7 @@ const Card = ({ type, data, onClick }) => {
           <div className="card-image" style={{ backgroundImage: `url(${data.image})` }}></div>
           <h3>{data.name}</h3>
           <p>{data.description}</p>
-          <small>{data.releaseDate}</small>
+          <small>{data.releaseDate? data.releaseDate.split('T')[0] : ""}</small>
         </>
       )}
       {type === 'collection-videogame' && (
@@ -20,28 +20,28 @@ const Card = ({ type, data, onClick }) => {
           <div className="card-image" style={{ backgroundImage: `url(${data.image})` }}></div>
           <h3>{data.name} ({data.platformName})</h3>
           <p>{data.description}</p>
-          <small>{data.releaseDate}</small>
+          <small>{data.releaseDate ? data.releaseDate.split('T')[0] : ""}</small>
         </>
       )}
       {type === 'platform' && (
         <>
           <h3>{data.name}</h3>
           <p>{data.description}</p>
-          <small>{data.releaseDate}</small>
+          <small>{data.releaseDate ? data.releaseDate.split('T')[0] : ""}</small>
         </>
       )}
       {type === 'developer' && (
         <>
           <h3>{data.name}</h3>
           <p>{data.description}</p>
-          <small>{data.foundedDate}</small>
+          <small>{data.foundedDate ? data.foundedDate.split('T')[0] : ""}</small>
         </>
       )}
       {type === 'publisher' && (
         <>
           <h3>{data.name}</h3>
           <p>{data.description}</p>
-          <small>{data.foundedDate}</small>
+          <small>{data.foundedDate ? data.foundedDate.split('T')[0] : ""}</small>
         </>
       )}
       {type === 'genre' && (

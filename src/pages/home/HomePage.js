@@ -94,24 +94,24 @@ const HomePage = () => {
     }
   };
 
-  const handleVideogameClick = (id) => {
-    navigate(`/videogames/${id}`);
+  const handleVideogameClick = (gameId, gameName) => {
+    navigate(`/videogames/${gameId}-${gameName}`);
   };
 
-  const handlePlatformClick = (platformId) => {
-    navigate(`/videogames/platform/${platformId}`);
+  const handlePlatformClick = (platformId, platformName) => {
+    navigate(`/videogames/platform/${platformId}-${platformName}`);
   };
   
-  const handleDeveloperClick = (developerId) => {
-    navigate(`/videogames/developer/${developerId}`);
+  const handleDeveloperClick = (developerId, developerName) => {
+    navigate(`/videogames/developer/${developerId}-${developerName}`);
   };
 
-  const handlePublisherClick = (publisherId) => {
-    navigate(`/videogames/publisher/${publisherId}`);
+  const handlePublisherClick = (publisherId, publisherName) => {
+    navigate(`/videogames/publisher/${publisherId}-${publisherName}`);
   };
 
-  const handleGenreClick = (genreId) => {
-    navigate(`/videogames/genre/${genreId}`);
+  const handleGenreClick = (genreId, genreName) => {
+    navigate(`/videogames/genre/${genreId}-${genreName}`);
   };
 
   const scrollLeft = () => {
@@ -170,7 +170,7 @@ const HomePage = () => {
           <h2>Random Games</h2>
           <div className="game-list" ref={gameListRef}>
             {randomGames.map((game) => (
-              <div key={game.id} className="game-item" onClick={() => handleVideogameClick(game.id)}>
+              <div key={game.id} className="game-item" onClick={() => handleVideogameClick(game.id, game.title)}>
                 <h3>{game.title}</h3>
                 <p>Release Date: {new Date(game.releaseDate).toLocaleDateString()}</p>
               </div>
@@ -188,7 +188,7 @@ const HomePage = () => {
           <div className="stats-list">
             {topPlatforms.length > 0 ? (
               topPlatforms.map((platform) => (
-                <div key={platform[0]} className="stats-item" onClick={() => handlePlatformClick(platform[0])}>
+                <div key={platform[0]} className="stats-item" onClick={() => handlePlatformClick(platform[0],platform[1])}>
                   <h3>{platform[1]}</h3>
                   <p>{platform[2]}</p>
                 </div>
@@ -204,7 +204,7 @@ const HomePage = () => {
           <div className="stats-list">
             {topDevelopers.length > 0 ? (
               topDevelopers.map((developer) => (
-                <div key={developer[0]} className="stats-item" onClick={() => handleDeveloperClick(developer[0])}>
+                <div key={developer[0]} className="stats-item" onClick={() => handleDeveloperClick(developer[0],developer[1])}>
                   <h3>{developer[1]}</h3>
                   <p>{developer[2]}</p>
                 </div>
@@ -220,7 +220,7 @@ const HomePage = () => {
           <div className="stats-list">
             {topPublishers.length > 0 ? (
               topPublishers.map((publisher) => (
-                <div key={publisher[0]} className="stats-item" onClick={() => handlePublisherClick(publisher[0])}>
+                <div key={publisher[0]} className="stats-item" onClick={() => handlePublisherClick(publisher[0],publisher[1])}>
                   <h3>{publisher[1]}</h3>
                   <p>{publisher[2]}</p>
                 </div>
@@ -236,7 +236,7 @@ const HomePage = () => {
           <div className="stats-list">
             {topGenres.length > 0 ? (
               topGenres.map((genre) => (
-                <div key={genre[0]} className="stats-item" onClick={() => handleGenreClick(genre[0])}>
+                <div key={genre[0]} className="stats-item" onClick={() => handleGenreClick(genre[0],genre[1])}>
                   <h3>{genre[1]}</h3>
                   <p>{genre[2]}</p>
                 </div>
