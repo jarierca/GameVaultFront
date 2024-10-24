@@ -1,12 +1,17 @@
 /* src/components/auth/StatusBar.css */
 
 .statusbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #333;
-  color: white;
+  background-color: var(--dark-header);
+  color: rgb(232, 230, 227) !important;
 }
 
 .statusbar-left,
@@ -31,51 +36,47 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
+  align-items: center;
 }
 
 .statusbar-links li {
   margin: 0;
 }
 
-.statusbar-links button {
+.statusbar-links .btn-link {
   background: none;
-  border: none;
-  color: white;
+  border: 1px solid transparent;
   font-size: 1rem;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
-.statusbar-links button:hover {
-  color: #ddd;
+.statusbar-links .btn-link:hover {
+  color: #cecece;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+}
+
+.btn-link {
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: var(--btn-color);
+  color: var(--white);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, filter 0.3s;
+}
+
+.btn-link:hover {
+  filter: brightness(var(--brightness));
+  color: var(--text-color-alt);
 }
 
 .statusbar-center {
   display: flex;
   align-items: center;
   position: relative;
-}
-
-.search-inpt {
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  width: 150px;
-  font-size: 0.875rem;
-  margin-left: 10px;
-}
-
-.search-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.search-btn svg {
-  width: 24px;
-  height: 24px;
 }
 
 .statusbar-auth {
@@ -85,7 +86,7 @@
 }
 
 .logout-button {
-  background-color: #e74c3c;
+  background-color: #ff0000;
   border-radius: 5px;
   padding: 5px 10px;
   border: none;
@@ -98,7 +99,6 @@
   border-radius: 5px;
   padding: 5px 10px;
   border: none;
-  color: white;
   cursor: pointer;
 }
 
@@ -108,5 +108,65 @@
 
 .logout-button:hover {
   background-color: #c0392b;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+  
+.dropdown-menu {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background-color: #333;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  min-width: 150px;
+  max-width: 250px;
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center; 
+}
+
+.dropdown-menu li {
+  margin: 5px 5px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #222;
+  color: white;
+  border-radius: 15px;
+}
+
+li .username:hover {
+  background-color: transparent;
+  cursor: default;
+}
+
+li .logout {
+  border: 1px solid transparent;
+}
+
+li .logout:hover {
+  border: 1px solid #bd000073;
+  background-color: #c60e0e30;
+}
+
+.dropdown-divider {
+  padding: 0 !important;
+  border-top: 1px solid #222;
+}
+
+.toggle-theme-button {
+  cursor: pointer;
 }
 

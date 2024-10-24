@@ -1,14 +1,21 @@
 /* src/pages/auth/login/LoginPage.css */
-/* src/pages/auth/register/RegisterPage.css */
 
-.login-page,
-.register-page {
+.auth-page {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f4f4f4;
-  margin: 0; /* Ensure no margin interferes */
+  background-color: var(--background-color-2);
+  margin: 0;
+}
+
+.auth-container {
+  background: var(--background-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
 }
 
 .modal {
@@ -20,7 +27,7 @@
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 200; /* Higher z-index to ensure it appears above StatusBar */
+  z-index: 200;
   width: 90%;
   max-width: 500px;
 }
@@ -69,5 +76,19 @@
 .modal .success-message {
   color: red;
   margin: 10px 0;
+}
+
+.btn-otp {
+  width: 100%;
+}
+
+.error-message,
+.success-message {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+}
+.success-message {
+  color: green;
 }
 

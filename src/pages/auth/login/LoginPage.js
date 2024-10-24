@@ -1,10 +1,11 @@
-// src/pages/LoginPage.js
+// src/pages/auth/login/LoginPage.js
 
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../../../hooks/useAuth';
-import './LoginPage.css';
+import { useAuth } from '../../../context/AuthContext';
+import { useAlert } from '../../../context/AlertContext';
+import './../AuthPage.css';
 
 function LoginPage() {
   const [username, setUsername] = useState('');
@@ -12,6 +13,7 @@ function LoginPage() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { showMessage } = useAlert(); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,18 +24,24 @@ function LoginPage() {
         password
       });
 
-      const token = response.data;
-      login(token, username);
+      if (response.data.message === 'OTP_REQUIRED') {
+        const playerId = response.data.playerId;
+        navigate(`/login-otp`, { state: { username, password, playerId } });
+      } else {
+        const { token, refreshToken } = response.data;
+        login(token, refreshToken);
+        navigate('/home');
+      }
 
-      navigate('/home');
     } catch (error) {
       setError('Error, incorrect credentials. Try again.');
+      showMessage('Error, incorrect credentials. Try again.', -1, 5000);
     }
-  };
+  }
 
   return (
-    <div className="login-page">
-      <div className="login-container">
+    <div className="auth-page">
+      <div className="auth-container">
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
           <div className="input-group">

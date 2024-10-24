@@ -1,4 +1,5 @@
-// src/components/util/Grid.jsx
+// src/components/util/Grid.js
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Grid.css';

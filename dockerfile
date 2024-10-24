@@ -1,8 +1,8 @@
-FROM node:latest
+FROM node:lts
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package.json ./
 
 RUN npm cache clean --force
 RUN npm install
@@ -12,4 +12,3 @@ COPY . .
 EXPOSE 3000
 
 CMD ["npm", "start"]
-

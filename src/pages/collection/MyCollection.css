@@ -1,0 +1,328 @@
+/* src/pages/collection/MyCollection.css */
+
+.my-collection-container {
+  display: flex;
+  height: 100vh;
+}
+
+.collection-list {
+  min-width: 200px;
+  max-width: 300px;
+  border-right: 1px solid var(--border-color);
+  padding: 10px;
+  overflow: hidden;
+}
+
+.collection-list li {
+  cursor: pointer;
+  padding: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: 1px solid transparent;
+  margin-top: 2px;
+}
+
+.collection-list h2 {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.add-collection-button {
+  margin-left: 10px;
+  cursor: pointer;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+.add-collection-button:hover {
+  background-color: #0056b3;
+}
+
+.collection-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.collection-list li:hover {
+  background-color: var(--background-color-2);
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.my-collection-wrapper {
+  display: flex;
+  flex: 1;
+}
+
+.right-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0px 20px;
+}
+
+.selected-collections {
+  margin-bottom: 20px;
+}
+
+.selected-collections h2 {
+  margin-bottom: 10px;
+}
+
+.selected-collections ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.collection-selected {
+  background-color: var(--selected-item);
+  font-weight: bold;
+  border-radius: 4px;
+  border: 1px solid var(--border-color) !important;
+}
+
+.games-in-collection {
+  flex: 1;
+}
+
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--background-color);
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  border-radius: 8px;
+  min-width: 300px;
+  min-height: 300px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+
+.dialog h3 {
+  margin-bottom: 15px;
+}
+
+.dialog input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.dialog button {
+  margin-right: 10px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dialog button:hover {
+  background-color: var(--item-hover);
+}
+
+.collection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.collection-name-year {
+  display: flex;
+  align-items:baseline;
+}
+
+.collection-name-year small {
+  padding-left: 15px;
+  color: #659299;
+  font-size: 15px;
+}
+
+.collection-title h2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 600px;
+}
+
+.collection-title p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 800px;
+  white-space: normal;
+}
+
+
+.collection-actions {
+  margin: 10px 10px 0 0;
+  display: flex;
+  gap: 10px;
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 900;
+}
+
+.dialog-actions {
+  margin-top: auto;
+  text-align: center;
+}
+
+.filter-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.search-input-collection, .search-input {
+  color-scheme: var(--color-schema) !important;
+  width: 100%;
+  padding: 10px;
+  margin-right: 5px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.search-input {
+  max-width: 400px;
+}
+
+.search-input:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+.filter-select {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+}
+
+.filter-select select {
+  color-scheme: var(--color-schema) !important;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  padding: 10px;
+  width: auto;
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.filter-select select:hover {
+  border-color: #007BFF;
+}
+
+.list-view {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+}
+
+.list-item:hover {
+  background-color: var(--item-hover);
+}
+
+.game-title, .game-platform, .game-release-date {
+  margin: 0 10px;
+}
+
+.game-release-date {
+  color: #659299;
+}
+
+.btn-generic-action {
+  background-color: var(--background-color-2);
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-generic-action:hover {
+  filter: brightness(var(--brightness));
+  color: var(--text-color-alt);
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: var(--background-color-2);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  padding: 5px;
+  display: none;
+  position: absolute;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content label {
+  padding: 5px;
+  cursor: pointer;
+  width: max-content;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.filter-num-checked {
+  background: var(--border-color);
+}
+
+.filter-num-empty, .filter-num-checked {
+  border-radius: 50px;
+  padding: 0 5px;
+  margin-left: 5px;
+}
+

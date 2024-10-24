@@ -17,12 +17,12 @@
 }
 
 .page-link {
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  color: #000;
-  background-color: #fff;
+  color: var(--text-color);
+  background-color: var(--background-color-2);
   border-radius: 4px;
 }
 
@@ -34,5 +34,10 @@
   background-color: #007bff;
   color: white;
   border-color: #007bff;
+}
+
+.page-link svg {
+  margin: -5px;
+  color: var(--text-color);
 }
 

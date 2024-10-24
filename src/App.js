@@ -1,57 +1,46 @@
 // src/App.js
 
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+
+// Routes
+import AppRoutes from './routes/AppRoutes';
 
 // Components
 import StatusBar from './components/auth/StatusBar';
-import Logout from './components/auth/Logout';
-
-// Pages
-import LoginPage from './pages/auth/login/LoginPage';
-import RegisterPage from './pages/auth/register/RegisterPage';
-import HomePage from './pages/home/HomePage';
-import PlatformPage from './pages/platform/PlatformPage';
-import DeveloperPage from './pages/developer/DeveloperPage';
-import PublisherPage from './pages/publisher/PublisherPage';
-import GenrePage from './pages/genre/GenrePage';
-import VideogamePage from './pages/videogame/VideogamePage';
-import VideogameDetail from './pages/videogame/VideogameDetailPage';
-
-// Hooks
-import useAuth from './hooks/useAuth';
+import ScrollToTopButton from './components/scrollToTopButton/ScrollToTopButton';
+import Alert from './components/alert/Alert';
 
 function App() {
-  const isAuthenticated = useAuth();
-  console.log('isAuthenticated:', isAuthenticated);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const storedTheme = localStorage.getItem('dark-mode');
+    return storedTheme === 'true';
+  });
+
+  
+  const toggleTheme = () => {
+    setIsDarkMode((prevMode) => {
+      const newMode = !prevMode;
+      localStorage.setItem('dark-mode', newMode);
+      document.body.classList.toggle('dark-mode', newMode);
+      return newMode;
+    });
+  };
+
+  useEffect(() => {
+    document.body.classList.toggle('dark-mode', isDarkMode);
+  }, [isDarkMode]);
+
   return (
-    <div>
+    <span className={isDarkMode ? 'app dark-mode' : 'app'}>
       <header>
-        <StatusBar />
+        <StatusBar toggleTheme={toggleTheme} isDarkMode={isDarkMode}/>
+        <Alert />
       </header>
       <main>
-        <Routes>
-          <Route path="/login" element={isAuthenticated.isAuthenticated ? <Navigate to="/home" /> : <LoginPage />} />
-          <Route path="/register" element={isAuthenticated.isAuthenticated ? <Navigate to="/home" /> : <RegisterPage />} />
-          <Route path="/home" element={<HomePage />}/>
-          <Route path="/logout" element={<Logout />} />
-        
-          <Route path="/videogames/:id" element={<VideogameDetail />} />
-          <Route path="/videogames/platform/:platformId" element={<VideogamePage />} />
-          <Route path="/videogames/developer/:developerId" element={<VideogamePage />} />
-          <Route path="/videogames/publisher/:publisherId" element={<VideogamePage />} />
-          <Route path="/videogames/genre/:genreId" element={<VideogamePage />} />
-
-          <Route path="/platforms" element={<PlatformPage />}/>
-
-          <Route path="/developers" element={<DeveloperPage />}/>
-
-          <Route path="/publishers" element={<PublisherPage />}/>
-
-          <Route path="/genres" element={<GenrePage />}/>
-        </Routes>
+        <AppRoutes />
+        <ScrollToTopButton />
       </main>
-    </div>
+    </span>
   );
 }
 

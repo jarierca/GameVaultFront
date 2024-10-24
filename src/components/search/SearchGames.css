@@ -1,0 +1,86 @@
+/* SearchGames.css */
+
+.search-component {
+  position: relative;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-component input {
+  color-scheme: var(--color-schema) !important;
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.suggestions-list {
+  position: absolute;
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  z-index: 1000;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  min-width: 300px;
+  color: black;
+}
+
+.suggestions-list-status {
+  position: absolute;
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  z-index: 1000;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+  top: 100%;
+}
+
+.suggestions-list li, .suggestions-list-status li {
+  padding: 10px;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.suggestions-list li:hover, .suggestions-list-status li:hover {
+  background-color: var(--item-hover);
+}
+
+.search-inpt {
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  width: 150px;
+  font-size: 0.875rem;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+.search-btn svg:hover {
+  transition: color 0.3s ease;
+  transform: scale(1.1);
+}
+
+.search-btn svg {
+  width: 24px;
+  height: 24px;
+  color: #cecece;
+}
