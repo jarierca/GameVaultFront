@@ -197,12 +197,16 @@ const MyCollection = () => {
     navigate(`/my-collection/${collection.name}/${game.id}-${game.title.replace(/\s+/g, '-')}`);
   };
 
-  const handleCloseGameDetails = () => {
+  const handleCloseGameDetails = (reload) => {
     setSelectedGameId(null);
     setShowGame(false);
 
     if(collectionName) {
       navigate(`/my-collection/${collectionName}`);
+    }
+
+    if (reload) {
+      navigate(0);
     }
   };
 
@@ -310,9 +314,10 @@ const MyCollection = () => {
           return matchesTitle && matchesPlatform && matchesDeveloper && matchesPublisher && matchesGenre;
         })
         .sort((a, b) => {
+console.log(sortOrderBy);
           const compareValue = sortOrder === 'asc' 
-            ? (a.title[sortOrderBy] < b.title[sortOrderBy] ? -1 : 1) 
-            : (a.title[sortOrderBy] > b.title[sortOrderBy] ? -1 : 1);
+            ? (a[sortOrderBy] < b[sortOrderBy] ? -1 : 1) 
+            : (a[sortOrderBy] > b[sortOrderBy] ? -1 : 1);
 
           return compareValue;
         })
@@ -538,7 +543,7 @@ const MyCollection = () => {
                 </div>
               </div>
 
-            <input type="text" className="search-input-collection" value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Search games..." />
+              <input type="text" className="search-input-collection" value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Search games..." />
               <div className="btn-generic-action" onClick={clearFilters} title="Clear filters">
                 <Icon iconName="CloseXIcon"/>
               </div>
@@ -588,7 +593,7 @@ const MyCollection = () => {
                 <div >
                   <span className="game-title">{game.title}</span> 
                    -
-                  <span className="game-release-date"> {game.releaseDate.split('T')[0]}</span>
+                  <span className="game-release-date"> {game.releaseDate ? game.releaseDate.split('T')[0] : ""}</span>
                 </div>                
                 <span className="game-platform">{game.platformName}</span>
               </div>

@@ -53,28 +53,35 @@ const MyGameDetails = ({ gameId, onClose }) => {
   };
 
   const handleRemoveCurrentVideogame = async () => {
-    const confirmDelete = window.confirm(`Are you sure you want to delete the collection "${editedDetails.videogame.title}"?`);
+    const confirmDelete = window.confirm(`Are you sure you want to delete the collection "${editedDetails.title}"?`);
     if (!confirmDelete) return;
 
     try {
       await axios.delete(`${process.env.REACT_APP_API_URL}/collection-videogames/${editedDetails.id}`);
-      onClose();
+      onClose(true);
+
     } catch (error) {
       console.error('Error deleting collection:', error);
     }
   };
   const {
-    videogame = {},
-    digital = false,
-    status = '',
+    title = '',
+    overview = '',
+    releaseDate = '',
+    platformName = '',
+    developerName = '',
+    publisherName = '',
+    genreNames = '',
+    dateAdded = '',
     completed = false,
     timesCompleted = 0,
     hoursPlayed = 0,
     rating = 0,
-    notes = '',
-    dateAdded = '',
+    digital = false,
     physicalStatus = '',
     purchaseDate = '',
+    status = '',
+    notes = ''
   } = gameDetails || {};
 
   return (
@@ -102,14 +109,16 @@ const MyGameDetails = ({ gameId, onClose }) => {
               )}
             </div>
           </div>
-          <h2>{videogame.title}</h2>
-
+          <div className="collection-name-year">
+            <h2>{title}</h2>
+            <small>{dateAdded ? dateAdded.split('T')[0] : ""}</small>
+          </div>
           <div className="row">
             <div className="column">
               <label>Description:</label>
               <input
                 type="text"
-                value={videogame.overview || ""}
+                value={overview || ""}
                 readOnly
                 className="readonly-input txt-collection-detail"
                 placeholder="Description"
@@ -120,7 +129,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
               <label>Release Date:</label>
               <input
                 type="date"
-                value={videogame.releaseDate ? videogame.releaseDate.split('T')[0] : ""}
+                value={releaseDate ? releaseDate.split('T')[0] : ""}
                 readOnly
                 className="readonly-input txt-collection-detail"
                 disabled={!isEditing}
@@ -132,7 +141,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
               <label>Platform:</label>
               <input
                 type="text"
-                value={videogame.platform?.name || ""}
+                value={platformName || ""}
                 readOnly
                 className="readonly-input txt-collection-detail"
                 disabled={!isEditing}
@@ -142,7 +151,17 @@ const MyGameDetails = ({ gameId, onClose }) => {
               <label>Developer:</label>
               <input
                 type="text"
-                value={videogame.developer?.name || ""}
+                value={developerName || ""}
+                readOnly
+                className="readonly-input txt-collection-detail"
+                disabled={!isEditing}
+              />
+            </div>
+            <div className="column">
+              <label>Publisher:</label>
+              <input
+                type="test"
+                value={publisherName ? publisherName.split('T')[0] : ""}
                 readOnly
                 className="readonly-input txt-collection-detail"
                 disabled={!isEditing}
@@ -152,17 +171,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
               <label>Genre:</label>
               <input
                 type="text"
-                value={videogame.genre?.name || ""}
-                readOnly
-                className="readonly-input txt-collection-detail"
-                disabled={!isEditing}
-              />
-            </div>
-            <div className="column">
-              <label>Date Added:</label>
-              <input
-                type="date"
-                value={dateAdded ? dateAdded.split('T')[0] : ""}
+                value={genreNames || ""}
                 readOnly
                 className="readonly-input txt-collection-detail"
                 disabled={!isEditing}
