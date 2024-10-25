@@ -110,7 +110,7 @@ const VideogamePage = () => {
                   name: videogame.title,
                   description: videogame.description,
                   releaseDate: videogame.releaseDate,
-                  image: videogame.image,
+                  images: videogame.images.length > 0 ? videogame.images : [],
                 }}
                 onClick={() => handleVideogameClick(videogame.id, videogame.title)}
               />

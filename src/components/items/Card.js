@@ -5,11 +5,27 @@ import PropTypes from 'prop-types';
 import './Card.css';
 
 const Card = ({ type, data, onClick }) => {
+  const images = Array.isArray(data.images) ? data.images : [];
+  const banner = images.find(img => img.imageType === 'BANNER');
+  const cover = images.find(img => img.imageType === 'COVER');
+
   return (
     <div className="card" onClick={onClick}>
+      <div className="card-banner-container">
+        {banner ? (
+          <div className="card-banner" style={{ backgroundImage: `url(${process.env.REACT_APP_API_URL}/images/p/${banner.name})` }}>
+            {cover ? (<img className="card-cover" src={`${process.env.REACT_APP_API_URL}/images/p/${cover.name}`} alt={cover.altName} />) 
+              : ( <div className="card-cover-placeholder"></div> )}
+          </div>
+        ) : (
+          <div className="card-banner-placeholder">
+            {cover ? (<img className="card-cover" src={`${process.env.REACT_APP_API_URL}/images/p/${cover.name}`} alt={cover.altName} />) 
+              : ( <div className="card-cover-placeholder"></div> )}
+          </div>
+        )}
+      </div>
       {type === 'videogame' && (
         <>
-          <div className="card-image" style={{ backgroundImage: `url(${data.image})` }}></div>
           <h3>{data.name}</h3>
           <p>{data.description}</p>
           <small>{data.releaseDate? data.releaseDate.split('T')[0] : ""}</small>
@@ -17,7 +33,8 @@ const Card = ({ type, data, onClick }) => {
       )}
       {type === 'collection-videogame' && (
         <>
-          <div className="card-image" style={{ backgroundImage: `url(${data.image})` }}></div>
+          {banner && <div className="card-banner" style={{ backgroundImage: `url(${banner.url})` }}></div>}
+          {cover && <img className="card-cover" src={cover.url} alt={cover.altName} />}
           <h3>{data.name} ({data.platformName})</h3>
           <p>{data.description}</p>
           <small>{data.releaseDate ? data.releaseDate.split('T')[0] : ""}</small>
@@ -59,7 +76,13 @@ Card.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string,
     releaseDate: PropTypes.string,
-    image: PropTypes.string,
+    images: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+      altName: PropTypes.string.isRequired,
+      imageType: PropTypes.string.isRequired,
+    })),
     foundedDate: PropTypes.string,
   }).isRequired,
   onClick: PropTypes.func.isRequired,

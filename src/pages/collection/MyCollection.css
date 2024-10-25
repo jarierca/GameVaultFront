@@ -57,6 +57,7 @@
 .my-collection-wrapper {
   display: flex;
   flex: 1;
+  margin-bottom: 50px;
 }
 
 .right-container {

@@ -314,7 +314,6 @@ const MyCollection = () => {
           return matchesTitle && matchesPlatform && matchesDeveloper && matchesPublisher && matchesGenre;
         })
         .sort((a, b) => {
-console.log(sortOrderBy);
           const compareValue = sortOrder === 'asc' 
             ? (a[sortOrderBy] < b[sortOrderBy] ? -1 : 1) 
             : (a[sortOrderBy] > b[sortOrderBy] ? -1 : 1);

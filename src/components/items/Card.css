@@ -1,6 +1,7 @@
 /* src/components/util/Card.css */
 
 .card {
+  position: relative;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -17,11 +18,65 @@
   transform: scale(1.05);
 }
 
-.card-image {
+.card-banner {
   width: 100%;
-  height: 150px;
+  height: 100px;
   background-size: cover;
   background-position: center;
-  margin-bottom: 10px;
+  border-radius: 8px 8px 0 0;
+}
+
+.card-cover {
+  position: absolute;
+  bottom: 10px;
+  max-width: 100px;
+  max-height: 150px;
+  object-fit: unset; /*cover;*/
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 120px;
+  border: 2px solid #fff;
+}
+
+.card-banner-container {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-banner {
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.card-banner-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
+  border-radius: 8px 8px 0 0;
+}
+
+.card-cover-placeholder {
+  background-color: #e0e0e0;
+  position: absolute;
+  bottom: 10px;
+  max-width: 100px;
+  max-height: 150px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 120px;
+  border: 2px solid transparent;
 }
 
