@@ -116,24 +116,9 @@ const MyGameDetails = ({ gameId, onClose }) => {
           <div className="row">
             <div className="column">
               <label>Description:</label>
-              <input
-                type="text"
-                value={overview || ""}
-                readOnly
-                className="readonly-input txt-collection-detail"
-                placeholder="Description"
-                disabled={!isEditing}
-              />
-            </div>
-            <div className="column">
-              <label>Release Date:</label>
-              <input
-                type="date"
-                value={releaseDate ? releaseDate.split('T')[0] : ""}
-                readOnly
-                className="readonly-input txt-collection-detail"
-                disabled={!isEditing}
-              />
+              <div className="readonly-input txt-collection-detail overview">
+                {overview || ""}
+              </div>
             </div>
           </div>
           <div className="row">
@@ -172,6 +157,16 @@ const MyGameDetails = ({ gameId, onClose }) => {
               <input
                 type="text"
                 value={genreNames || ""}
+                readOnly
+                className="readonly-input txt-collection-detail"
+                disabled={!isEditing}
+              />
+            </div>
+            <div className="column">
+              <label>Release Date:</label>
+              <input
+                type="date"
+                value={releaseDate ? releaseDate.split('T')[0] : ""}
                 readOnly
                 className="readonly-input txt-collection-detail"
                 disabled={!isEditing}

@@ -13,14 +13,14 @@ const Card = ({ type, data, onClick }) => {
     <div className="card" onClick={onClick}>
       <div className="card-banner-container">
         {banner ? (
-          <div className="card-banner" style={{ backgroundImage: `url(${process.env.REACT_APP_API_URL}/images/p/${banner.name})` }}>
-            {cover ? (<img className="card-cover" src={`${process.env.REACT_APP_API_URL}/images/p/${cover.name}`} alt={cover.altName} />) 
-              : ( <div className="card-cover-placeholder"></div> )}
+          <div className="card-banner" style={{ background: `linear-gradient(rgba(3, 18, 22, 0.5), rgba(3, 18, 22, 0.7)),url(${process.env.REACT_APP_API_URL}/images/p/${encodeURIComponent(banner?.url)})`,backgroundSize: 'cover', backgroundPosition: 'center', }}>
+            {cover ? (<img className="card-cover" src={`${process.env.REACT_APP_API_URL}/images/p/${encodeURIComponent(cover?.url || "no-image.jpeg")}`} alt={cover?.altName} />) 
+              : ( <></> )}
           </div>
         ) : (
-          <div className="card-banner-placeholder">
-            {cover ? (<img className="card-cover" src={`${process.env.REACT_APP_API_URL}/images/p/${cover.name}`} alt={cover.altName} />) 
-              : ( <div className="card-cover-placeholder"></div> )}
+          <div className="card-banner" style={{ background: `linear-gradient(rgba(3, 18, 22, 0.5), rgba(3, 18, 22, 0.7)),url(${process.env.REACT_APP_API_URL}/images/p/${encodeURIComponent(cover?.url || "no-image.jpeg")})`,backgroundSize: 'cover', backgroundPosition: 'center', }}>
+            {cover ? (<img className="card-cover" src={`${process.env.REACT_APP_API_URL}/images/p/${encodeURIComponent(cover?.url || "no-image.jpeg")}`} alt={cover?.altName} />) 
+              : ( <></> )}
           </div>
         )}
       </div>
@@ -33,8 +33,6 @@ const Card = ({ type, data, onClick }) => {
       )}
       {type === 'collection-videogame' && (
         <>
-          {banner && <div className="card-banner" style={{ backgroundImage: `url(${banner.url})` }}></div>}
-          {cover && <img className="card-cover" src={cover.url} alt={cover.altName} />}
           <h3>{data.name} ({data.platformName})</h3>
           <p>{data.description}</p>
           <small>{data.releaseDate ? data.releaseDate.split('T')[0] : ""}</small>

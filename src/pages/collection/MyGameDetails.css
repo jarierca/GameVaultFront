@@ -57,6 +57,11 @@ label {
   margin-top: 5px;
 }
 
+.overview {
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
 .readonly-input {
   background-color: #f0f0f0;
 }
@@ -70,7 +75,6 @@ label {
   border-top: 1px solid var(--border-color);
   margin: 25px 0;
 }
-
 
 .readonly-input {
   color: var(--text-color);

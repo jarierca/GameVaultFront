@@ -111,38 +111,63 @@ const icons = {
         </svg>
     ),
     AZAscIcon: () => (
-       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 40"fill="currentColor" >
-        <text x="-12" y="32" fontSize="35">↑</text>
-        <text x="13" y="18" fontSize="24">A</text>
-        <text x="13" y="40" fontSize="24">Z</text>
-      </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 40"fill="currentColor" >
+          <text x="-12" y="32" fontSize="35">↑</text>
+          <text x="13" y="18" fontSize="24">A</text>
+          <text x="13" y="40" fontSize="24">Z</text>
+        </svg>
     ),
     ZADescIcon: () => (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 40" fill="currentColor" >
-        <text x="-12" y="32" fontSize="35">↓</text>
-        <text x="13" y="18" fontSize="24">Z</text>
-        <text x="13" y="40" fontSize="24">A</text>
-      </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 40" fill="currentColor" >
+          <text x="-12" y="32" fontSize="35">↓</text>
+          <text x="13" y="18" fontSize="24">Z</text>
+          <text x="13" y="40" fontSize="24">A</text>
+        </svg>
+    ),
+    CalendarIcon: () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="4" width="20" height="18" rx="2" ry="2" />
+            <line x1="2" y1="10" x2="22" y2="10" />
+            <line x1="7" y1="4" x2="7" y2="10" />
+            <line x1="17" y1="4" x2="17" y2="10" />
+            <text x="12" y="18" fontSize="4" fill="currentColor" textAnchor="middle" alignmentBaseline="middle" fontWeight="normal">30</text>
+        </svg>
     ),
     CalendarAscIcon: () => (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" >
-        <rect x="2" y="4" width="20" height="18" rx="2" ry="2" />
-        <line x1="2" y1="10" x2="22" y2="10" />
-        <line x1="7" y1="4" x2="7" y2="10" />
-        <line x1="17" y1="4" x2="17" y2="10" />
-        <path d="M12 19v-4" />
-        <path d="M9 16l3-3 3 3" />
-      </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" >
+          <rect x="2" y="4" width="20" height="18" rx="2" ry="2" />
+          <line x1="2" y1="10" x2="22" y2="10" />
+          <line x1="7" y1="4" x2="7" y2="10" />
+          <line x1="17" y1="4" x2="17" y2="10" />
+          <path d="M12 19v-4" />
+          <path d="M9 16l3-3 3 3" />
+        </svg>
     ),
     CalendarDescIcon: () => (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" >
-        <rect x="2" y="4" width="20" height="18" rx="2" ry="2" />
-        <line x1="2" y1="10" x2="22" y2="10" />
-        <line x1="7" y1="4" x2="7" y2="10" />
-        <line x1="17" y1="4" x2="17" y2="10" />
-        <path d="M12 13v4" />
-        <path d="M9 16l3 3 3-3" />
-      </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" >
+          <rect x="2" y="4" width="20" height="18" rx="2" ry="2" />
+          <line x1="2" y1="10" x2="22" y2="10" />
+          <line x1="7" y1="4" x2="7" y2="10" />
+          <line x1="17" y1="4" x2="17" y2="10" />
+          <path d="M12 13v4" />
+          <path d="M9 16l3 3 3-3" />
+        </svg>
+    ),
+    GameControllerIcon: () => (
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15">
+            <path
+                d="M3 5H21C22.6569 5 24 6.34315 24 8V16C24 17.6569 22.6569 19 21 19H3C1.34315 19 0 17.6569 0 16V8C0 6.34315 1.34315 5 3 5Z"
+                fill="none"
+                stroke="#FFFFFF"
+                strokeWidth="1.5"
+            />
+            <path
+                d="M8 10C8 9.44772 7.55228 9 7 9C6.44772 9 6 9.44772 6 10V11H5C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13H6V14C6 14.5523 6.44772 15 7 15C7.55228 15 8 14.5523 8 14V13H9C9.55228 13 10 12.5523 10 12C10 11.4477 9.55228 11 9 11H8V10Z"
+                fill="#FFFFFF"
+            />
+            <circle cx="16" cy="11.5" r="1" fill="#FFFFFF" />
+            <circle cx="18.5" cy="11.5" r="1" fill="#FFFFFF" />
+        </svg>
     ),
 };
 

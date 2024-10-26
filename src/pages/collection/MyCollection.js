@@ -579,7 +579,8 @@ const MyCollection = () => {
                 data={{
                   name: game.title,
                   platformName: game.platformName,
-                  releaseDate: game.releaseDate.split('T')[0],
+                  releaseDate: game.releaseDate ? game.releaseDate.split('T')[0] : "",
+                  images: game.images,
                 }}
                 onClick={() => handleGameClick(game)}
               />
