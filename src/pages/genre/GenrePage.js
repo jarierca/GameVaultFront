@@ -58,10 +58,6 @@ const GenrePage = () => {
     navigate(`?page=${page}`);
   };
 
-  const handleGenreClick = (genreId, genreName) => {
-    navigate(`/videogames/genre/${genreId}-${genreName}`);
-  };
-
   if (loading) {
     return <Loading />;
   }
@@ -92,7 +88,7 @@ const GenrePage = () => {
             data={{
               name: genre.name,
             }}
-            onClick={() => handleGenreClick(genre.id, genre.name)}
+            linkTo={`/videogames/genre/${genre.id}-${genre.name}`}
           />
         ))}
       </Grid>

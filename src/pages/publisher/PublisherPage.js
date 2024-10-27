@@ -58,10 +58,6 @@ const PublisherPage = () => {
     navigate(`?page=${page}`);
   };
 
-  const handlePublisherClick = (publisherId, publisherName) => {
-    navigate(`/videogames/publisher/${publisherId}-${publisherName}`);
-  };
-
   if (loading) {
     return <Loading />;
   }
@@ -94,7 +90,7 @@ const PublisherPage = () => {
               description: publisher.description,
               releaseDate: publisher.releaseDate,
             }}
-            onClick={() => handlePublisherClick(publisher.id, publisher.name)}
+            linkTo={`/videogames/publisher/${publisher.id}-${publisher.name}`}
           />
         ))}
       </Grid>

@@ -1,9 +1,10 @@
 // src/pages/home/HomePage.js
 
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../../components/loading/Loading';
+import Card from '../../components/items/Card';
 import Icon from '../../components/icon/Icon';
 import './HomePage.css';
 
@@ -94,26 +95,6 @@ const HomePage = () => {
     }
   };
 
-  const handleVideogameClick = (gameId, gameName) => {
-    navigate(`/videogames/${gameId}-${gameName}`);
-  };
-
-  const handlePlatformClick = (platformId, platformName) => {
-    navigate(`/videogames/platform/${platformId}-${platformName}`);
-  };
-  
-  const handleDeveloperClick = (developerId, developerName) => {
-    navigate(`/videogames/developer/${developerId}-${developerName}`);
-  };
-
-  const handlePublisherClick = (publisherId, publisherName) => {
-    navigate(`/videogames/publisher/${publisherId}-${publisherName}`);
-  };
-
-  const handleGenreClick = (genreId, genreName) => {
-    navigate(`/videogames/genre/${genreId}-${genreName}`);
-  };
-
   const scrollLeft = () => {
     if (gameListRef.current) {
       gameListRef.current.scrollBy({
@@ -169,11 +150,18 @@ const HomePage = () => {
         <div className="random-games-section">
           <h2>Random Games</h2>
           <div className="game-list" ref={gameListRef}>
-            {randomGames.map((game) => (
-              <div key={game.id} className="game-item" onClick={() => handleVideogameClick(game.id, game.title)}>
-                <h3>{game.title}</h3>
-                <p>Release Date: {new Date(game.releaseDate).toLocaleDateString()}</p>
-              </div>
+            {randomGames.map((videogame) => (
+              <Card
+                key={videogame.id}
+                type="random-game"
+                data={{
+                  name: videogame.title,
+                  description: videogame.description,
+                  releaseDate: videogame.releaseDate,
+                  images: videogame.images.length > 0 ? videogame.images : [],
+                }}
+                linkTo={`/videogames/${videogame.id}-${videogame.title}`}
+              />
             ))}
             <div className="scroll-buttons">
               <button className="scroll-button left-button" onClick={scrollLeft}><Icon iconName="LeftArrowIcon" /></button>
@@ -182,16 +170,15 @@ const HomePage = () => {
           </div>
         </div>
 
-
         <section className="top-stats-section">
           <h2>Top 5 Platforms</h2>
           <div className="stats-list">
             {topPlatforms.length > 0 ? (
               topPlatforms.map((platform) => (
-                <div key={platform[0]} className="stats-item" onClick={() => handlePlatformClick(platform[0],platform[1])}>
+                <Link key={platform[0]} className="stats-item" to={`/videogames/platform/${platform[0]}-${platform[1]}`}>
                   <h3>{platform[1]}</h3>
                   <p>{platform[2]}</p>
-                </div>
+                </Link>
               ))
             ) : (
               <p>No platforms available</p>
@@ -204,10 +191,10 @@ const HomePage = () => {
           <div className="stats-list">
             {topDevelopers.length > 0 ? (
               topDevelopers.map((developer) => (
-                <div key={developer[0]} className="stats-item" onClick={() => handleDeveloperClick(developer[0],developer[1])}>
+                <Link key={developer[0]} className="stats-item" to={`/videogames/developer/${developer[0]}-${developer[1]}`}>
                   <h3>{developer[1]}</h3>
                   <p>{developer[2]}</p>
-                </div>
+                </Link>
               ))
             ) : (
               <p>No developers available</p>
@@ -220,10 +207,10 @@ const HomePage = () => {
           <div className="stats-list">
             {topPublishers.length > 0 ? (
               topPublishers.map((publisher) => (
-                <div key={publisher[0]} className="stats-item" onClick={() => handlePublisherClick(publisher[0],publisher[1])}>
+                <Link key={publisher[0]} className="stats-item" to={`/videogames/publisher/${publisher[0]}-${publisher[1]}`}>
                   <h3>{publisher[1]}</h3>
                   <p>{publisher[2]}</p>
-                </div>
+                </Link>
               ))
             ) : (
               <p>No publishers available</p>
@@ -236,10 +223,10 @@ const HomePage = () => {
           <div className="stats-list">
             {topGenres.length > 0 ? (
               topGenres.map((genre) => (
-                <div key={genre[0]} className="stats-item" onClick={() => handleGenreClick(genre[0],genre[1])}>
+                <Link key={genre[0]} className="stats-item" to={`/videogames/genre/${genre[0]}-${genre[1]}`}>
                   <h3>{genre[1]}</h3>
                   <p>{genre[2]}</p>
-                </div>
+                </Link>
               ))
             ) : (
               <p>No genres available</p>

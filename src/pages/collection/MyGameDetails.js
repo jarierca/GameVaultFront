@@ -52,6 +52,10 @@ const MyGameDetails = ({ gameId, onClose }) => {
     setIsEditing(false);
   };
 
+  const handleCloseDetail = () => {
+    onClose(false);
+  }
+
   const handleRemoveCurrentVideogame = async () => {
     const confirmDelete = window.confirm(`Are you sure you want to delete the collection "${editedDetails.title}"?`);
     if (!confirmDelete) return;
@@ -91,7 +95,7 @@ const MyGameDetails = ({ gameId, onClose }) => {
       ) : (
         <div className="game-details-container">
           <div className="header-container">
-            <div className="close-icon" onClick={onClose} aria-label="Close" title="Close videogame">
+            <div className="close-icon" onClick={handleCloseDetail} aria-label="Close" title="Close videogame">
               <Icon iconName="CloseXIcon" />
             </div>
             {isEditing && <div className="editing-notice">Editing Video Game</div>}

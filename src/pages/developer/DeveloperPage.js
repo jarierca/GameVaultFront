@@ -58,10 +58,6 @@ const DeveloperPage = () => {
     navigate(`?page=${page}`);
   };
 
-  const handleDeveloperClick = (developerId, developerName) => {
-    navigate(`/videogames/developer/${developerId}-${developerName}`);
-  };
-
   if (loading) {
     return <Loading />;
   }
@@ -94,7 +90,7 @@ const DeveloperPage = () => {
               description: developer.description,
               releaseDate: developer.releaseDate,
             }}
-            onClick={() => handleDeveloperClick(developer.id, developer.name)}
+            linkTo={`/videogames/developer/${developer.id}-${developer.name}`}
           />
         ))}
       </Grid>

@@ -11,7 +11,7 @@ const VideogameDetailPage = () => {
   const { gameId } = useParams();
   const [videogame, setVideogame] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const noImage = "no-image.jpeg";
   useEffect(() => {
     const fetchVideogame = async () => {
       setLoading(true);
@@ -44,35 +44,30 @@ const VideogameDetailPage = () => {
 
   return (
     <div className="videogame-detail-container">
-      {bannerImage && (
-        <div className="banner-image" style={{ background: `linear-gradient(to bottom, rgba(3, 18, 22, 0.5), rgba(3, 18, 22, 0.7)), url(${process.env.REACT_APP_API_URL}/images/p/${encodeURIComponent(bannerImage.url)})`, }}>
-          <h1 className="banner-title">{videogame.title}</h1>
-        </div>
-      )}
-
+      <div className="banner-image" style={{ background: `linear-gradient(to bottom, rgba(3, 18, 22, 0.5), rgba(3, 18, 22, 0.7)), url(${process.env.REACT_APP_API_URL}/images/p/${encodeURIComponent(bannerImage?.url || coverImage?.url || noImage )})`, }}>
+        <h1 className="banner-title">{videogame.title}</h1>
+      </div>
 
       <div className="videogame-description-container">
-        {coverImage && (
-          <span>
-            <img
-              src={`${process.env.REACT_APP_API_URL}/images/p/${encodeURIComponent(coverImage.url)}`}
-              alt={coverImage.altName}
-              className="cover-image"
-            />
-            <div className="links-info">
-              <div className="link-box">
-                <a href={videogame.urlAlt} target="_blank" rel="noopener noreferrer">
-                  More Info
-                </a>
-              </div>
-              <div className="link-box">
-                <a href={videogame.video} target="_blank" rel="noopener noreferrer">
-                  Watch Video
-                </a>
-              </div>
+        <span>
+          <img
+            src={`${process.env.REACT_APP_API_URL}/images/p/${encodeURIComponent(coverImage?.url || bannerImage?.url || noImage)}`}
+            alt={coverImage?.altName}
+            className="cover-image"
+          />
+          <div className="links-info">
+            <div className="link-box">
+              <a href={videogame?.urlAlt} target="_blank" rel="noopener noreferrer">
+                More Info
+              </a>
             </div>
-          </span>
-        )}
+            <div className="link-box">
+              <a href={videogame?.video} target="_blank" rel="noopener noreferrer">
+                Watch Video
+              </a>
+            </div>
+          </div>
+        </span>
         
         <div className="videogame-description">
           <h3>Description</h3>

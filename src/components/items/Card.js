@@ -2,15 +2,19 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import './Card.css';
 
-const Card = ({ type, data, onClick }) => {
+const Card = ({ type, data, linkTo, onClick }) => {
   const images = Array.isArray(data.images) ? data.images : [];
   const banner = images.find(img => img.imageType === 'BANNER');
   const cover = images.find(img => img.imageType === 'COVER');
 
+  const CardContainer = linkTo ? Link : 'div';
+  const cardProps = linkTo ? { to: linkTo } : { onClick };
+
   return (
-    <div className="card" onClick={onClick}>
+    <CardContainer {...cardProps} className={type === 'random-game' ? "game-item" : "card" }>
       <div className="card-banner-container">
         {banner ? (
           <div className="card-banner" style={{ background: `linear-gradient(rgba(3, 18, 22, 0.5), rgba(3, 18, 22, 0.7)),url(${process.env.REACT_APP_API_URL}/images/p/${encodeURIComponent(banner?.url)})`,backgroundSize: 'cover', backgroundPosition: 'center', }}>
@@ -25,6 +29,13 @@ const Card = ({ type, data, onClick }) => {
         )}
       </div>
       {type === 'videogame' && (
+        <>
+          <h3>{data.name}</h3>
+          <p>{data.description}</p>
+          <small>{data.releaseDate? data.releaseDate.split('T')[0] : ""}</small>
+        </>
+      )}
+      {type === 'random-game' && (
         <>
           <h3>{data.name}</h3>
           <p>{data.description}</p>
@@ -64,12 +75,12 @@ const Card = ({ type, data, onClick }) => {
           <h3>{data.name}</h3>
         </>
       )}
-    </div>
+    </CardContainer>
   );
 };
 
 Card.propTypes = {
-  type: PropTypes.oneOf(['videogame', 'collection-videogame', 'platform', 'publisher', 'developer', 'genre']).isRequired,
+  type: PropTypes.oneOf(['videogame', 'random-game', 'collection-videogame', 'platform', 'publisher', 'developer', 'genre']).isRequired,
   data: PropTypes.shape({
     name: PropTypes.string.isRequired,
     description: PropTypes.string,
@@ -83,7 +94,6 @@ Card.propTypes = {
     })),
     foundedDate: PropTypes.string,
   }).isRequired,
-  onClick: PropTypes.func.isRequired,
 };
 
 export default Card;

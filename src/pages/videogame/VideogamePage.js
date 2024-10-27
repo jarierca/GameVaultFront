@@ -10,6 +10,7 @@ import './VideogamePage.css';
 
 const VideogamePage = () => {
   const { platform, developer, publisher, genre } = useParams();
+  const [pageTitle, setPageTitle] = useState("Videogames");
   const [videogames, setVideogames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,18 +34,22 @@ const VideogamePage = () => {
         if (platform) {
           const platformId = platform.split('-')[0];
           url += `/platform/${platformId}`;
+          setPageTitle(platform.split('-')[1]);
 
         } else if (developer) {
           const developerId = developer.split('-')[0];
           url += `/developer/${developerId}`;
+          setPageTitle(developer.split('-')[1]);
 
         } else if (publisher) {
           const publisherId = publisher.split('-')[0];
           url += `/publisher/${publisherId}`;
+          setPageTitle(publisher.split('-')[1]);
 
         } else if (genre) {
           const genreId = genre.split('-')[0];
           url += `/genre/${genreId}`;
+          setPageTitle(genre.split('-')[1]);
         }
 
         url += `?page=${currentPage - 1}&size=${itemsPerPage}`;
@@ -70,10 +75,6 @@ const VideogamePage = () => {
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const handleVideogameClick = (gameId, gameName) => {
-    navigate(`/videogames/${gameId}-${gameName}`);
-  };
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
     navigate(`?page=${page}`);
@@ -85,7 +86,7 @@ const VideogamePage = () => {
         <Loading />
       ) : (
         <div className="container">
-          <h1>Videogames</h1>
+          <h1>{pageTitle}</h1>
           <input
             type="text"
             placeholder="Search by videogame name..."
@@ -112,7 +113,7 @@ const VideogamePage = () => {
                   releaseDate: videogame.releaseDate,
                   images: videogame.images.length > 0 ? videogame.images : [],
                 }}
-                onClick={() => handleVideogameClick(videogame.id, videogame.title)}
+                linkTo={`/videogames/${videogame.id}-${videogame.title}`}
               />
             ))}
           </Grid>

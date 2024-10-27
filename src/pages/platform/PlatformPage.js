@@ -59,10 +59,6 @@ const PlatformPage = () => {
     navigate(`?page=${page}`);
   };
 
-  const handlePlatformClick = (platformId, platformName) => {
-    navigate(`/videogames/platform/${platformId}-${platformName}`);
-  };
-
   if (loading) {
     return <Loading />;
   }
@@ -95,7 +91,7 @@ const PlatformPage = () => {
               description: platform.description,
               releaseDate: platform.releaseDate,
             }}
-            onClick={() => handlePlatformClick(platform.id, platform.name)}
+            linkTo={`/videogames/platform/${platform.id}-${platform.name}`}
           />
         ))}
       </Grid>

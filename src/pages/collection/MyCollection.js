@@ -91,7 +91,7 @@ const MyCollection = () => {
   }, [isDialogOpen, isGameDialogOpen]);
 
   const toggleCollection = async (collection) => {
-    handleCloseGameDetails();
+    handleCloseGameDetails(false);
     setSelectedCollections([collection]);
     
     if (!collectionName != collection && !gameInfo){
